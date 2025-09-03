@@ -1,8 +1,5 @@
 {
-  "version": 2,
-  "routes": [
-    { "src": "/", "dest": "/index.html" },
-    { "src": "/brand", "dest": "/brand.html" },
-    { "src": "/workshop", "dest": "/workshop.html" }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
