@@ -1,0 +1,22 @@
+{
+  "name": "Vauntico - Only what matters. Exactly when it matters.",
+  "short_name": "Vauntico",
+  "description": "Premium digital solutions with precision and elegance. Only what matters. Exactly when it matters.",
+  "icons": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#d4af37",
+  "background_color": "#0a0a0a",
+  "orientation": "portrait-primary"
+}

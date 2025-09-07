@@ -1,10 +1,301 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Vauntico – Homepage</title>
-  </head>
-  <body>
-    <h1>Welcome to Vauntico</h1>
-    <p>This is the homepage. Deployment test successful.</p>
-  </body>
+<html lang="en" class="scroll-smooth">
+<head>
+    <!-- Essential Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Primary Meta Tags -->
+    <title>Vauntico Brand - Only what matters. Exactly when it matters.</title>
+    <meta name="title" content="Vauntico Brand - Only what matters. Exactly when it matters.">
+    <meta name="description" content="Discover the Vauntico brand identity. Only what matters. Exactly when it matters. Premium digital solutions with precision and elegance.">
+    <meta name="keywords" content="Vauntico brand, brand identity, premium design, digital branding">
+    <meta name="author" content="Vauntico">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vauntico.com/brand.html">
+    <meta property="og:title" content="Vauntico Brand - Only what matters. Exactly when it matters.">
+    <meta property="og:description" content="Discover the Vauntico brand identity. Only what matters. Exactly when it matters. Premium digital solutions with precision and elegance.">
+    <meta property="og:image" content="/assets/vauntico-brand-og.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://vauntico.com/brand.html">
+    <meta property="twitter:title" content="Vauntico Brand - Only what matters. Exactly when it matters.">
+    <meta property="twitter:description" content="Discover the Vauntico brand identity. Only what matters. Exactly when it matters. Premium digital solutions with precision and elegance.">
+    <meta property="twitter:image" content="/assets/vauntico-brand-twitter.jpg">
+
+    <!-- Favicon -->
+       <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://vauntico.com/">
+    <meta property="twitter:title" content="Vauntico - Only what matters. Exactly when it matters.">
+    <meta property="twitter:description" content="Only what matters. Exactly when it matters. Vauntico delivers premium digital solutions with precision and elegance.">
+    <meta property="twitter:image" content="/assets/vauntico-twitter-image.jpg">
+
+    <!-- Favicon -->
+   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/site.webmanifest">
+
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'vauntico-dark': '#0a0a0a',
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'vauntico-dark': '#0a0a0a',
+                        'vauntico-gray': '#1a1a1a',
+                        'vauntico-accent': '#2d2d2d',
+                        'vauntico-gold': '#d4af37',
+                        'vauntico-light': '#f8f8f8'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'display': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-vauntico-dark text-vauntico-light font-sans antialiased">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-vauntico-dark/90 backdrop-blur-md border-b border-vauntico-accent z-50" aria-label="Main navigation">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold text-vauntico-gold" aria-label="Vauntico Homepage">
+                        Vauntico
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="/" class="text-vauntico-light hover:text-vauntico-gold px-3 py-2 text-sm font-medium transition-colors duration-200">Home</a>
+                        <a href="/brand.html" class="text-vauntico-gold px-3 py-2 text-sm font-medium">Brand</a>
+                        <a href="/workshop.html" class="text-vauntico-light hover:text-vauntico-gold px-3 py-2 text-sm font-medium transition-colors duration-200">Workshop</a>
+                        <a href="/prompt-vault.html" class="text-vauntico-light hover:text-vauntico-gold px-3 py-2 text-sm font-medium transition-colors duration-200">Prompt Vault</a>
+                        <a href="/pass.html" class="bg-vauntico-gold text-vauntico-dark px-4 py-2 text-sm font-medium rounded-lg hover:bg-vauntico-gold/90 transition-colors duration-200">Creator Pass</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-24 px-4 sm:px-6 lg:px-8">
+            <div class="container mx-auto">
+                <div class="max-w-6xl mx-auto text-center">
+                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
+                        <span class="text-vauntico-light">Brand</span>
+                        <br>
+                        <span class="text-vauntico-gold">Identity</span>
+                    </h1>
+                    <p class="text-xl sm:text-2xl text-vauntico-light/80 mb-12 max-w-4xl mx-auto leading-relaxed">
+                        Discover the essence of Vauntico. Our brand represents precision, elegance, and the unwavering focus on what truly matters.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Brand Values -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8 bg-vauntico-gray">
+            <div class="container mx-auto">
+                <div class="max-w-6xl mx-auto">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl font-bold mb-6 text-vauntico-light">Our Values</h2>
+                        <p class="text-xl text-vauntico-light/80 max-w-3xl mx-auto">
+                            These principles guide every decision we make and every solution we create.
+                        </p>
+                    </div>
+
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-vauntico-gold rounded-full flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-10 h-10 text-vauntico-dark" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4 text-vauntico-light">Excellence</h3>
+                            <p class="text-vauntico-light/80 leading-relaxed">
+                                We accept nothing less than exceptional quality in every detail of our work.
+                            </p>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-vauntico-gold rounded-full flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-10 h-10 text-vauntico-dark" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4 text-vauntico-light">Precision</h3>
+                            <p class="text-vauntico-light/80 leading-relaxed">
+                                Every element is carefully crafted and delivered exactly when it's needed.
+                            </p>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-vauntico-gold rounded-full flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-10 h-10 text-vauntico-dark" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4 text-vauntico-light">Focus</h3>
+                            <p class="text-vauntico-light/80 leading-relaxed">
+                                We eliminate distractions to concentrate on what truly drives success.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Brand Colors -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8">
+            <div class="container mx-auto">
+                <div class="max-w-6xl mx-auto">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl font-bold mb-6 text-vauntico-light">Brand Colors</h2>
+                        <p class="text-xl text-vauntico-light/80">
+                            Our color palette reflects sophistication and premium quality.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-4 gap-8">
+                        <div class="text-center">
+                            <div class="w-24 h-24 bg-vauntico-dark border-2 border-vauntico-accent rounded-lg mx-auto mb-4"></div>
+                            <h3 class="text-lg font-semibold text-vauntico-light mb-2">Vauntico Dark</h3>
+                            <p class="text-sm text-vauntico-light/60 font-mono">#0a0a0a</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-24 h-24 bg-vauntico-gray rounded-lg mx-auto mb-4"></div>
+                            <h3 class="text-lg font-semibold text-vauntico-light mb-2">Vauntico Gray</h3>
+                            <p class="text-sm text-vauntico-light/60 font-mono">#1a1a1a</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-24 h-24 bg-vauntico-accent rounded-lg mx-auto mb-4"></div>
+                            <h3 class="text-lg font-semibold text-vauntico-light mb-2">Vauntico Accent</h3>
+                            <p class="text-sm text-vauntico-light/60 font-mono">#2d2d2d</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-24 h-24 bg-vauntico-gold rounded-lg mx-auto mb-4"></div>
+                            <h3 class="text-lg font-semibold text-vauntico-light mb-2">Vauntico Gold</h3>
+                            <p class="text-sm text-vauntico-light/60 font-mono">#d4af37</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Typography -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8 bg-vauntico-gray">
+            <div class="container mx-auto">
+                <div class="max-w-6xl mx-auto">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl font-bold mb-6 text-vauntico-light">Typography</h2>
+                        <p class="text-xl text-vauntico-light/80">
+                            Clean, modern, and highly readable typography for premium communication.
+                        </p>
+                    </div>
+
+                    <div class="bg-vauntico-accent rounded-2xl p-8">
+                        <div class="mb-8">
+                            <h3 class="text-vauntico-gold text-sm font-semibold mb-2 uppercase tracking-wide">Primary Font</h3>
+                            <p class="text-4xl font-bold text-vauntico-light mb-2">Inter</p>
+                            <p class="text-vauntico-light/80">Professional, clean, and optimized for digital interfaces</p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div>
+                                <span class="text-vauntico-gold text-sm font-semibold uppercase tracking-wide">Heading 1</span>
+                                <h1 class="text-5xl font-bold text-vauntico-light">Only what matters.</h1>
+                            </div>
+                            <div>
+                                <span class="text-vauntico-gold text-sm font-semibold uppercase tracking-wide">Heading 2</span>
+                                <h2 class="text-3xl font-bold text-vauntico-light">Exactly when it matters.</h2>
+                            </div>
+                            <div>
+                                <span class="text-vauntico-gold text-sm font-semibold uppercase tracking-wide">Body Text</span>
+                                <p class="text-lg text-vauntico-light/80">Vauntico delivers premium digital solutions with precision and elegance.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8">
+            <div class="container mx-auto">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h2 class="text-4xl font-bold mb-6 text-vauntico-light">
+                        Ready to Work with Vauntico?
+                    </h2>
+                    <p class="text-xl text-vauntico-light/80 mb-8">
+                        Experience the premium difference. Join our creator community today.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        <a href="/pass.html" 
+                           class="bg-vauntico-gold text-vauntico-dark px-8 py-4 text-lg font-semibold rounded-xl hover:bg-vauntico-gold/90 transition-all duration-200 transform hover:scale-105">
+                            Get Creator Pass
+                        </a>
+                        <a href="/workshop.html" 
+                           class="border-2 border-vauntico-accent text-vauntico-light px-8 py-4 text-lg font-semibold rounded-xl hover:border-vauntico-gold hover:text-vauntico-gold transition-all duration-200">
+                            Join Workshop
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-vauntico-gray border-t border-vauntico-accent py-12 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col items-center text-center">
+                    <div class="mb-8">
+                        <a href="/" class="text-3xl font-bold text-vauntico-gold" aria-label="Vauntico Homepage">
+                            Vauntico
+                        </a>
+                        <p class="text-vauntico-light/60 mt-2 text-lg">
+                            Only what matters. Exactly when it matters.
+                        </p>
+                    </div>
+                    <nav class="flex flex-wrap justify-center gap-6 mb-8" aria-label="Footer navigation">
+                        <a href="/" class="text-vauntico-light/80 hover:text-vauntico-gold transition-colors duration-200">Home</a>
+                        <a href="/brand.html" class="text-vauntico-light/80 hover:text-vauntico-gold transition-colors duration-200">Brand</a>
+                        <a href="/workshop.html" class="text-vauntico-light/80 hover:text-vauntico-gold transition-colors duration-200">Workshop</a>
+                        <a href="/prompt-vault.html" class="text-vauntico-light/80 hover:text-vauntico-gold transition-colors duration-200">Prompt Vault</a>
+                        <a href="/pass.html" class="text-vauntico-light/80 hover:text-vauntico-gold transition-colors duration-200">Creator Pass</a>
+                    </nav>
+                    <div class="text-vauntico-light/60 text-sm">
+                        <p>&copy; 2025 Vauntico. All rights reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
 </html>
