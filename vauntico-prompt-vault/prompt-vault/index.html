@@ -24,8 +24,8 @@
   <script>
     function payWithPaystack() {
       var handler = PaystackPop.setup({
-        key: pk_live_6170742d40545d6ee122fb1d8878be1cf4eb1b4e, // Replace with your actual Paystack public key
-        email: 'customer@example.com', // You can dynamically set this later
+        key: 'pk_live_6170742d40545d6ee122fb1d8878be1cf4eb1b4e', // ✅ wrapped in quotes
+        email: 'customer@example.com',
         amount: 52900, // Amount in kobo (R529)
         currency: 'ZAR',
         callback: function(response) {
