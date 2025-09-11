@@ -1,26 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Vauntico Prompt Vault</title>
-  <link rel="stylesheet" href="../assets/styles.css">
-  <link rel="icon" href="../assets/logo.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vauntico – Legacy Tools for Digital Builders</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <link rel="icon" href="/assets/logo.png" />
+  <script src="https://js.paystack.co/v1/inline.js"></script>
 </head>
 <body>
-  <header class="site-header">
-    <img src="../assets/logo.png" alt="Vauntico Logo" class="logo">
+  <header class="site-header" style="text-align: center; padding: 2rem 0;">
+    <img src="/assets/logo.png" alt="Vauntico Logo" class="logo" style="max-width: 120px;" />
+    <h1 style="margin-top: 1rem; font-size: 2rem;">Legacy Tools for Digital Builders</h1>
+    <p style="font-size: 1.1rem; color: #777;">Built once. Delivered forever.</p>
   </header>
-  <main class="hero">
-    <h1>Vauntico Prompt Vault</h1>
-    <p class="intro">
-      Unlock premium AI prompts curated for creators, marketers, and innovators.<br>
-      Get instant access and boost your productivity!
-    </p>
-    <div class="button-group">
-      <a href="https://gumroad.com/" class="btn gold-btn" target="_blank" rel="noopener">Buy on Gumroad</a>
-      <a href="https://paystack.com/" class="btn gold-btn" target="_blank" rel="noopener">Buy on Paystack</a>
-    </div>
+
+  <main style="text-align: center; margin-top: 3rem;">
+    <button onclick="payWithPaystack()" class="btn gold-btn" style="font-size: 1.2rem; padding: 1rem 2rem;">
+      Access the Vault – R529
+    </button>
   </main>
+
+  <script>
+    function payWithPaystack() {
+      var handler = PaystackPop.setup({
+        key: pk_live_6170742d40545d6ee122fb1d8878be1cf4eb1b4e, // Replace with your actual Paystack public key
+        email: 'customer@example.com', // You can dynamically set this later
+        amount: 52900, // Amount in kobo (R529)
+        currency: 'ZAR',
+        callback: function(response) {
+          window.location.href = "https://vault.vauntico.com";
+        },
+        onClose: function() {
+          alert('Transaction was cancelled');
+        }
+      });
+      handler.openIframe();
+    }
+  </script>
 </body>
 </html>
