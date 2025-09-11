@@ -16,27 +16,41 @@
   </header>
 
   <main style="text-align: center; margin-top: 3rem;">
-    <button onclick="payWithPaystack()" class="btn gold-btn" style="font-size: 1.2rem; padding: 1rem 2rem;">
-      Access the Vault – R529
-    </button>
-  </main>
+  <input 
+    type="email" 
+    id="buyerEmail" 
+    placeholder="Enter your email to access the vault" 
+    required 
+    style="padding: 0.8rem 1rem; font-size: 1rem; width: 300px; max-width: 90%; margin-bottom: 1rem;"
+  />
+  <br />
+  <button onclick="payWithPaystack()" class="btn gold-btn" style="font-size: 1.2rem; padding: 1rem 2rem;">
+    Access the Vault – R529
+  </button>
+</main>
 
-  <script>
-    function payWithPaystack() {
-      var handler = PaystackPop.setup({
-        key: 'pk_live_6170742d40545d6ee122fb1d8878be1cf4eb1b4e', // ✅ wrapped in quotes
-        email: 'customer@example.com',
-        amount: 52900, // Amount in kobo (R529)
-        currency: 'ZAR',
-        callback: function(response) {
-          window.location.href = "https://vault.vauntico.com";
-        },
-        onClose: function() {
-          alert('Transaction was cancelled');
-        }
-      });
-      handler.openIframe();
+<script>
+  function payWithPaystack() {
+    var email = document.getElementById("buyerEmail").value;
+    if (!email) {
+      alert("Please enter your email before proceeding.");
+      return;
     }
-  </script>
+
+    var handler = PaystackPop.setup({
+      key: 'pk_live_6170742d40545d6ee122fb1d8878be1cf4eb1b4e',
+      email: email, // ✅ now uses the input value
+      amount: 52900,
+      currency: 'ZAR',
+      callback: function(response) {
+        window.location.href = "https://vault.vauntico.com";
+      },
+      onClose: function() {
+        alert('Transaction was cancelled');
+      }
+    });
+    handler.openIframe();
+  }
+</script>
 </body>
 </html>
