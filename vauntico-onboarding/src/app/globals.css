@@ -1,0 +1,45 @@
+.animate-pulse-glow {
+  animation: pulse-glow 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.3; filter: blur(16px); }
+  50% { opacity: 0.7; filter: blur(24px); }
+}
+.animate-fade-in-slow {
+  animation: fade-in 2.2s ease-out;
+}
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+
+
+body {
+  background: radial-gradient(ellipse at 50% 0%, #f3f4f6 60%, #18181b 100%);
+}
+
+body.dark {
+  background: radial-gradient(ellipse at 50% 0%, #18181b 60%, #0a0a0a 100%);
+}
+
+.text-neon {
+  color: #7c3aed;
+  text-shadow: 0 0 8px #7c3aed, 0 0 16px #7c3aed;
+}
+.border-neon {
+  border-color: #7c3aed;
+}
+.drop-shadow-neon {
+  filter: drop-shadow(0 0 8px #7c3aed) drop-shadow(0 0 16px #7c3aed);
+}
+.bg-neon {
+  background: #7c3aed;
+}
+.animate-fade-in {
+  animation: fade-in 1.2s ease-out;
+}
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
