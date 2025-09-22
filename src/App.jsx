@@ -14,6 +14,7 @@ function App() {
       <SidebarInset>
         <Router>
           <Routes>
+            <Route path="/" element={<PromptVaultPage />} />
             <Route path="/prompt-vault" element={<PromptVaultPage />} />
             <Route path="/vaults" element={<VaultsPage />} />
             <Route path="/creator-pass" element={<CreatorPassPage />} />
