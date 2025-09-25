@@ -53,26 +53,60 @@ export default function Homepage() {
         </Link>
       </section>
 
-      <section className="grid md:grid-cols-3 gap-6">
+      <section className="grid md:grid-cols-3 gap-6 mb-24">
         <VaultCard
           title="Creator’s Toolkit"
           price="$49"
           description="Prompts and templates for influencers, creators, and personal brands."
           buttonText="Unlock Vault"
+          slug="creators-toolkit"
         />
         <VaultCard
           title="Agency Arsenal"
           price="$99"
           description="Client-ready workflows, pitch decks, and automation templates."
           buttonText="Unlock Vault"
+          slug="agency-arsenal"
         />
         <VaultCard
           title="E-commerce Empire"
           price="$149"
           description="Product descriptions, ad copy, and branding kits for online stores."
           buttonText="Unlock Vault"
+          slug="ecommerce-empire"
         />
       </section>
+
+      {/* Email Capture Section */}
+      <div className="mt-24 px-6">
+        <h2 className="text-3xl font-bold text-vauntico-gold mb-4 text-center">
+          Join the Vauntico Movement
+        </h2>
+        <p className="text-gray-300 mb-6 text-center">
+          Get early access to new vaults, creator tools, and exclusive drops.
+        </p>
+        <form
+          name="vauntico-email-capture"
+          method="POST"
+          data-netlify="true"
+          className="max-w-xl mx-auto"
+        >
+          <input type="hidden" name="form-name" value="vauntico-email-capture" />
+          <input
+            type="email"
+            name="email"
+            placeholder="you@example.com"
+            required
+            className="w-full px-4 py-3 rounded bg-white text-black border border-vauntico-gold placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-vauntico-gold"
+          />
+          <button
+            type="submit"
+            className="mt-4 bg-vauntico-gold text-black px-6 py-3 rounded font-semibold hover:bg-yellow-400 transition w-full"
+          >
+            Subscribe
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
