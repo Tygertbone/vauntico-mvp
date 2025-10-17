@@ -1,15 +1,10 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { CheckCircle, Bookmark, ExternalLink } from 'lucide-react'
+import vaunticoBanner from '../assets/vauntico_banner.webp'
 
 const VaultSuccessPage = () => {
-<<<<<<< HEAD
-  return (
-    <div className="bg-background text-foreground py-20 px-6 text-center">
-      <h1 className="text-4xl font-bold text-vauntico-gold mb-4">Vault Created Successfully</h1>
-      <p className="text-lg text-muted max-w-2xl mx-auto mb-6">
-        Your vault is now live and ready to share. You’ve just taken a step toward legacy and income.
-      </p>
-      <a href="/vaults" className="vauntico-btn">View All Vaults</a>
-=======
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
@@ -138,7 +133,6 @@ const VaultSuccessPage = () => {
           </p>
         </div>
       </section>
->>>>>>> fe315b11 (Applied Cursur fix sprint: payment bug, routing, spiritual messaging, email integration)
     </div>
   )
 }

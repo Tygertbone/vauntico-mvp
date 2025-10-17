@@ -1,15 +1,3 @@
-module.exports = {
-  content: ['./src/**/*.{js,ts,jsx,tsx}'],
-  theme: {
-    extend: {
-      colors: {
-        primary: '#1A1A1A',
-        accent: '#FACC15',
-      },
-    },
-  },
-  plugins: [],
-}
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -25,6 +13,9 @@ export default {
         'vauntico-dark': '#1a1a1a',
         'vauntico-gray': '#2d2d2d',
         'vauntico-light': '#f8f8f8',
+        // Legacy colors for backward compatibility
+        primary: '#1A1A1A',
+        accent: '#FACC15',
       },
       fontFamily: {
         'sans': ['Inter', 'system-ui', 'sans-serif'],
