@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { initializePaystackPayment, redirectToSuccess } from '../utils/paystack'
+import { initializePaystackPayment, redirectToSuccess, verifyPayment } from '../utils/paystack'
+import ErrorAlert from './ui/error-alert'
 
 const PaystackButton = ({ 
-  amount = 97, // Default price in USD
+  amount = parseInt(import.meta.env.VITE_PRODUCT_PRICE) || 97, // Default price from env
   email = '',
   className = 'vauntico-btn',
   children = 'Buy with Apple Pay'
@@ -10,6 +11,7 @@ const PaystackButton = ({
   const [isLoading, setIsLoading] = useState(false)
   const [showEmailInput, setShowEmailInput] = useState(false)
   const [userEmail, setUserEmail] = useState(email)
+  const [error, setError] = useState(null)
 
   const handlePayment = () => {
     if (!userEmail) {
@@ -18,15 +20,35 @@ const PaystackButton = ({
     }
 
     setIsLoading(true)
+    setError(null)
     
     initializePaystackPayment(
       userEmail,
       amount,
-      (response) => {
-        // Payment successful
+      async (response) => {
+        // Payment successful - verify payment
         console.log('Payment successful:', response)
-        setIsLoading(false)
-        redirectToSuccess()
+        
+        try {
+          const verification = await verifyPayment(response.reference)
+          if (verification.success) {
+            redirectToSuccess()
+          } else {
+            console.error('Payment verification failed:', verification.message)
+            setError({
+              title: 'Payment Verification Failed',
+              message: 'Please contact support if this issue persists.'
+            })
+            setIsLoading(false)
+          }
+        } catch (error) {
+          console.error('Payment verification error:', error)
+          setError({
+            title: 'Payment Error',
+            message: 'An error occurred during payment verification. Please try again or contact support.'
+          })
+          setIsLoading(false)
+        }
       },
       () => {
         // Payment cancelled
@@ -47,6 +69,13 @@ const PaystackButton = ({
   if (showEmailInput) {
     return (
       <div className="space-y-3">
+        {error && (
+          <ErrorAlert 
+            title={error.title}
+            message={error.message}
+            onClose={() => setError(null)}
+          />
+        )}
         <form onSubmit={handleEmailSubmit} className="space-y-3">
           <input
             type="email"
@@ -79,13 +108,23 @@ const PaystackButton = ({
   }
 
   return (
-    <button 
-      onClick={handlePayment}
-      disabled={isLoading}
-      className={className}
-    >
-      {isLoading ? 'Processing...' : children}
-    </button>
+    <div className="space-y-3">
+      {error && (
+        <ErrorAlert 
+          title={error.title}
+          message={error.message}
+          onClose={() => setError(null)}
+        />
+      )}
+      <button 
+        onClick={handlePayment}
+        disabled={isLoading}
+        className={className}
+        aria-label={isLoading ? 'Processing payment...' : 'Start payment process'}
+      >
+        {isLoading ? 'Processing...' : children}
+      </button>
+    </div>
   )
 }
 

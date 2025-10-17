@@ -119,12 +119,14 @@
   }
 }
 
-/* Vauntico Brand Colors */
+/* Vauntico Brand Colors - Consolidated with tailwind.config.js */
 :root {
   --vauntico-gold: #D4AF37;
   --vauntico-gold-hover: #B8941F;
   --vauntico-pink: #E91E63;
   --vauntico-dark: #1a1a1a;
+  --vauntico-gray: #2d2d2d;
+  --vauntico-light: #f8f8f8;
 }
 
 /* Custom Vauntico Button Styles */
