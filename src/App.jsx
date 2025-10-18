@@ -4,6 +4,9 @@ import PromptVaultPage from './components/PromptVaultPage'
 import VaultsPage from './components/VaultsPage'
 import CreatorPassPage from './components/CreatorPassPage'
 import VaultSuccessPage from './components/VaultSuccessPage'
+import VaultDashboard from './components/VaultDashboard'
+import WorkshopPage from './pages/WorkshopPage'
+import AuditServicePage from './pages/AuditServicePage'
 import { Sidebar, SidebarProvider, SidebarInset } from './components/ui/sidebar'
 import './App.css'
 
@@ -20,6 +23,9 @@ function App() {
               <Route path="/vaults" element={<VaultsPage />} />
               <Route path="/creator-pass" element={<CreatorPassPage />} />
               <Route path="/vault-success" element={<VaultSuccessPage />} />
+              <Route path="/dashboard" element={<VaultDashboard />} />
+              <Route path="/workshop" element={<WorkshopPage />} />
+              <Route path="/audit-service" element={<AuditServicePage />} />
             </Routes>
           </div>
         </Router>
