@@ -1,0 +1,84 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+.yarn/
+.npm/
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.development
+.env.test
+
+# Build outputs
+dist/
+build/
+.output/
+.vercel/
+.netlify/
+
+# IDE and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# OS generated files
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Package manager locks (keep pnpm-lock.yaml)
+# package-lock.json
+# yarn.lock
+
+# Submodule directories (prevent corruption)
+vauntico-mvp-cursur-build/
+vauntico-mvp/
+vauntico-dream-mover/
+vaultscrolls/
+vaultclientsdemo-clientscrolls/
+packages/
+server/
+tools/
+vault/
+.husky/
+syndication/
+archive/
+docs/
+
+# Keep critical files
+!src/**
+!public/**
+!package.json
+!pnpm-lock.yaml
+!tailwind.config.js
+!vite.config.js
+!tsconfig.json
+!index.html
+!vercel.json
+!components.json
+
+.vercel
