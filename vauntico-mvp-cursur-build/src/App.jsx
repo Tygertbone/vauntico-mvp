@@ -7,6 +7,8 @@ import Pricing from './pages/Pricing'
 import WorkshopKit from './pages/WorkshopKit'
 import AuditService from './pages/AuditService'
 import Addons from './pages/Addons'
+import LoreVault from './pages/LoreVault'
+import Ascend from './pages/Ascend'
 
 function App() {
   return (
@@ -54,8 +56,14 @@ function App() {
                     </Link>
                   </div>
                 </div>
-                <Link to="/pricing" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
+                                                                <Link to="/pricing" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   Pricing
+                </Link>
+                                <Link to="/lore" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
+                  📚 Lore
+                </Link>
+                <Link to="/ascend" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
+                  🏔️ Ascend
                 </Link>
               </div>
               
@@ -74,7 +82,7 @@ function App() {
         {/* Main Content */}
         <main className="animate-fade-in">
                     <Routes>
-            <Route path="/" element={<Dashboard />} />
+                        <Route path="/" element={<Dashboard />} />
             <Route path="/creator-pass" element={<CreatorPass />} />
             <Route path="/vaults" element={<Vaults />} />
             <Route path="/dream-mover" element={<DreamMover />} />
@@ -82,6 +90,8 @@ function App() {
             <Route path="/audit-service" element={<AuditService />} />
             <Route path="/addons" element={<Addons />} />
             <Route path="/pricing" element={<Pricing />} />
+            <Route path="/lore" element={<LoreVault />} />
+            <Route path="/ascend" element={<Ascend />} />
           </Routes>
         </main>
 
@@ -107,7 +117,9 @@ function App() {
                   <li><Link to="/creator-pass" className="hover:text-white transition-colors">Creator Pass</Link></li>
                   <li><Link to="/vaults" className="hover:text-white transition-colors">Vaults</Link></li>
                   <li><Link to="/dream-mover" className="hover:text-white transition-colors">Dream Mover</Link></li>
-                  <li><Link to="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
+                                    <li><Link to="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
+                  <li><Link to="/lore" className="hover:text-white transition-colors">📚 Lore Vault</Link></li>
+                  <li><Link to="/ascend" className="hover:text-white transition-colors">🏔️ Ascend</Link></li>
                 </ul>
               </div>
               

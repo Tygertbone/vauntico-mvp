@@ -1,4 +1,29 @@
+import { useMemo } from 'react'
+import { getLocalizedPrice, PRICING as PRICING_DATA, getUserCurrency, getApproximatePrice } from '../utils/pricing'
+
 function Pricing() {
+  // Get localized pricing
+  const currentCurrency = useMemo(() => getUserCurrency(), [])
+  const creatorPassPrice = useMemo(() => getLocalizedPrice(PRICING_DATA.CREATOR_PASS), [])
+  const workshopKitPrice = useMemo(() => getLocalizedPrice(PRICING_DATA.WORKSHOP_KIT), [])
+  const auditServicePrice = useMemo(() => getLocalizedPrice(PRICING_DATA.AUDIT_SERVICE.plans.professional), [])
+  
+  const workshopApprox = useMemo(() => {
+    if (workshopKitPrice.currency === 'ZAR') {
+      return getApproximatePrice(workshopKitPrice.price, 'ZAR', 'USD')
+    } else {
+      return getApproximatePrice(workshopKitPrice.price, 'USD', 'ZAR')
+    }
+  }, [workshopKitPrice])
+  
+  const auditApprox = useMemo(() => {
+    if (auditServicePrice.currency === 'ZAR') {
+      return getApproximatePrice(auditServicePrice.price, 'ZAR', 'USD')
+    } else {
+      return getApproximatePrice(auditServicePrice.price, 'USD', 'ZAR')
+    }
+  }, [auditServicePrice])
+
   const plans = [
     {
       name: 'Free',
@@ -16,9 +41,11 @@ function Pricing() {
       popular: false,
       color: 'gray',
     },
-    {
+        {
       name: 'Creator Pass',
-      price: '29',
+      price: creatorPassPrice.price,
+      priceFormatted: creatorPassPrice.formatted,
+      currency: creatorPassPrice.currency,
       description: 'For serious content creators',
       features: [
         'Unlimited Vaults',
@@ -132,11 +159,11 @@ function Pricing() {
               <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
               <p className="text-gray-600 mb-4">{plan.description}</p>
               <div className="flex items-end justify-center mb-2">
-                {plan.price === 'Custom' ? (
+                                {plan.price === 'Custom' ? (
                   <span className="text-4xl font-bold">{plan.price}</span>
                 ) : (
                   <>
-                    <span className="text-5xl font-bold">${plan.price}</span>
+                    <span className="text-5xl font-bold">{plan.priceFormatted || `$${plan.price}`}</span>
                     <span className="text-gray-600 ml-2 mb-2">/month</span>
                   </>
                 )}
@@ -236,38 +263,46 @@ function Pricing() {
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="card text-center hover:shadow-xl transition-all hover:scale-105">
-            <div className="text-5xl mb-4">🎁</div>
-            <h3 className="text-xl font-bold mb-2">Workshop Kit</h3>
-            <p className="text-gray-600 mb-4">Complete brand starter pack</p>
-            <div className="text-3xl font-bold text-vault-purple mb-4">R499</div>
-            <a href="/workshop-kit" className="btn-outline w-full inline-block">
-              Learn More
-            </a>
-          </div>
-          
-          <div className="card text-center hover:shadow-xl transition-all hover:scale-105 border-2 border-vault-purple">
-            <div className="bg-vault-purple text-white text-xs font-semibold px-3 py-1 rounded-full inline-block mb-3">
-              POPULAR
+                      <div className="card text-center hover:shadow-xl transition-all hover:scale-105">
+              <div className="text-5xl mb-4">🎁</div>
+              <h3 className="text-xl font-bold mb-2">Workshop Kit</h3>
+              <p className="text-gray-600 mb-4">Complete brand starter pack</p>
+              <div className="text-3xl font-bold text-vault-purple mb-2">{workshopKitPrice.formatted}</div>
+              {workshopApprox && (
+                <div className="text-sm text-gray-400 mb-4">≈ {workshopApprox.formatted}</div>
+              )}
+              <a href="/workshop-kit" className="btn-outline w-full inline-block">
+                Learn More
+              </a>
             </div>
-            <div className="text-5xl mb-4">🔍</div>
-            <h3 className="text-xl font-bold mb-2">Audit Service</h3>
-            <p className="text-gray-600 mb-4">Ongoing code health monitoring</p>
-            <div className="text-3xl font-bold text-vault-purple mb-4">R999<span className="text-base text-gray-600">/mo</span></div>
-            <a href="/audit-service" className="btn-primary w-full inline-block">
-              Subscribe Now
-            </a>
-          </div>
           
-          <div className="card text-center hover:shadow-xl transition-all hover:scale-105">
-            <div className="text-5xl mb-4">⚡</div>
-            <h3 className="text-xl font-bold mb-2">More Add-ons</h3>
-            <p className="text-gray-600 mb-4">Automation, analytics & more</p>
-            <div className="text-3xl font-bold text-vault-purple mb-4">From R199</div>
-            <a href="/addons" className="btn-outline w-full inline-block">
-              Browse All
-            </a>
-          </div>
+                      <div className="card text-center hover:shadow-xl transition-all hover:scale-105 border-2 border-vault-purple">
+              <div className="bg-vault-purple text-white text-xs font-semibold px-3 py-1 rounded-full inline-block mb-3">
+                POPULAR
+              </div>
+              <div className="text-5xl mb-4">🔍</div>
+              <h3 className="text-xl font-bold mb-2">Audit Service</h3>
+              <p className="text-gray-600 mb-4">Ongoing code health monitoring</p>
+              <div className="text-3xl font-bold text-vault-purple mb-2">{auditServicePrice.formatted}<span className="text-base text-gray-600">/mo</span></div>
+              {auditApprox && (
+                <div className="text-sm text-gray-400 mb-4">≈ {auditApprox.formatted}/mo</div>
+              )}
+              <a href="/audit-service" className="btn-primary w-full inline-block">
+                Subscribe Now
+              </a>
+            </div>
+          
+                      <div className="card text-center hover:shadow-xl transition-all hover:scale-105">
+              <div className="text-5xl mb-4">⚡</div>
+              <h3 className="text-xl font-bold mb-2">More Add-ons</h3>
+              <p className="text-gray-600 mb-4">Automation, analytics & more</p>
+              <div className="text-3xl font-bold text-vault-purple mb-4">
+                From {currentCurrency === 'ZAR' ? 'R199' : '$12'}
+              </div>
+              <a href="/addons" className="btn-outline w-full inline-block">
+                Browse All
+              </a>
+            </div>
         </div>
         
         <div className="card bg-gradient-to-r from-vault-purple/10 to-vault-blue/10 border-2 border-vault-purple/20">

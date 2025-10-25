@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { OnboardingProgressMini } from '../components/OnboardingProgress'
 
 function DreamMover() {
   const [prompt, setPrompt] = useState('')
@@ -28,6 +29,27 @@ function DreamMover() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            {/* CLI Quick Access Banner */}
+      <div className="mb-8 card bg-gradient-to-r from-vault-purple/10 to-vault-blue/10 border-2 border-vault-purple/20">
+        <div className="flex items-center justify-between">
+          <div className="flex-1">
+            <div className="flex items-center space-x-3 mb-2">
+              <span className="text-2xl">⚡</span>
+              <h3 className="font-bold text-lg">Level Up with CLI</h3>
+            </div>
+            <p className="text-sm text-gray-600">
+              Generate content directly from your terminal. Install the Dream Mover CLI for power users.
+            </p>
+          </div>
+          <a
+            href="/lore"
+            className="ml-4 btn-primary whitespace-nowrap"
+          >
+            📚 View CLI Guide
+          </a>
+        </div>
+      </div>
+
       {/* Header */}
       <div className="text-center mb-12">
         <div className="inline-block vault-gradient text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">

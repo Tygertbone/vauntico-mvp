@@ -8,9 +8,17 @@ export default defineConfig({
     port: 3000,
     open: true,
   },
-  build: {
+    build: {
     outDir: 'dist',
-    sourcemap: true,
+    sourcemap: false, // Disable sourcemaps in production for security
+    minify: 'esbuild', // Fast minification with esbuild
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+        },
+      },
+    },
   },
   resolve: {
     alias: {
