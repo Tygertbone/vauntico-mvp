@@ -4,6 +4,9 @@ import CreatorPass from './pages/CreatorPass'
 import Vaults from './pages/Vaults'
 import DreamMover from './pages/DreamMover'
 import Pricing from './pages/Pricing'
+import WorkshopKit from './pages/WorkshopKit'
+import AuditService from './pages/AuditService'
+import Addons from './pages/Addons'
 
 function App() {
   return (
@@ -22,7 +25,7 @@ function App() {
                 </Link>
               </div>
               
-              <div className="hidden md:flex items-center space-x-8">
+                            <div className="hidden lg:flex items-center space-x-6">
                 <Link to="/" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   Dashboard
                 </Link>
@@ -32,9 +35,25 @@ function App() {
                 <Link to="/vaults" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   Vaults
                 </Link>
-                <Link to="/dream-mover" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
-                  Dream Mover
-                </Link>
+                <div className="relative group">
+                  <button className="text-gray-700 hover:text-vault-purple font-medium transition-colors flex items-center">
+                    Services
+                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  <div className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <Link to="/workshop-kit" className="block px-4 py-3 text-gray-700 hover:bg-vault-purple hover:text-white rounded-t-lg transition-colors">
+                      🎁 Workshop Kit
+                    </Link>
+                    <Link to="/audit-service" className="block px-4 py-3 text-gray-700 hover:bg-vault-purple hover:text-white transition-colors">
+                      🔍 Audit Service
+                    </Link>
+                    <Link to="/addons" className="block px-4 py-3 text-gray-700 hover:bg-vault-purple hover:text-white rounded-b-lg transition-colors">
+                      ⚡ Add-ons
+                    </Link>
+                  </div>
+                </div>
                 <Link to="/pricing" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   Pricing
                 </Link>
@@ -54,11 +73,14 @@ function App() {
 
         {/* Main Content */}
         <main className="animate-fade-in">
-          <Routes>
+                    <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/creator-pass" element={<CreatorPass />} />
             <Route path="/vaults" element={<Vaults />} />
             <Route path="/dream-mover" element={<DreamMover />} />
+            <Route path="/workshop-kit" element={<WorkshopKit />} />
+            <Route path="/audit-service" element={<AuditService />} />
+            <Route path="/addons" element={<Addons />} />
             <Route path="/pricing" element={<Pricing />} />
           </Routes>
         </main>
@@ -66,7 +88,7 @@ function App() {
         {/* Footer */}
         <footer className="bg-vault-dark text-white mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
               <div className="col-span-1 md:col-span-2">
                 <div className="flex items-center space-x-2 mb-4">
                   <div className="w-10 h-10 vault-gradient rounded-lg flex items-center justify-center">
@@ -79,7 +101,7 @@ function App() {
                 </p>
               </div>
               
-              <div>
+                            <div>
                 <h3 className="font-semibold mb-4">Product</h3>
                 <ul className="space-y-2 text-gray-400">
                   <li><Link to="/creator-pass" className="hover:text-white transition-colors">Creator Pass</Link></li>
@@ -90,11 +112,19 @@ function App() {
               </div>
               
               <div>
+                <h3 className="font-semibold mb-4">Services</h3>
+                <ul className="space-y-2 text-gray-400">
+                  <li><Link to="/workshop-kit" className="hover:text-white transition-colors">Workshop Kit</Link></li>
+                  <li><Link to="/audit-service" className="hover:text-white transition-colors">Audit Service</Link></li>
+                  <li><Link to="/addons" className="hover:text-white transition-colors">Add-ons</Link></li>
+                </ul>
+              </div>
+              
+                            <div>
                 <h3 className="font-semibold mb-4">Company</h3>
                 <ul className="space-y-2 text-gray-400">
                   <li><a href="#" className="hover:text-white transition-colors">About</a></li>
                   <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
                   <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
                 </ul>
               </div>

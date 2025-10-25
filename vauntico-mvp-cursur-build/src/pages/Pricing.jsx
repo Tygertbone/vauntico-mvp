@@ -226,6 +226,63 @@ function Pricing() {
         </div>
       </div>
 
+            {/* Add-ons Section */}
+      <div className="mb-16">
+        <h2 className="text-3xl font-bold text-center mb-4">
+          Extend with <span className="text-gradient">Add-ons</span>
+        </h2>
+        <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
+          Supercharge your experience with powerful add-ons. Available with any plan.
+        </p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="card text-center hover:shadow-xl transition-all hover:scale-105">
+            <div className="text-5xl mb-4">🎁</div>
+            <h3 className="text-xl font-bold mb-2">Workshop Kit</h3>
+            <p className="text-gray-600 mb-4">Complete brand starter pack</p>
+            <div className="text-3xl font-bold text-vault-purple mb-4">R499</div>
+            <a href="/workshop-kit" className="btn-outline w-full inline-block">
+              Learn More
+            </a>
+          </div>
+          
+          <div className="card text-center hover:shadow-xl transition-all hover:scale-105 border-2 border-vault-purple">
+            <div className="bg-vault-purple text-white text-xs font-semibold px-3 py-1 rounded-full inline-block mb-3">
+              POPULAR
+            </div>
+            <div className="text-5xl mb-4">🔍</div>
+            <h3 className="text-xl font-bold mb-2">Audit Service</h3>
+            <p className="text-gray-600 mb-4">Ongoing code health monitoring</p>
+            <div className="text-3xl font-bold text-vault-purple mb-4">R999<span className="text-base text-gray-600">/mo</span></div>
+            <a href="/audit-service" className="btn-primary w-full inline-block">
+              Subscribe Now
+            </a>
+          </div>
+          
+          <div className="card text-center hover:shadow-xl transition-all hover:scale-105">
+            <div className="text-5xl mb-4">⚡</div>
+            <h3 className="text-xl font-bold mb-2">More Add-ons</h3>
+            <p className="text-gray-600 mb-4">Automation, analytics & more</p>
+            <div className="text-3xl font-bold text-vault-purple mb-4">From R199</div>
+            <a href="/addons" className="btn-outline w-full inline-block">
+              Browse All
+            </a>
+          </div>
+        </div>
+        
+        <div className="card bg-gradient-to-r from-vault-purple/10 to-vault-blue/10 border-2 border-vault-purple/20">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-xl font-bold mb-2">💡 Creator Pass Bonus</h3>
+              <p className="text-gray-600">Save 10-30% on all add-ons with Creator Pass membership</p>
+            </div>
+            <a href="/addons" className="btn-secondary whitespace-nowrap">
+              View All Add-ons
+            </a>
+          </div>
+        </div>
+      </div>
+
       {/* FAQs */}
       <div className="max-w-3xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
