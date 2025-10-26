@@ -1,4 +1,25 @@
+/**
+ * Dashboard Component
+ * 
+ * AUDIT NOTES:
+ * - TODO: Add personalized welcome message with user's name
+ * - TODO: Integrate real vault data from API
+ * - TODO: Add onboarding checklist for new users
+ * - TODO: Show recommended scrolls based on user tier
+ * - TODO: Add activity feed (recent actions, team activity)
+ * - TODO: Implement quick stats analytics (track engagement)
+ * - TODO: Add upsell banner for free users
+ * - TODO: Create "Getting Started" widget for first-time visitors
+ * 
+ * CONVERSION OPPORTUNITIES:
+ * - Show value of upgrade (locked features preview)
+ * - Display usage metrics vs. tier limits
+ * - Add testimonial widget
+ * - Surface most popular scrolls
+ */
+
 import { Link } from 'react-router-dom'
+// TODO: Import Testimonials, SocialProof components when ready
 
 function Dashboard() {
   const stats = [
@@ -16,13 +37,20 @@ function Dashboard() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Hero Section */}
+            {/* Hero Section */}
+      {/* TODO: Personalize greeting with user's first name */}
+      {/* TODO: Add contextual CTA based on user tier (upgrade prompt for free users) */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-2">Welcome back! 👋</h1>
         <p className="text-gray-600 text-lg">Here's what's happening with your vaults today.</p>
+        {/* TODO: Add quick action shortcuts or onboarding progress bar here */}
       </div>
 
       {/* Stats Grid */}
+      {/* TODO: Replace mock data with real user stats from API */}
+      {/* TODO: Make stats clickable (link to detailed views) */}
+      {/* TODO: Add trend indicators (up/down arrows with percentages) */}
+      {/* TODO: Track clicks on stats cards for engagement metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {stats.map((stat, index) => (
           <div key={index} className="card">
@@ -36,6 +64,10 @@ function Dashboard() {
       </div>
 
       {/* Quick Actions */}
+      {/* TODO: Personalize quick actions based on user role (Solo/Agency/Team) */}
+      {/* TODO: Add "Continue where you left off" section */}
+      {/* TODO: Track which quick actions are most clicked */}
+      {/* TODO: A/B test different quick action layouts */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <Link to="/vaults" className="card hover:border-vault-purple cursor-pointer group">
           <div className="flex items-center space-x-4">
@@ -75,6 +107,11 @@ function Dashboard() {
       </div>
 
       {/* Recent Vaults */}
+      {/* TODO: Replace mock data with user's actual vaults */}
+      {/* TODO: Add filters (All, Shared, Recent, Favorites) */}
+      {/* TODO: Add search functionality */}
+      {/* TODO: Add "Create New Vault" CTA within this section */}
+      {/* TODO: Show collaboration indicators (who else is working on vault) */}
       <div className="card">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Recent Vaults</h2>

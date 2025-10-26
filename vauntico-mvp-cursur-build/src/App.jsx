@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
 import CreatorPass from './pages/CreatorPass'
 import Vaults from './pages/Vaults'
@@ -9,6 +10,8 @@ import AuditService from './pages/AuditService'
 import Addons from './pages/Addons'
 import LoreVault from './pages/LoreVault'
 import Ascend from './pages/Ascend'
+import About from './pages/About'
+import Referrals from './pages/Referrals'
 
 function App() {
   return (
@@ -28,8 +31,8 @@ function App() {
               </div>
               
                             <div className="hidden lg:flex items-center space-x-6">
-                <Link to="/" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
-                  Dashboard
+                                <Link to="/" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
+                  Home
                 </Link>
                 <Link to="/creator-pass" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   Creator Pass
@@ -59,11 +62,11 @@ function App() {
                                                                 <Link to="/pricing" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   Pricing
                 </Link>
-                                <Link to="/lore" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
+                                                <Link to="/lore" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   📚 Lore
                 </Link>
-                <Link to="/ascend" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
-                  🏔️ Ascend
+                <Link to="/about" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
+                  About
                 </Link>
               </div>
               
@@ -82,16 +85,19 @@ function App() {
         {/* Main Content */}
         <main className="animate-fade-in">
                     <Routes>
-                        <Route path="/" element={<Dashboard />} />
+                        <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/creator-pass" element={<CreatorPass />} />
             <Route path="/vaults" element={<Vaults />} />
             <Route path="/dream-mover" element={<DreamMover />} />
             <Route path="/workshop-kit" element={<WorkshopKit />} />
             <Route path="/audit-service" element={<AuditService />} />
             <Route path="/addons" element={<Addons />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/lore" element={<LoreVault />} />
+                        <Route path="/pricing" element={<Pricing />} />
+                        <Route path="/lore" element={<LoreVault />} />
             <Route path="/ascend" element={<Ascend />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/referrals" element={<Referrals />} />
           </Routes>
         </main>
 
@@ -133,11 +139,11 @@ function App() {
               </div>
               
                             <div>
-                <h3 className="font-semibold mb-4">Company</h3>
+                                <h3 className="font-semibold mb-4">Company</h3>
                 <ul className="space-y-2 text-gray-400">
-                  <li><a href="#" className="hover:text-white transition-colors">About</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+                  <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
+                  <li><a href="mailto:hello@vauntico.com" className="hover:text-white transition-colors">Contact</a></li>
+                  <li><Link to="/ascend" className="hover:text-white transition-colors">🏔️ Ascend</Link></li>
                 </ul>
               </div>
             </div>
