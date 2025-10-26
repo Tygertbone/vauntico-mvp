@@ -3,6 +3,7 @@ import ScrollPreview from '../components/ScrollPreview'
 import ExitIntentCapture from '../components/ExitIntentCapture'
 import OldWayVsNewWay from '../components/OldWayVsNewWay'
 import ComparisonTable from '../components/ComparisonTable'
+import CLIShowcase from '../components/CLIShowcase'
 
 function Home() {
   // Sample scroll for preview
@@ -51,6 +52,9 @@ function Home() {
           ✓ No credit card required &nbsp;•&nbsp; ✓ 14-day free trial &nbsp;•&nbsp; ✓ Cancel anytime
         </p>
       </div>
+
+      {/* CLI Showcase - Show Don't Tell */}
+      <CLIShowcase />
 
       {/* Founder Story Teaser */}
       <div className="mb-20 card bg-gradient-to-r from-vault-purple/10 to-vault-blue/10 border-2 border-vault-purple/20">
