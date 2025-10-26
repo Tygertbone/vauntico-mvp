@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { useCreatorPass } from '../hooks/useAccess'
 import { subscribeToCreatorPassTier, PRICING, getLocalizedPrice, getApproximatePrice } from '../utils/pricing'
 import { AccessBadge } from '../components/AccessGate'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 function CreatorPass() {
   const [isSubscribing, setIsSubscribing] = useState(false)
@@ -179,12 +180,17 @@ function CreatorPass() {
               ))}
             </div>
             
-            <button
+                        <button
               onClick={() => handleSubscribe('starter')}
               disabled={isSubscribing || hasPass || isLoading}
-              className="btn-outline w-full disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-outline w-full disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {isSubscribing && selectedTier === 'starter' ? '⏳ Processing...' : (hasPass ? '✓ Active' : 'Begin Journey')}
+              {isSubscribing && selectedTier === 'starter' ? (
+                <>
+                  <LoadingSpinner size="sm" color="purple" />
+                  Processing...
+                </>
+              ) : (hasPass ? '✓ Active' : 'Begin Journey')}
             </button>
           </div>
           
@@ -232,12 +238,17 @@ function CreatorPass() {
               ))}
             </div>
             
-            <button
+                        <button
               onClick={() => handleSubscribe('pro')}
               disabled={isSubscribing || hasPass || isLoading}
-              className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {isSubscribing && selectedTier === 'pro' ? '⏳ Processing...' : (hasPass ? '✓ Active' : 'Claim Dominion')}
+              {isSubscribing && selectedTier === 'pro' ? (
+                <>
+                  <LoadingSpinner size="sm" />
+                  Processing...
+                </>
+              ) : (hasPass ? '✓ Active' : 'Claim Dominion')}
             </button>
           </div>
           
@@ -279,12 +290,17 @@ function CreatorPass() {
               ))}
             </div>
             
-            <button
+                        <button
               onClick={() => handleSubscribe('legacy')}
               disabled={isSubscribing || hasPass || isLoading}
-              className="btn-secondary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-secondary w-full disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {isSubscribing && selectedTier === 'legacy' ? '⏳ Processing...' : (hasPass ? '✓ Active' : 'Forge Legend')}
+              {isSubscribing && selectedTier === 'legacy' ? (
+                <>
+                  <LoadingSpinner size="sm" />
+                  Processing...
+                </>
+              ) : (hasPass ? '✓ Active' : 'Forge Legend')}
             </button>
           </div>
         </div>

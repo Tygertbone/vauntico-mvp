@@ -217,8 +217,12 @@ function ComparisonTable() {
         </div>
 
         {/* Comparison Table - Mobile View (Horizontal Scroll) */}
-        <div className="lg:hidden overflow-x-auto">
-          <div className="card min-w-[800px]">
+        <div className="lg:hidden overflow-x-auto relative">
+          {/* Scroll indicators */}
+          <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-gray-100 to-transparent pointer-events-none z-10" aria-hidden="true"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-gray-100 to-transparent pointer-events-none z-10" aria-hidden="true"></div>
+          
+          <div className="card min-w-[800px] shadow-inner">
             <table className="w-full">
               <thead>
                 <tr className="border-b-2 border-gray-200">
@@ -292,9 +296,11 @@ function ComparisonTable() {
               </tbody>
             </table>
           </div>
-          <p className="text-center text-sm text-gray-500 mt-3">
-            👉 Scroll horizontally to see all competitors
-          </p>
+          <div className="text-center mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <p className="text-sm text-gray-700 font-medium">
+              👉 <span className="font-bold">Swipe left/right</span> to see all competitors
+            </p>
+          </div>
         </div>
 
         {/* CTA Section */}
