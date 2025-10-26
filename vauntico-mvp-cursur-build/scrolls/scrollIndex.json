@@ -1,0 +1,453 @@
+{
+  "metadata": {
+    "title": "Vauntico Phase 3 Syndication Scrolls",
+    "description": "Complete catalog of Phase 3 module scrolls containing mythic identities, features, pricing, and unlock conditions",
+    "version": "1.0.0",
+    "created": "2025-01-25T00:00:00Z",
+    "lastUpdated": "2025-01-25T00:00:00Z",
+    "maintainer": "Vauntico Engineering Team",
+    "totalScrolls": 6
+  },
+  "scrolls": [
+    {
+      "id": "ga4-integration",
+      "name": "GA4 Integration Complete",
+      "mythicIdentity": "The Observer",
+      "phase": 3,
+      "status": "complete",
+      "filepath": "scrolls/GA4_INTEGRATION_COMPLETE.md",
+      "category": "tracking",
+      "tags": ["analytics", "GA4", "metrics", "conversion", "scrolls"],
+      "deploymentDate": "2025-10-26",
+      "productionUrl": "https://vauntico-mvp-cursur-build-1ytu2epnj-tyrones-projects-6eab466c.vercel.app",
+      "pricing": {
+        "tiers": [
+          {
+            "name": "Included",
+            "price": 0,
+            "currency": "ZAR",
+            "period": "lifetime",
+            "features": ["Built-in analytics", "Event tracking", "Conversion monitoring", "Real-time reporting"]
+          }
+        ]
+      },
+      "unlockConditions": [
+        "Active Vauntico account",
+        "GA4 measurement ID configured",
+        "Production deployment"
+      ],
+      "keyFeatures": [
+        "Page view tracking",
+        "Scroll depth monitoring",
+        "Conversion events",
+        "User engagement metrics",
+        "Real-time analytics"
+      ]
+    },
+    {
+      "id": "dream-mover-cli",
+      "name": "Dream Mover CLI",
+      "mythicIdentity": "The Weaver of Commands",
+      "phase": 3,
+      "status": "awaiting-unlock",
+      "filepath": "scrolls/dream-mover-cli.md",
+      "category": "generation-tools",
+      "tags": ["cli", "content-generation", "ai", "automation", "pipeline"],
+      "pricing": {
+        "tiers": [
+          {
+            "name": "Starter",
+            "price": 149,
+            "currency": "ZAR",
+            "period": "month",
+            "features": ["1,000 generations/month", "Basic features"]
+          },
+          {
+            "name": "Professional",
+            "price": 499,
+            "currency": "ZAR",
+            "period": "month",
+            "features": ["10,000 generations/month", "All features"]
+          },
+          {
+            "name": "Enterprise",
+            "price": "custom",
+            "currency": "ZAR",
+            "period": "custom",
+            "features": ["Unlimited generations", "Dedicated support"]
+          },
+          {
+            "name": "Creator Pass",
+            "included": true,
+            "features": ["Unlimited access", "Priority queue"]
+          }
+        ]
+      },
+      "unlockConditions": [
+        "Active Vauntico account",
+        "API key generated",
+        "Node.js 18+ or Python 3.9+"
+      ],
+      "keyFeatures": [
+        "Text synthesis",
+        "Image creation",
+        "Code scaffolding",
+        "Batch operations",
+        "Pipeline integration"
+      ]
+    },
+    {
+      "id": "workshop-kit",
+      "name": "Workshop Kit",
+      "mythicIdentity": "The Forge of Mastery",
+      "phase": 3,
+      "status": "ready",
+      "filepath": "scrolls/workshop-kit.md",
+      "category": "learning-development",
+      "tags": ["components", "education", "react", "templates", "tutorials"],
+      "pricing": {
+        "tiers": [
+          {
+            "name": "Free",
+            "price": 0,
+            "currency": "ZAR",
+            "period": "lifetime",
+            "features": ["10 components", "Basic tutorials"]
+          },
+          {
+            "name": "Pro",
+            "price": 299,
+            "currency": "ZAR",
+            "period": "month",
+            "features": ["50+ components", "All tutorials", "Support"]
+          },
+          {
+            "name": "Team",
+            "price": 899,
+            "currency": "ZAR",
+            "period": "month",
+            "features": ["5 seats", "Collaboration tools", "Priority support"]
+          },
+          {
+            "name": "Creator Pass",
+            "included": true,
+            "features": ["Everything Pro", "Exclusive workshops"]
+          }
+        ]
+      },
+      "unlockConditions": [
+        "Vauntico account (Free tier)",
+        "Email verification (Free tier)",
+        "Subscription for Pro/Team tiers",
+        "Creator Pass for full access"
+      ],
+      "keyFeatures": [
+        "50+ React components",
+        "20+ video tutorials",
+        "5 starter kits",
+        "Code generation",
+        "Theme customizer"
+      ]
+    },
+    {
+      "id": "audit-as-a-service",
+      "name": "Audit-as-a-Service",
+      "mythicIdentity": "The Truth Seeker",
+      "phase": 3,
+      "status": "active",
+      "filepath": "scrolls/audit-as-a-service.md",
+      "category": "quality-assurance",
+      "tags": ["audit", "security", "performance", "analysis", "reporting"],
+      "pricing": {
+        "tiers": [
+          {
+            "name": "Starter",
+            "price": 499,
+            "currency": "ZAR",
+            "period": "one-time",
+            "credits": 100,
+            "features": ["One-time audit", "PDF report", "2-day turnaround"]
+          },
+          {
+            "name": "Professional",
+            "price": 999,
+            "currency": "ZAR",
+            "period": "month",
+            "credits": 1000,
+            "features": ["Weekly audits", "Dashboard access", "Priority support"]
+          },
+          {
+            "name": "Enterprise",
+            "price": "custom",
+            "currency": "ZAR",
+            "period": "custom",
+            "credits": "unlimited",
+            "features": ["Multi-repo audits", "Dedicated manager", "Custom SLA"]
+          },
+          {
+            "name": "Creator Pass",
+            "included": true,
+            "credits": 2000,
+            "features": ["Professional tier", "Priority queue", "Expert reviews"]
+          }
+        ]
+      },
+      "unlockConditions": [
+        "Vauntico account",
+        "Repository connection (GitHub/GitLab/Bitbucket)",
+        "Subscription or Creator Pass"
+      ],
+      "keyFeatures": [
+        "Git archaeology",
+        "Security scanning",
+        "Performance metrics",
+        "Module mapping",
+        "Automated fix suggestions"
+      ]
+    },
+    {
+      "id": "addons-marketplace",
+      "name": "Add-ons Marketplace",
+      "mythicIdentity": "The Bazaar of Possibilities",
+      "phase": 3,
+      "status": "open",
+      "filepath": "scrolls/addons-marketplace.md",
+      "category": "extensibility",
+      "tags": ["marketplace", "plugins", "addons", "extensions", "monetization"],
+      "pricing": {
+        "forBuyers": [
+          {
+            "model": "free",
+            "description": "Community-supported open source",
+            "price": 0
+          },
+          {
+            "model": "freemium",
+            "description": "Basic free, premium paid",
+            "priceRange": "0-299"
+          },
+          {
+            "model": "one-time",
+            "description": "Pay once, own forever",
+            "priceRange": "99-2999"
+          },
+          {
+            "model": "subscription",
+            "description": "Monthly or annual billing",
+            "priceRange": "49-499"
+          }
+        ],
+        "forSellers": [
+          {
+            "tier": "Community",
+            "commission": 30,
+            "price": 0,
+            "features": ["List free add-ons", "Basic analytics"]
+          },
+          {
+            "tier": "Pro Seller",
+            "commission": 25,
+            "price": 299,
+            "period": "month",
+            "features": ["Reduced commission", "Featured placement"]
+          },
+          {
+            "tier": "Enterprise",
+            "commission": 20,
+            "price": 999,
+            "period": "month",
+            "features": ["Priority support", "Custom licensing"]
+          }
+        ],
+        "creatorPassBenefits": {
+          "commission": 0,
+          "revenueThreshold": 10000,
+          "features": ["0% commission on first R10k", "Featured placement", "Priority review"]
+        }
+      },
+      "unlockConditions": {
+        "buyers": [
+          "Active Vauntico account",
+          "Paid subscription for premium add-ons",
+          "Compatible platform version"
+        ],
+        "sellers": [
+          "Developer account",
+          "Pass security audit",
+          "Provide documentation",
+          "Offer support channel"
+        ]
+      },
+      "keyFeatures": [
+        "Universal plugin architecture",
+        "Smart search",
+        "User reviews",
+        "Flexible monetization",
+        "Revenue analytics"
+      ]
+    },
+    {
+      "id": "creator-pass",
+      "name": "Creator Pass",
+      "mythicIdentity": "The Master Key",
+      "phase": 3,
+      "status": "elite",
+      "filepath": "scrolls/creator-pass.md",
+      "category": "subscription",
+      "tags": ["subscription", "all-access", "premium", "coaching", "vip"],
+      "pricing": {
+        "tiers": [
+          {
+            "name": "Individual",
+            "price": 1999,
+            "currency": "ZAR",
+            "period": "month",
+            "annualPrice": 19990,
+            "annualSavings": 3998,
+            "users": 1,
+            "features": [
+              "All platform features",
+              "2,000 audit credits/month",
+              "100GB storage",
+              "Monthly coaching"
+            ]
+          },
+          {
+            "name": "Team",
+            "price": 4999,
+            "currency": "ZAR",
+            "period": "month",
+            "annualPrice": 49990,
+            "annualSavings": 9998,
+            "users": 5,
+            "features": [
+              "Everything in Individual",
+              "10,000 audit credits/month",
+              "500GB storage",
+              "Team collaboration",
+              "Quarterly strategy review"
+            ]
+          },
+          {
+            "name": "Enterprise",
+            "price": "custom",
+            "currency": "ZAR",
+            "period": "custom",
+            "users": "unlimited",
+            "features": [
+              "Everything in Team",
+              "Unlimited credits",
+              "Unlimited storage",
+              "Dedicated account manager",
+              "Custom SLA"
+            ]
+          }
+        ],
+        "valueComparison": {
+          "totalValuePerMonth": 3597,
+          "creatorPassPrice": 1999,
+          "savingsPerMonth": 1598,
+          "savingsPercentage": 44
+        }
+      },
+      "unlockConditions": [
+        "Subscribe to Creator Pass",
+        "Instant activation",
+        "Start using immediately"
+      ],
+      "keyFeatures": [
+        "Unlimited Dream Mover generations",
+        "Full Workshop Kit access",
+        "Professional Audit Service",
+        "0% marketplace commission (first R10k)",
+        "1-on-1 coaching",
+        "VIP support",
+        "Early access"
+      ],
+      "included": {
+        "dreamMoverCLI": true,
+        "workshopKit": true,
+        "auditService": true,
+        "addonsMarketplace": true,
+        "coaching": true,
+        "vipSupport": true,
+        "earlyAccess": true
+      }
+    }
+  ],
+  "categories": {
+    "generation-tools": {
+      "name": "Generation Tools",
+      "description": "AI-powered content and code generation utilities",
+      "scrolls": ["dream-mover-cli"]
+    },
+    "learning-development": {
+      "name": "Learning & Development",
+      "description": "Educational resources and component libraries",
+      "scrolls": ["workshop-kit"]
+    },
+    "quality-assurance": {
+      "name": "Quality Assurance",
+      "description": "Code auditing and health monitoring services",
+      "scrolls": ["audit-as-a-service"]
+    },
+    "extensibility": {
+      "name": "Extensibility",
+      "description": "Marketplace and plugin ecosystem",
+      "scrolls": ["addons-marketplace"]
+    },
+    "tracking": {
+      "name": "Tracking & Analytics",
+      "description": "Analytics and user behavior monitoring",
+      "scrolls": ["ga4-integration"]
+    },
+    "subscription": {
+      "name": "Subscription Plans",
+      "description": "Premium subscription offerings",
+      "scrolls": ["creator-pass"]
+    }
+  },
+  "tags": {
+    "cli": ["dream-mover-cli"],
+    "content-generation": ["dream-mover-cli"],
+    "ai": ["dream-mover-cli"],
+    "components": ["workshop-kit"],
+    "education": ["workshop-kit"],
+    "react": ["workshop-kit"],
+    "audit": ["audit-as-a-service"],
+    "security": ["audit-as-a-service"],
+    "performance": ["audit-as-a-service"],
+    "marketplace": ["addons-marketplace"],
+    "plugins": ["addons-marketplace"],
+    "subscription": ["creator-pass"],
+    "all-access": ["creator-pass"],
+    "premium": ["creator-pass"],
+    "coaching": ["creator-pass"],
+    "vip": ["creator-pass"],
+    "analytics": ["ga4-integration"],
+    "GA4": ["ga4-integration"],
+    "metrics": ["ga4-integration"],
+    "conversion": ["ga4-integration"],
+    "scrolls": ["ga4-integration"]
+  },
+  "stats": {
+    "totalScrolls": 6,
+    "totalCategories": 6,
+    "totalTags": 23,
+    "statusBreakdown": {
+      "ready": 1,
+      "active": 1,
+      "open": 1,
+      "elite": 1,
+      "awaiting-unlock": 1,
+      "complete": 1
+    }
+  },
+  "quickLinks": {
+    "documentation": "https://docs.vauntico.com",
+    "marketplace": "https://marketplace.vauntico.com",
+    "dashboard": "https://dashboard.vauntico.com",
+    "support": "https://support.vauntico.com",
+    "community": "https://discord.gg/vauntico"
+  }
+}
