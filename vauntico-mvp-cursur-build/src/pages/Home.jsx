@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import SEO from '../components/SEO'
 import ScrollPreview from '../components/ScrollPreview'
 import ExitIntentCapture from '../components/ExitIntentCapture'
 import OldWayVsNewWay from '../components/OldWayVsNewWay'
@@ -27,8 +28,13 @@ function Home() {
     unlockedBy: '2,400+'
   }
 
-  return (
+    return (
     <>
+      <SEO 
+        title="Vauntico | The Creator OS That Actually Ships"
+        description="Ship 10x faster with the CLI that thinks like you. One command generates complete landing pages, workshops, and audits. Stop juggling 10 tools. Start creating freely."
+        canonical="/"
+      />
       <ExitIntentCapture />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Hero Section - Outcome Focused */}

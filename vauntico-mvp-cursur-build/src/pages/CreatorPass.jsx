@@ -1,4 +1,6 @@
 import { useState, useMemo } from 'react'
+import SEO from '../components/SEO'
+import StructuredData from '../components/StructuredData'
 import { useCreatorPass } from '../hooks/useAccess'
 import { subscribeToCreatorPassTier, PRICING, getLocalizedPrice, getApproximatePrice } from '../utils/pricing'
 import { AccessBadge } from '../components/AccessGate'
@@ -84,8 +86,44 @@ function CreatorPass() {
     },
   ]
 
-    return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            return (
+    <>
+      <SEO 
+        title="Creator Pass - Unlock the Vault | Vauntico"
+        description="Choose your covenant: Starter, Pro, or Legacy tiers. Scale your creative output with AI-powered tools, unlimited vaults, and priority support. From R299/month."
+        canonical="/creator-pass"
+      />
+      <StructuredData 
+        type="Product"
+        data={{
+          name: 'Vauntico Creator Pass',
+          description: 'AI-powered content creation platform with three tiers: Starter, Pro, and Legacy',
+          offers: [
+            {
+              '@type': 'Offer',
+              name: 'Starter',
+              price: getPriceForTier('starter', 'monthly').price.toString(),
+              priceCurrency: getPriceForTier('starter', 'monthly').currency,
+              availability: 'https://schema.org/InStock'
+            },
+            {
+              '@type': 'Offer',
+              name: 'Pro',
+              price: getPriceForTier('pro', 'monthly').price.toString(),
+              priceCurrency: getPriceForTier('pro', 'monthly').currency,
+              availability: 'https://schema.org/InStock'
+            },
+            {
+              '@type': 'Offer',
+              name: 'Legacy',
+              price: getPriceForTier('legacy', 'monthly').price.toString(),
+              priceCurrency: getPriceForTier('legacy', 'monthly').currency,
+              availability: 'https://schema.org/InStock'
+            }
+          ]
+        }}
+      />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Hero Section */}
       <div className="text-center mb-16">
         <div className="inline-block vault-gradient text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 tracking-wide">
@@ -395,8 +433,9 @@ function CreatorPass() {
             Compare All Plans
           </a>
         </div>
+            </div>
       </div>
-    </div>
+    </>
   )
 }
 

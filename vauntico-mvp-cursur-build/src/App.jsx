@@ -1,26 +1,43 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import ErrorBoundary from './components/ErrorBoundary'
+import LoadingSpinner from './components/LoadingSpinner'
+
+// Eager load homepage (critical)
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
-import Dashboard from './pages/Dashboard'
-import CreatorPass from './pages/CreatorPass'
-import Vaults from './pages/Vaults'
-import DreamMover from './pages/DreamMover'
-import Pricing from './pages/Pricing'
-import WorkshopKit from './pages/WorkshopKit'
-import AuditService from './pages/AuditService'
-import Addons from './pages/Addons'
-import LoreVault from './pages/LoreVault'
-import Ascend from './pages/Ascend'
-import About from './pages/About'
-import Referrals from './pages/Referrals'
 
-// Competitor Comparison Pages
-import VsJasper from './pages/vs/VsJasper'
-import VsChatGPT from './pages/vs/VsChatGPT'
-import VsNotion from './pages/vs/VsNotion'
-import VsCopyAI from './pages/vs/VsCopyAI'
+// Lazy load all other pages
+const Dashboard = lazy(() => import('./pages/Dashboard'))
+const CreatorPass = lazy(() => import('./pages/CreatorPass'))
+const Vaults = lazy(() => import('./pages/Vaults'))
+const DreamMover = lazy(() => import('./pages/DreamMover'))
+const Pricing = lazy(() => import('./pages/Pricing'))
+const WorkshopKit = lazy(() => import('./pages/WorkshopKit'))
+const AuditService = lazy(() => import('./pages/AuditService'))
+const Addons = lazy(() => import('./pages/Addons'))
+const LoreVault = lazy(() => import('./pages/LoreVault'))
+const Ascend = lazy(() => import('./pages/Ascend'))
+const About = lazy(() => import('./pages/About'))
+const Referrals = lazy(() => import('./pages/Referrals'))
+
+// Competitor Comparison Pages (lazy)
+const VsJasper = lazy(() => import('./pages/vs/VsJasper'))
+const VsChatGPT = lazy(() => import('./pages/vs/VsChatGPT'))
+const VsNotion = lazy(() => import('./pages/vs/VsNotion'))
+const VsCopyAI = lazy(() => import('./pages/vs/VsCopyAI'))
+
+// Loading fallback component
+function PageLoader() {
+  return (
+    <div className="min-h-[60vh] flex items-center justify-center">
+      <div className="text-center">
+        <LoadingSpinner size="lg" color="purple" />
+        <p className="mt-4 text-gray-600">Loading...</p>
+      </div>
+    </div>
+  )
+}
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -226,9 +243,10 @@ function App() {
           )}
         </nav>
 
-        {/* Main Content */}
+                {/* Main Content */}
         <main id="main-content" className="animate-fade-in">
-                    <Routes>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
                         <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/creator-pass" element={<CreatorPass />} />
@@ -249,9 +267,10 @@ function App() {
             <Route path="/vs/notion" element={<VsNotion />} />
             <Route path="/vs/copyai" element={<VsCopyAI />} />
             
-            {/* 404 Catch-all */}
+                        {/* 404 Catch-all */}
             <Route path="*" element={<NotFound />} />
-          </Routes>
+            </Routes>
+          </Suspense>
         </main>
 
                 {/* Footer */}

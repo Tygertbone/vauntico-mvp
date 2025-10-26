@@ -8,14 +8,22 @@ export default defineConfig({
     port: 3000,
     open: true,
   },
-    build: {
+      build: {
     outDir: 'dist',
     sourcemap: false, // Disable sourcemaps in production for security
     minify: 'esbuild', // Fast minification with esbuild
+    chunkSizeWarningLimit: 600, // Increase warning threshold
     rollupOptions: {
       output: {
         manualChunks: {
+          // Core React dependencies
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          
+          // Markdown rendering (only used in specific pages)
+          'markdown': ['react-markdown', 'remark-gfm'],
+          
+          // Analytics (can be loaded async)
+          'analytics': ['mixpanel-browser'],
         },
       },
     },
