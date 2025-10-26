@@ -13,6 +13,12 @@ import Ascend from './pages/Ascend'
 import About from './pages/About'
 import Referrals from './pages/Referrals'
 
+// Competitor Comparison Pages
+import VsJasper from './pages/vs/VsJasper'
+import VsChatGPT from './pages/vs/VsChatGPT'
+import VsNotion from './pages/vs/VsNotion'
+import VsCopyAI from './pages/vs/VsCopyAI'
+
 function App() {
   return (
     <Router>
@@ -95,9 +101,15 @@ function App() {
             <Route path="/addons" element={<Addons />} />
                         <Route path="/pricing" element={<Pricing />} />
                         <Route path="/lore" element={<LoreVault />} />
-            <Route path="/ascend" element={<Ascend />} />
+                        <Route path="/ascend" element={<Ascend />} />
             <Route path="/about" element={<About />} />
             <Route path="/referrals" element={<Referrals />} />
+            
+            {/* Competitor Comparison Pages */}
+            <Route path="/vs/jasper" element={<VsJasper />} />
+            <Route path="/vs/chatgpt" element={<VsChatGPT />} />
+            <Route path="/vs/notion" element={<VsNotion />} />
+            <Route path="/vs/copyai" element={<VsCopyAI />} />
           </Routes>
         </main>
 
