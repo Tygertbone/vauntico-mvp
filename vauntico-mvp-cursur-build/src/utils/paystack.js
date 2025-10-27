@@ -235,15 +235,8 @@ export const checkoutWorkshopKit = async (userEmail = '', paymentType = 'one_tim
           })
         }
         
-        // Show success message
-        const message = paymentType === 'one_time'
-          ? '🎉 Welcome to The R2,000 Challenge! Check your email for immediate access.\n\nYour 60-day journey starts NOW!\n\nReference: ' + response.reference
-          : '🎉 Payment 1/3 Complete (R349)! Check your email for immediate access.\n\nNext payment in 30 days. Let\'s make R2,000!\n\nReference: ' + response.reference
-        
-        alert(message)
-        
-        // Redirect to thank you page
-        window.location.href = '/workshop-kit?purchased=true'
+        // Redirect to success page
+        window.location.href = `/workshop-kit/success?ref=${response.reference}`
       },
       onClose: function() {
         console.log('Payment window closed')

@@ -14,6 +14,7 @@ const Vaults = lazy(() => import('./pages/Vaults'))
 const DreamMover = lazy(() => import('./pages/DreamMover'))
 const Pricing = lazy(() => import('./pages/Pricing'))
 const WorkshopKit = lazy(() => import('./pages/WorkshopKit'))
+const WorkshopKitSuccess = lazy(() => import('./pages/WorkshopKitSuccess'))
 const AuditService = lazy(() => import('./pages/AuditService'))
 const Addons = lazy(() => import('./pages/Addons'))
 const LoreVault = lazy(() => import('./pages/LoreVault'))
@@ -269,6 +270,7 @@ function App() {
             <Route path="/vaults" element={<Vaults />} />
             <Route path="/dream-mover" element={<DreamMover />} />
             <Route path="/workshop-kit" element={<WorkshopKit />} />
+            <Route path="/workshop-kit/success" element={<WorkshopKitSuccess />} />
             <Route path="/audit-service" element={<AuditService />} />
             <Route path="/addons" element={<Addons />} />
                         <Route path="/pricing" element={<Pricing />} />
