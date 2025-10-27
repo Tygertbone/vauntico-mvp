@@ -1,4 +1,9 @@
 @tailwind base;
+
+/* Mobile Optimizations */
+@import './styles/mobile-optimizations.css';
+
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
