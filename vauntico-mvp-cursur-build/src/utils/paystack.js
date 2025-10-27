@@ -1,3 +1,4 @@
+
 /**
  * Paystack Payment Integration for Vauntico
  * 
@@ -42,7 +43,7 @@ export const PAYSTACK_PLAN_CODES = {
 }
 
 // Pricing in kobo (Paystack uses smallest currency unit)
-// 1 ZAR = 100 kobo
+// 1 ZAR = 100 kobo, 1 USD = 100 cents
 export const PAYSTACK_PRICING = {
   starter: {
     monthly: 29900, // R299
@@ -56,7 +57,10 @@ export const PAYSTACK_PRICING = {
     monthly: 299900,  // R2,999
     yearly: 2999000   // R29,990
   },
-  workshop_kit: 49900 // R499 one-time
+  workshop_kit: {
+    ZAR: 350000, // R3,500 one-time
+    USD: 19900   // $199 one-time
+  }
 }
 
 // ============================================================================
@@ -162,30 +166,78 @@ export const checkoutCreatorPass = async (tier, billingCycle = 'monthly', userEm
 /**
  * Create Workshop Kit checkout (one-time payment)
  * @param {string} userEmail - User's email
+ * @param {string} currency - 'ZAR' or 'USD'
+ * @param {string} name - Customer name (optional)
  */
-export const checkoutWorkshopKit = async (userEmail = '') => {
+export const checkoutWorkshopKit = async (userEmail = '', currency = 'ZAR', name = '') => {
   try {
-    const amount = PAYSTACK_PRICING.workshop_kit
+    const amount = PAYSTACK_PRICING.workshop_kit[currency]
+    
+    if (!amount) {
+      throw new Error(`Invalid currency: ${currency}`)
+    }
 
     const PaystackPop = await loadPaystack()
+    
+    // Generate unique reference
+    const reference = `WK_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
 
     const handler = PaystackPop.setup({
       key: PAYSTACK_PUBLIC_KEY,
       email: userEmail || 'customer@vauntico.com',
       amount: amount,
-      currency: 'ZAR',
+      currency: currency,
+      ref: reference,
       metadata: {
         custom_fields: [
           {
             display_name: 'Product',
             variable_name: 'product',
-            value: 'workshop_kit'
+            value: 'Workshop Kit'
+          },
+          {
+            display_name: 'Customer Name',
+            variable_name: 'customer_name',
+            value: name || 'Not provided'
+          },
+          {
+            display_name: 'Currency',
+            variable_name: 'currency',
+            value: currency
           }
         ]
       },
       callback: function(response) {
         console.log('✅ Payment successful:', response.reference)
-        verifyPayment(response.reference, 'workshop_kit')
+        
+        // Save payment locally
+        const paymentData = {
+          reference: response.reference,
+          email: userEmail,
+          amount: amount,
+          currency: currency,
+          product: 'workshop_kit',
+          timestamp: new Date().toISOString(),
+          status: 'success'
+        }
+        
+        localStorage.setItem('vauntico_workshop_kit_payment', JSON.stringify(paymentData))
+        localStorage.setItem('vauntico_workshop_kit', 'true')
+        
+        // Track success
+        if (window.VaunticoAnalytics && window.VaunticoAnalytics.trackEvent) {
+          window.VaunticoAnalytics.trackEvent('workshop_kit_purchased', {
+            reference: response.reference,
+            currency: currency,
+            amount: amount / 100
+          })
+        }
+        
+        // Show success message
+        alert('🎉 Workshop Kit purchased! We\'ll email you access details within 24 hours.\n\nReference: ' + response.reference)
+        
+        // Redirect to thank you page
+        window.location.href = '/workshop-kit?purchased=true'
       },
       onClose: function() {
         console.log('Payment window closed')

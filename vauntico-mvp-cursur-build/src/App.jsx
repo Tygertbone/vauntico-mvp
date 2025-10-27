@@ -47,6 +47,11 @@ function App() {
     <ErrorBoundary>
       <Router>
         <div className="min-h-screen bg-gray-50">
+                {/* Maintenance Banner */}
+        <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white py-2 px-4 text-center text-sm font-medium">
+          ⚠️ Payment system upgrade in progress. Workshop Kit available now - other products launching February 2025.
+        </div>
+
         {/* Skip to main content link */}
         <a 
           href="#main-content" 
