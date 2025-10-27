@@ -188,7 +188,7 @@ export const checkoutWorkshopKit = async (userEmail = '', paymentType = 'one_tim
       amount: amount,
       currency: 'ZAR',
       ref: reference,
-      plan: paymentType === 'payment_plan' ? 'PLN_workshop_3x149' : undefined,
+      plan: paymentType === 'payment_plan' ? 'PLN_5cobwk237hoymro' : undefined,
       metadata: {
         custom_fields: [
           {
