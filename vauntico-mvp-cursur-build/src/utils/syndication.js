@@ -152,7 +152,9 @@ export const copyShareLink = async (scrollId, scrollTitle) => {
     trackScrollShare(scrollId, scrollTitle, 'copy_link')
     return { success: true, url }
   } catch (error) {
-    console.error('Failed to copy link:', error)
+    if (import.meta.env.DEV) {
+      console.error('Failed to copy link:', error)
+    }
     return { success: false, error }
   }
 }
@@ -461,16 +463,20 @@ export const SYNDICATION_DEV = {
   
   resetCode: () => {
     localStorage.removeItem('vauntico_my_referral_code')
-    console.log('Referral code reset')
+    if (import.meta.env.DEV) {
+      console.log('Referral code reset')
+    }
   },
   
   viewStats: () => {
     const stats = exportReferralStats()
-    console.log('=== Syndication Stats ===')
-    console.log('Referral Code:', stats.referralCode)
-    console.log('Commission Rate:', stats.commission + '%')
-    console.log('Creator Pass Link:', stats.links.creatorPass)
-    console.log('========================')
+    if (import.meta.env.DEV) {
+      console.log('=== Syndication Stats ===')
+      console.log('Referral Code:', stats.referralCode)
+      console.log('Commission Rate:', stats.commission + '%')
+      console.log('Creator Pass Link:', stats.links.creatorPass)
+      console.log('========================')
+    }
     return stats
   }
 }
