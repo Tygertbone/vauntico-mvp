@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import SEO from '../components/SEO'
 
 function Vaults() {
   const [selectedFilter, setSelectedFilter] = useState('all')
@@ -80,8 +81,14 @@ function Vaults() {
     return colors[color] || colors.purple
   }
 
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    return (
+    <>
+      <SEO 
+        title="Your Vaults - Intelligent Organization | Vauntico"
+        description="Organize your content with intelligent vaults. Collaborate with teams, track analytics, and never lose track of your creative work."
+        canonical="/vaults"
+      />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
         <div>
@@ -185,9 +192,10 @@ function Vaults() {
           <button className="btn-primary">
             + Create New Vault
           </button>
-        </div>
+                </div>
       )}
-    </div>
+      </div>
+    </>
   )
 }
 

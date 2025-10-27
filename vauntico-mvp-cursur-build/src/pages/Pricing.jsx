@@ -1,4 +1,6 @@
 import { useMemo } from 'react'
+import SEO from '../components/SEO'
+import StructuredData from '../components/StructuredData'
 import { getLocalizedPrice, PRICING as PRICING_DATA, getUserCurrency, getApproximatePrice } from '../utils/pricing'
 
 function Pricing() {
@@ -114,8 +116,35 @@ function Pricing() {
     return 'btn-outline w-full text-lg py-3'
   }
 
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    return (
+    <>
+      <SEO 
+        title="Pricing - Fair & Transparent | Vauntico"
+        description="Choose from Free, Creator Pass (R999/month), or Enterprise plans. Credit-based pricing, no hidden fees, cancel anytime. 14-day free trial available."
+        canonical="/pricing"
+      />
+      <StructuredData 
+        type="Product"
+        data={{
+          name: 'Vauntico Pricing Plans',
+          description: 'Flexible pricing for creators: Free, Creator Pass, and Enterprise tiers',
+          offers: [
+            {
+              '@type': 'Offer',
+              name: 'Free',
+              price: '0',
+              priceCurrency: 'USD'
+            },
+            {
+              '@type': 'Offer',
+              name: 'Creator Pass',
+              price: creatorPassPrice.price.toString(),
+              priceCurrency: creatorPassPrice.currency
+            }
+          ]
+        }}
+      />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="text-center mb-16">
         <h1 className="text-5xl font-bold mb-4">
@@ -345,8 +374,9 @@ function Pricing() {
             Schedule Demo
           </button>
         </div>
+            </div>
       </div>
-    </div>
+    </>
   )
 }
 
