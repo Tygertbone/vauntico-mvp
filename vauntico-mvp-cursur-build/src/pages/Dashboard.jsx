@@ -19,7 +19,8 @@
  */
 
 import { Link } from 'react-router-dom'
-// TODO: Import Testimonials, SocialProof components when ready
+import { UserCountBadge, StatsBar, ReviewStars } from '../components/SocialProof'
+import Testimonials from '../components/Testimonials'
 
 function Dashboard() {
   const stats = [
@@ -37,12 +38,17 @@ function Dashboard() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            {/* Hero Section */}
+                  {/* Hero Section */}
       {/* TODO: Personalize greeting with user's first name */}
       {/* TODO: Add contextual CTA based on user tier (upgrade prompt for free users) */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">Welcome back! 👋</h1>
-        <p className="text-gray-600 text-lg">Here's what's happening with your vaults today.</p>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+          <div>
+            <h1 className="text-4xl font-bold mb-2">Welcome back! 👋</h1>
+            <p className="text-gray-600 text-lg">Here's what's happening with your vaults today.</p>
+          </div>
+          <UserCountBadge count={2500} label="creators" />
+        </div>
         {/* TODO: Add quick action shortcuts or onboarding progress bar here */}
       </div>
 
@@ -106,7 +112,7 @@ function Dashboard() {
         </Link>
       </div>
 
-      {/* Recent Vaults */}
+            {/* Recent Vaults */}
       {/* TODO: Replace mock data with user's actual vaults */}
       {/* TODO: Add filters (All, Shared, Recent, Favorites) */}
       {/* TODO: Add search functionality */}
@@ -138,6 +144,20 @@ function Dashboard() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Platform Stats */}
+      <div className="mt-12">
+        <StatsBar />
+      </div>
+
+      {/* What Creators Are Saying */}
+      <div className="mt-12">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold mb-2">What Creators Are Saying</h2>
+          <ReviewStars rating={4.8} reviewCount={350} />
+        </div>
+        <Testimonials variant="grid" limit={3} />
       </div>
     </div>
   )

@@ -5,6 +5,9 @@ import { useCreatorPass } from '../hooks/useAccess'
 import { subscribeToCreatorPassTier, PRICING, getLocalizedPrice, getApproximatePrice } from '../utils/pricing'
 import { AccessBadge } from '../components/AccessGate'
 import LoadingSpinner from '../components/LoadingSpinner'
+import Testimonials from '../components/Testimonials'
+import { TrustBadges, MoneyBackGuarantee, ReviewStars } from '../components/SocialProof'
+import { CreatorPassCTA } from '../components/MobileStickyCTA'
 
 function CreatorPass() {
   const [isSubscribing, setIsSubscribing] = useState(false)
@@ -124,7 +127,7 @@ function CreatorPass() {
         }}
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Hero Section */}
+            {/* Hero Section */}
       <div className="text-center mb-16">
         <div className="inline-block vault-gradient text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 tracking-wide">
           THE CREATOR PASS SCROLL
@@ -133,15 +136,21 @@ function CreatorPass() {
           Unlock the Vault. Ascend the Tiers.<br/>
           <span className="text-gradient">Scale Your Legacy.</span>
         </h1>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
           Most platforms sell subscriptions. Vauntico offers <strong>ascension</strong>.<br/>
           The Creator Pass isn't just access—it's a <strong>covenant</strong>.
         </p>
+        <div className="flex justify-center mb-6">
+          <ReviewStars rating={4.8} reviewCount={350} />
+        </div>
         {hasPass && (
           <div className="mb-6">
             <AccessBadge hasAccess={hasPass} reason="creator_pass" />
           </div>
         )}
+        <div className="flex justify-center">
+          <MoneyBackGuarantee days={14} />
+        </div>
       </div>
       
       {/* Billing Toggle */}
@@ -170,7 +179,16 @@ function CreatorPass() {
         </div>
       </div>
 
-            {/* Three Covenant Tiers */}
+                  {/* Social Proof - Testimonials */}
+      <div className="mb-16">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold mb-2">Join 2,500+ Creators Scaling Their Legacy</h2>
+          <p className="text-gray-600">See what they're saying about their ascension</p>
+        </div>
+        <Testimonials variant="grid" limit={3} />
+      </div>
+
+      {/* Three Covenant Tiers */}
       <div className="mb-16">
         <h2 className="text-4xl font-bold text-center mb-4">
           The Three <span className="text-gradient">Covenants</span>
@@ -375,7 +393,12 @@ function CreatorPass() {
         </div>
       </div>
 
-            {/* FAQ Section */}
+                  {/* Trust Badges */}
+      <div className="mb-16">
+        <TrustBadges layout="horizontal" />
+      </div>
+
+      {/* FAQ Section */}
       <div className="mt-16 max-w-3xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-8">
           Sacred <span className="text-gradient">Covenant Questions</span>
@@ -433,8 +456,11 @@ function CreatorPass() {
             Compare All Plans
           </a>
         </div>
-            </div>
+                        </div>
       </div>
+
+      {/* Mobile Sticky CTA */}
+      {!hasPass && <CreatorPassCTA />}
     </>
   )
 }

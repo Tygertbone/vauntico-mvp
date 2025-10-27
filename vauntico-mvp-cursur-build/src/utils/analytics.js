@@ -704,6 +704,70 @@ export const trackComparisonCTAClick = (ctaText, ctaDestination, competitorName 
 }
 
 // ============================================================================
+// EMAIL CAPTURE & LEAD GENERATION TRACKING
+// ============================================================================
+
+/**
+ * Track email capture success
+ */
+export const trackEmailCapture = (email, leadMagnet, source) => {
+  queueEvent({
+    name: 'email_captured',
+    category: 'conversion',
+    label: leadMagnet,
+    properties: {
+      email_domain: email.split('@')[1], // Track domain for B2B insights
+      lead_magnet: leadMagnet,
+      source, // 'scroll_unlock', 'banner', 'modal', etc.
+      user_id: getUserId(),
+      ...getReferralData()
+    }
+  })
+  
+  // Also track in Mixpanel with full email
+  if (window.mixpanel) {
+    window.mixpanel.people.set({
+      $email: email,
+      lead_magnet: leadMagnet,
+      subscription_source: source,
+      subscribed_at: new Date().toISOString()
+    })
+  }
+}
+
+/**
+ * Track email capture form view
+ */
+export const trackEmailCaptureView = (variant, location) => {
+  queueEvent({
+    name: 'email_capture_viewed',
+    category: 'engagement',
+    label: variant,
+    properties: {
+      variant, // 'inline', 'modal', 'banner'
+      location, // 'lore_vault', 'scroll_lock', 'homepage'
+      user_id: getUserId()
+    }
+  })
+}
+
+/**
+ * Track email capture form submission attempt (before validation)
+ */
+export const trackEmailCaptureAttempt = (variant, isValid) => {
+  queueEvent({
+    name: 'email_capture_attempted',
+    category: 'conversion',
+    label: variant,
+    properties: {
+      variant,
+      is_valid: isValid,
+      user_id: getUserId()
+    }
+  })
+}
+
+// ============================================================================
 // FEATURE USAGE TRACKING
 // ============================================================================
 
