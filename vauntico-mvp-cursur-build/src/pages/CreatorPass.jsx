@@ -8,6 +8,8 @@ import LoadingSpinner from '../components/LoadingSpinner'
 import Testimonials from '../components/Testimonials'
 import { TrustBadges, MoneyBackGuarantee, ReviewStars } from '../components/SocialProof'
 import { CreatorPassCTA } from '../components/MobileStickyCTA'
+import { checkoutCreatorPass, mockCheckout, isStripeConfigured } from '../utils/stripe'
+import { UrgencyStack, PriceIncreaseWarning } from '../components/UrgencyElements'
 
 function CreatorPass() {
   const [isSubscribing, setIsSubscribing] = useState(false)
@@ -48,22 +50,25 @@ function CreatorPass() {
     }
   }
 
-    const handleSubscribe = async (tier) => {
+        const handleSubscribe = async (tier) => {
     setIsSubscribing(true)
     setSelectedTier(tier)
-    await subscribeToCreatorPassTier(
-      tier,
-      billingCycle,
-      () => {
-        alert(`🎉 Welcome to Creator Pass ${tiers[tier].name}! Your covenant has been sealed.`)
-        window.location.reload()
-      },
-      (error) => {
-        alert('Subscription failed. Please try again.')
-        console.error(error)
-        setIsSubscribing(false)
+    
+    try {
+      // Check if Stripe is configured
+      if (isStripeConfigured()) {
+        // Real Stripe checkout
+        await checkoutCreatorPass(tier, billingCycle)
+      } else {
+        // Mock checkout for development/testing
+        console.warn('⚠️  Stripe not configured - using mock checkout')
+        await mockCheckout('creator_pass', tier, billingCycle)
       }
-    )
+    } catch (error) {
+      console.error('Subscription error:', error)
+      alert('Subscription failed. Please try again.')
+      setIsSubscribing(false)
+    }
   }
 
     const upgradePath = [
@@ -179,7 +184,12 @@ function CreatorPass() {
         </div>
       </div>
 
-                  {/* Social Proof - Testimonials */}
+                        {/* Urgency Elements - Above pricing */}
+      <div className="mb-12">
+        <UrgencyStack tier="Pro" />
+      </div>
+
+      {/* Social Proof - Testimonials */}
       <div className="mb-16">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold mb-2">Join 2,500+ Creators Scaling Their Legacy</h2>
