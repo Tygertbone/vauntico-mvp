@@ -47,9 +47,20 @@ function App() {
     <ErrorBoundary>
       <Router>
         <div className="min-h-screen bg-gray-50">
-                {/* Maintenance Banner */}
-        <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white py-2 px-4 text-center text-sm font-medium">
-          ⚠️ Payment system upgrade in progress. Workshop Kit available now - other products launching February 2025.
+                        {/* Launch Banner */}
+        <div className="bg-gradient-to-r from-purple-600 to-green-600 text-white py-3 text-center">
+          <div className="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-center gap-4">
+            <span className="text-xl">🎉</span>
+            <span className="font-semibold">
+              The R2,000 Challenge is LIVE! Start building your creator income today →
+            </span>
+            <a
+              href="/workshop-kit"
+              className="bg-white text-purple-600 px-4 py-1 rounded-full text-sm font-bold hover:bg-purple-50 transition-colors"
+            >
+              Join Now
+            </a>
+          </div>
         </div>
 
         {/* Skip to main content link */}

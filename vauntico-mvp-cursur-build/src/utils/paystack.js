@@ -58,8 +58,8 @@ export const PAYSTACK_PRICING = {
     yearly: 2999000   // R29,990
   },
   workshop_kit: {
-    ZAR: 350000, // R3,500 one-time
-    USD: 19900   // $199 one-time
+    one_time: 99700,  // R997 one-time (PREMIUM)
+    payment_plan: 34900  // R349 x 3 monthly payments (R1,047 total)
   }
 }
 
@@ -164,17 +164,17 @@ export const checkoutCreatorPass = async (tier, billingCycle = 'monthly', userEm
 }
 
 /**
- * Create Workshop Kit checkout (one-time payment)
+ * Create R2,000 Challenge checkout (Premium)
  * @param {string} userEmail - User's email
- * @param {string} currency - 'ZAR' or 'USD'
+ * @param {string} paymentType - 'one_time' (R997) or 'payment_plan' (3xR349)
  * @param {string} name - Customer name (optional)
  */
-export const checkoutWorkshopKit = async (userEmail = '', currency = 'ZAR', name = '') => {
+export const checkoutWorkshopKit = async (userEmail = '', paymentType = 'one_time', name = '') => {
   try {
-    const amount = PAYSTACK_PRICING.workshop_kit[currency]
+    const amount = PAYSTACK_PRICING.workshop_kit[paymentType]
     
     if (!amount) {
-      throw new Error(`Invalid currency: ${currency}`)
+      throw new Error(`Invalid payment type: ${paymentType}`)
     }
 
     const PaystackPop = await loadPaystack()
@@ -186,14 +186,15 @@ export const checkoutWorkshopKit = async (userEmail = '', currency = 'ZAR', name
       key: PAYSTACK_PUBLIC_KEY,
       email: userEmail || 'customer@vauntico.com',
       amount: amount,
-      currency: currency,
+      currency: 'ZAR',
       ref: reference,
+      plan: paymentType === 'payment_plan' ? 'PLN_workshop_3x149' : undefined,
       metadata: {
         custom_fields: [
           {
             display_name: 'Product',
             variable_name: 'product',
-            value: 'Workshop Kit'
+            value: 'The R2,000 Challenge'
           },
           {
             display_name: 'Customer Name',
@@ -201,9 +202,9 @@ export const checkoutWorkshopKit = async (userEmail = '', currency = 'ZAR', name
             value: name || 'Not provided'
           },
           {
-            display_name: 'Currency',
-            variable_name: 'currency',
-            value: currency
+            display_name: 'Payment Type',
+            variable_name: 'payment_type',
+            value: paymentType === 'one_time' ? 'R997 One-time' : '3x R349 Plan'
           }
         ]
       },
@@ -215,8 +216,9 @@ export const checkoutWorkshopKit = async (userEmail = '', currency = 'ZAR', name
           reference: response.reference,
           email: userEmail,
           amount: amount,
-          currency: currency,
-          product: 'workshop_kit',
+          currency: 'ZAR',
+          product: 'r2000_challenge',
+          payment_type: paymentType,
           timestamp: new Date().toISOString(),
           status: 'success'
         }
@@ -226,15 +228,19 @@ export const checkoutWorkshopKit = async (userEmail = '', currency = 'ZAR', name
         
         // Track success
         if (window.VaunticoAnalytics && window.VaunticoAnalytics.trackEvent) {
-          window.VaunticoAnalytics.trackEvent('workshop_kit_purchased', {
+          window.VaunticoAnalytics.trackEvent('r2000_challenge_purchased', {
             reference: response.reference,
-            currency: currency,
+            payment_type: paymentType,
             amount: amount / 100
           })
         }
         
         // Show success message
-        alert('🎉 Workshop Kit purchased! We\'ll email you access details within 24 hours.\n\nReference: ' + response.reference)
+        const message = paymentType === 'one_time'
+          ? '🎉 Welcome to The R2,000 Challenge! Check your email for immediate access.\n\nYour 60-day journey starts NOW!\n\nReference: ' + response.reference
+          : '🎉 Payment 1/3 Complete (R349)! Check your email for immediate access.\n\nNext payment in 30 days. Let\'s make R2,000!\n\nReference: ' + response.reference
+        
+        alert(message)
         
         // Redirect to thank you page
         window.location.href = '/workshop-kit?purchased=true'
