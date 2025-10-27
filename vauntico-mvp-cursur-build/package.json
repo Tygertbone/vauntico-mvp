@@ -7,7 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "test:build": "npm run build && npm run preview",
+    "analyze": "vite-bundle-visualizer",
+    "check:types": "echo 'TypeScript not configured'",
+    "check:deps": "npm outdated",
+    "validate": "npm run lint && npm run build"
   },
   "dependencies": {
     "crypto-js": "^4.2.0",
