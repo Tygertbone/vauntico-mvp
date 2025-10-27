@@ -8,7 +8,7 @@ import LoadingSpinner from '../components/LoadingSpinner'
 import Testimonials from '../components/Testimonials'
 import { TrustBadges, MoneyBackGuarantee, ReviewStars } from '../components/SocialProof'
 import { CreatorPassCTA } from '../components/MobileStickyCTA'
-import { checkoutCreatorPass, mockCheckout, isStripeConfigured } from '../utils/stripe'
+import { checkoutCreatorPass as paystackCheckout, mockPaystackCheckout, isPaystackConfigured } from '../utils/paystack'
 import { UrgencyStack, PriceIncreaseWarning } from '../components/UrgencyElements'
 
 function CreatorPass() {
@@ -50,19 +50,23 @@ function CreatorPass() {
     }
   }
 
-        const handleSubscribe = async (tier) => {
+            const handleSubscribe = async (tier) => {
     setIsSubscribing(true)
     setSelectedTier(tier)
     
     try {
-      // Check if Stripe is configured
-      if (isStripeConfigured()) {
-        // Real Stripe checkout
-        await checkoutCreatorPass(tier, billingCycle)
+      // Get user email (you can add email input field or get from auth)
+      const userEmail = localStorage.getItem('user_email') || 'customer@vauntico.com'
+      
+      // Check if Paystack is configured
+      if (isPaystackConfigured()) {
+        // Real Paystack checkout
+        console.log('🇿🇦 Opening Paystack payment modal...')
+        await paystackCheckout(tier, billingCycle, userEmail)
       } else {
         // Mock checkout for development/testing
-        console.warn('⚠️  Stripe not configured - using mock checkout')
-        await mockCheckout('creator_pass', tier, billingCycle)
+        console.warn('⚠️  Paystack not configured - using mock checkout')
+        await mockPaystackCheckout(tier, billingCycle)
       }
     } catch (error) {
       console.error('Subscription error:', error)
