@@ -28,6 +28,10 @@ const VsChatGPT = lazy(() => import('./pages/vs/VsChatGPT'))
 const VsNotion = lazy(() => import('./pages/vs/VsNotion'))
 const VsCopyAI = lazy(() => import('./pages/vs/VsCopyAI'))
 
+// R2,000 Challenge Pages (lazy)
+const R2000Dashboard = lazy(() => import('./pages/r2000/R2000Dashboard'))
+const DayLesson = lazy(() => import('./pages/r2000/DayLesson'))
+
 // Loading fallback component
 function PageLoader() {
   return (
@@ -279,13 +283,17 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/referrals" element={<Referrals />} />
             
-                        {/* Competitor Comparison Pages */}
+                                    {/* Competitor Comparison Pages */}
             <Route path="/vs/jasper" element={<VsJasper />} />
             <Route path="/vs/chatgpt" element={<VsChatGPT />} />
             <Route path="/vs/notion" element={<VsNotion />} />
             <Route path="/vs/copyai" element={<VsCopyAI />} />
             
-                        {/* 404 Catch-all */}
+            {/* R2,000 Challenge Member Area */}
+            <Route path="/r2000-challenge/dashboard" element={<R2000Dashboard />} />
+            <Route path="/r2000-challenge/day/:dayNumber" element={<DayLesson />} />
+            
+            {/* 404 Catch-all */}
             <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

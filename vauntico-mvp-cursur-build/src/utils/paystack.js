@@ -21,16 +21,26 @@ import { trackSubscriptionSuccess, trackUpgradeClick } from './analytics'
 // PAYSTACK CONFIGURATION
 // ============================================================================
 
+// Load from environment variables (Vite uses import.meta.env)
+const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || 'pk_test_fallback_key'
 
+// ⚠️ SECURITY: Secret key should NEVER be in frontend code!
+// It should only exist in backend API routes/serverless functions
+// Frontend only needs the public key for Paystack.js initialization
+const PAYSTACK_SECRET_KEY = null // Not used in frontend
 
 // TEMPORARY FIX: Hardcoded keys for immediate testing
-// TODO: Fix environment variable loading issue
-const PAYSTACK_PUBLIC_KEY = 'pk_live_6170742d40545d6ee122fb1d8878be1cf4eb1b4e'
-const PAYSTACK_SECRET_KEY = 'sk_live_f1afbe03e8d99a47aed871f2870db061ea28afec'
 
-// Original code (not working in build):
-// const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || 'pk_test_YOUR_KEY_HERE'
-// const PAYSTACK_SECRET_KEY = import.meta.env.VITE_PAYSTACK_SECRET_KEY || 'sk_test_YOUR_KEY_HERE'
+
+
+// Development fallback warning
+if (import.meta.env.DEV && PAYSTACK_PUBLIC_KEY === 'pk_test_fallback_key') {
+  console.warn('⚠️ PAYSTACK: Using fallback test key. Set VITE_PAYSTACK_PUBLIC_KEY in .env')
+}
+
+
+
+
 
 // Paystack Plan Codes (create these in Paystack Dashboard)
 export const PAYSTACK_PLAN_CODES = {
