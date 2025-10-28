@@ -64,11 +64,11 @@ export default function WorkshopKit() {
             backgroundSize: '40px 40px'
           }}></div>
         </div>
-        {/* Hero Background Image */}
+        {/* Hero Background Image - Two young Africans collaborating with phones in Lagos */}
         <div 
-          className="absolute inset-0 opacity-20" 
+          className="absolute inset-0 opacity-25" 
           style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&q=80)',
+            backgroundImage: 'url(https://images.unsplash.com/photo-1644043350898-2f4ff1e17912?w=1200&q=80)',
             backgroundSize: 'cover',
             backgroundPosition: 'center'
           }}
