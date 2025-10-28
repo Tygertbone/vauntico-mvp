@@ -21,8 +21,16 @@ import { trackSubscriptionSuccess, trackUpgradeClick } from './analytics'
 // PAYSTACK CONFIGURATION
 // ============================================================================
 
-const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || 'pk_test_YOUR_KEY_HERE'
-const PAYSTACK_SECRET_KEY = import.meta.env.VITE_PAYSTACK_SECRET_KEY || 'sk_test_YOUR_KEY_HERE'
+
+
+// TEMPORARY FIX: Hardcoded keys for immediate testing
+// TODO: Fix environment variable loading issue
+const PAYSTACK_PUBLIC_KEY = 'pk_live_6170742d40545d6ee122fb1d8878be1cf4eb1b4e'
+const PAYSTACK_SECRET_KEY = 'sk_live_f1afbe03e8d99a47aed871f2870db061ea28afec'
+
+// Original code (not working in build):
+// const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || 'pk_test_YOUR_KEY_HERE'
+// const PAYSTACK_SECRET_KEY = import.meta.env.VITE_PAYSTACK_SECRET_KEY || 'sk_test_YOUR_KEY_HERE'
 
 // Paystack Plan Codes (create these in Paystack Dashboard)
 export const PAYSTACK_PLAN_CODES = {
@@ -182,72 +190,98 @@ export const checkoutWorkshopKit = async (userEmail = '', paymentType = 'one_tim
     // Generate unique reference
     const reference = `WK_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
 
-    // DEBUG: Log the Paystack key
-    console.log('🔑 Paystack Public Key:', PAYSTACK_PUBLIC_KEY)
-    console.log('🔑 Raw env var:', import.meta.env.VITE_PAYSTACK_PUBLIC_KEY)
-    console.log('🔑 Is configured?', isPaystackConfigured())
+    // DETAILED DEBUG LOGGING
+    console.log('=== PAYSTACK CHECKOUT DEBUG ===')
+    console.log('Email:', userEmail)
+    console.log('Payment Type:', paymentType)
+    console.log('Name:', name)
+    console.log('Amount (kobo):', amount)
+    console.log('Amount (ZAR):', amount / 100)
+    console.log('Currency: ZAR')
+    console.log('Reference:', reference)
+    console.log('Public Key:', PAYSTACK_PUBLIC_KEY)
+    console.log('Is Payment Plan?', paymentType === 'payment_plan')
+    console.log('Plan Code:', paymentType === 'payment_plan' ? 'PLN_5cobwk237hoymro' : 'N/A')
+    console.log('===============================')
 
-    const handler = PaystackPop.setup({
+    // Build config based on payment type
+    const setupConfig = {
       key: PAYSTACK_PUBLIC_KEY,
       email: userEmail || 'customer@vauntico.com',
-      amount: amount,
       currency: 'ZAR',
-      ref: reference,
-      plan: paymentType === 'payment_plan' ? 'PLN_5cobwk237hoymro' : undefined,
-      metadata: {
-        custom_fields: [
-          {
-            display_name: 'Product',
-            variable_name: 'product',
-            value: 'The R2,000 Challenge'
-          },
-          {
-            display_name: 'Customer Name',
-            variable_name: 'customer_name',
-            value: name || 'Not provided'
-          },
-          {
-            display_name: 'Payment Type',
-            variable_name: 'payment_type',
-            value: paymentType === 'one_time' ? 'R997 One-time' : '3x R349 Plan'
-          }
-        ]
-      },
-      callback: function(response) {
-        console.log('✅ Payment successful:', response.reference)
-        
-        // Save payment locally
-        const paymentData = {
-          reference: response.reference,
-          email: userEmail,
-          amount: amount,
-          currency: 'ZAR',
-          product: 'r2000_challenge',
-          payment_type: paymentType,
-          timestamp: new Date().toISOString(),
-          status: 'success'
-        }
-        
-        localStorage.setItem('vauntico_workshop_kit_payment', JSON.stringify(paymentData))
-        localStorage.setItem('vauntico_workshop_kit', 'true')
-        
-        // Track success
-        if (window.VaunticoAnalytics && window.VaunticoAnalytics.trackEvent) {
-          window.VaunticoAnalytics.trackEvent('r2000_challenge_purchased', {
-            reference: response.reference,
-            payment_type: paymentType,
-            amount: amount / 100
-          })
-        }
-        
-        // Redirect to success page
-        window.location.href = `/workshop-kit/success?ref=${response.reference}`
-      },
-      onClose: function() {
-        console.log('Payment window closed')
-      }
-    })
+      ref: reference
+    }
 
+    // For one-time payment: use amount
+    // For payment plan: use plan code (NO amount!)
+    if (paymentType === 'one_time') {
+      setupConfig.amount = amount
+      console.log('✅ Using one-time payment with amount:', amount)
+    } else {
+      setupConfig.plan = 'PLN_5cobwk237hoymro'
+      console.log('✅ Using payment plan with code: PLN_5cobwk237hoymro')
+    }
+
+    // Add metadata
+    setupConfig.metadata = {
+      custom_fields: [
+        {
+          display_name: 'Product',
+          variable_name: 'product',
+          value: 'The R2,000 Challenge'
+        },
+        {
+          display_name: 'Customer Name',
+          variable_name: 'customer_name',
+          value: name || 'Not provided'
+        },
+        {
+          display_name: 'Payment Type',
+          variable_name: 'payment_type',
+          value: paymentType === 'one_time' ? 'R997 One-time' : '3x R349 Plan'
+        }
+      ]
+    }
+
+    // Add callback
+    setupConfig.callback = function(response) {
+      console.log('✅ Payment successful:', response.reference)
+      
+      // Save payment locally
+      const paymentData = {
+        reference: response.reference,
+        email: userEmail,
+        amount: amount,
+        currency: 'ZAR',
+        product: 'r2000_challenge',
+        payment_type: paymentType,
+        timestamp: new Date().toISOString(),
+        status: 'success'
+      }
+      
+      localStorage.setItem('vauntico_workshop_kit_payment', JSON.stringify(paymentData))
+      localStorage.setItem('vauntico_workshop_kit', 'true')
+      
+      // Track success
+      if (window.VaunticoAnalytics && window.VaunticoAnalytics.trackEvent) {
+        window.VaunticoAnalytics.trackEvent('r2000_challenge_purchased', {
+          reference: response.reference,
+          payment_type: paymentType,
+          amount: amount / 100
+        })
+      }
+      
+      // Redirect to success page
+      window.location.href = `/workshop-kit/success?ref=${response.reference}`
+    }
+
+    setupConfig.onClose = function() {
+      console.log('Payment window closed')
+    }
+
+    // NOW create the handler with the complete config
+    console.log('📦 Final Paystack config:', setupConfig)
+    const handler = PaystackPop.setup(setupConfig)
     handler.openIframe()
   } catch (error) {
     console.error('Checkout error:', error)
