@@ -182,6 +182,11 @@ export const checkoutWorkshopKit = async (userEmail = '', paymentType = 'one_tim
     // Generate unique reference
     const reference = `WK_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
 
+    // DEBUG: Log the Paystack key
+    console.log('🔑 Paystack Public Key:', PAYSTACK_PUBLIC_KEY)
+    console.log('🔑 Raw env var:', import.meta.env.VITE_PAYSTACK_PUBLIC_KEY)
+    console.log('🔑 Is configured?', isPaystackConfigured())
+
     const handler = PaystackPop.setup({
       key: PAYSTACK_PUBLIC_KEY,
       email: userEmail || 'customer@vauntico.com',
