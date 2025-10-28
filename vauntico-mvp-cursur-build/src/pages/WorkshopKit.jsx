@@ -66,7 +66,7 @@ export default function WorkshopKit() {
         
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <div className="inline-block bg-yellow-400 text-purple-900 px-4 py-2 rounded-full text-sm font-bold mb-6 animate-pulse">
-            ?? THE R2,000 CHALLENGE
+            🦄 THE R2,000 CHALLENGE
           </div>
           
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
@@ -101,19 +101,19 @@ export default function WorkshopKit() {
 
           <div className="flex flex-wrap justify-center gap-4 text-lg mb-8">
             <div className="flex items-center gap-2">
-              <span className="text-2xl">?</span>
+              <span className="text-2xl">📱</span>
               <span>Phone-only system</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-2xl">?</span>
+              <span className="text-2xl">🛡️</span>
               <span>60-day guarantee</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-2xl">?</span>
+              <span className="text-2xl">🎁</span>
               <span>Free tools only</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-2xl">?</span>
+              <span className="text-2xl">⏰</span>
               <span>1 hour per day</span>
             </div>
           </div>
@@ -121,13 +121,13 @@ export default function WorkshopKit() {
           {/* Checkout Form */}
           {hasPurchased ? (
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 max-w-md mx-auto border border-white/20">
-              <div className="text-5xl mb-4">??</div>
+              <div className="text-5xl mb-4">🎉</div>
               <h2 className="text-3xl font-bold mb-2">You are In!</h2>
               <p className="text-lg opacity-90 mb-4">
                 Check your email for immediate access to The R2,000 Challenge.
               </p>
               <p className="text-sm opacity-75">
-                Your 60-day journey starts NOW. Let us build that R2,000/month income! ??
+                Your 60-day journey starts NOW. Let us build that R2,000/month income! 🚀
               </p>
             </div>
           ) : (
@@ -190,7 +190,7 @@ export default function WorkshopKit() {
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <span className="text-xs bg-yellow-500 text-gray-900 px-2 py-1 rounded-full font-bold">
-                          ? MOST POPULAR
+                          🔥 MOST POPULAR
                         </span>
                       </div>
                       <div className="font-bold text-lg">3 Payments of R349</div>
@@ -209,19 +209,19 @@ export default function WorkshopKit() {
                 disabled={isPurchasing || !email || !name}
                 className="w-full bg-gradient-to-r from-purple-600 to-green-600 hover:from-purple-700 hover:to-green-700 text-white font-bold text-lg py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
               >
-                {isPurchasing
-                  ? '? Opening Secure Payment...'
-                  : paymentType === 'one_time'
-                  ? '?? Get Instant Access - R997'
-                  : '?? Start Today - R349/month'}
+                                {isPurchasing
+                    ? '⏳ Opening Secure Payment...'
+                    : paymentType === 'one_time'
+                    ? '🚀 Get Instant Access - R997'
+                    : '🚀 Start Today - R349/month'}
               </button>
 
               <div className="mt-4 text-center">
                 <p className="text-xs text-gray-500 mb-2">
-                  ?? Secure payment via Paystack
+                  🔒 Secure payment via Paystack
                 </p>
                 <p className="text-xs text-gray-500">
-                  ?? M-Pesa � MoMo � Bank Transfer � Card
+                  ✓ M-Pesa • MoMo • Bank Transfer • Card
                 </p>
               </div>
             </div>
