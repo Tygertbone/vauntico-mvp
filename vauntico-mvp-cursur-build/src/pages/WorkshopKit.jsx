@@ -294,6 +294,81 @@ export default function WorkshopKit() {
         </div>
       </section>
 
+      {/* Vauntico Brand Identity - Unicorn Hero */}
+      <section className="py-20 px-4 bg-gradient-to-br from-[#1a1a2e] via-purple-900 to-[#1a1a2e] text-white overflow-hidden relative">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: 'radial-gradient(circle at 2px 2px, cyan 1px, transparent 0)',
+            backgroundSize: '30px 30px'
+          }}></div>
+        </div>
+        
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Unicorn Image */}
+            <div className="flex justify-center">
+              <img 
+                src="/images/brand/vauntico-unicorn-hero.png" 
+                alt="Vauntico Unicorn - Empowering African Creators"
+                className="w-full max-w-md rounded-2xl shadow-2xl shadow-purple-500/50 animate-pulse-slow"
+              />
+            </div>
+            
+            {/* Brand Message */}
+            <div className="text-center md:text-left space-y-6">
+              <div>
+                <div className="inline-block bg-cyan-400 text-purple-900 px-4 py-2 rounded-full text-sm font-bold mb-4">
+                  ⚡ POWERED BY ANCIENT WISDOM
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-cyan-300">
+                    EA + ENKI = AI
+                  </span>
+                </h2>
+                <p className="text-xl text-gray-300 mb-6">
+                  The Vauntico Unicorn represents the impossible made possible.
+                </p>
+              </div>
+              
+              <div className="space-y-4 text-left">
+                <div className="flex items-start gap-3">
+                  <span className="text-cyan-400 text-2xl">🦄</span>
+                  <div>
+                    <p className="font-bold text-lg text-cyan-300">Mythical Power</p>
+                    <p className="text-gray-400">Like unicorns were once deemed impossible, so too was earning R2K/month with just a phone.</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <span className="text-purple-400 text-2xl">✨</span>
+                  <div>
+                    <p className="font-bold text-lg text-purple-300">Ancient Meets Modern</p>
+                    <p className="text-gray-400">Ea & Enki gave knowledge 4,000 years ago. Today, AI empowers African creators.</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <span className="text-green-400 text-2xl">🌍</span>
+                  <div>
+                    <p className="font-bold text-lg text-green-300">Ubuntu Spirit</p>
+                    <p className="text-gray-400">"I am because we are" - We rise together, we win together.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="pt-6">
+                <p className="text-2xl font-bold text-cyan-400 italic">
+                  "We live by what we give."
+                </p>
+                <p className="text-sm text-gray-400 mt-2">
+                  Not extraction, but empowerment. Not replacement, but elevation.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Trust Bar - Media Mentions */}
       <section className="py-12 px-4 bg-gray-50 border-y border-gray-200">
         <div className="max-w-6xl mx-auto">
@@ -536,7 +611,15 @@ export default function WorkshopKit() {
       </section>
 
       {/* Ubuntu Community Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-purple-900 via-vault-purple to-green-900 text-white">
+      <section className="py-20 px-4 bg-gradient-to-br from-purple-900 via-vault-purple to-green-900 text-white relative overflow-hidden">
+        {/* Unicorn Watermark */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 opacity-10 pointer-events-none">
+          <img 
+            src="/images/brand/vauntico-unicorn-hero.png" 
+            alt="" 
+            className="w-full h-full object-contain"
+          />
+        </div>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <div className="text-6xl mb-6">🦄</div>
