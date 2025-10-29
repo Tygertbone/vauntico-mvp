@@ -76,3 +76,4 @@ docs/
 !index.html
 !vercel.json
 !components.json
+.vercel
