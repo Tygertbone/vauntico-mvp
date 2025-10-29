@@ -189,8 +189,6 @@
   }
 
   .animate-slide-down {
-
-    .animate-slide-down {
     animation: slideDown 0.4s ease-out;
   }
   
@@ -207,6 +205,19 @@
     }
   }
 
+    .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
   .animate-pulse-slow {
     animation: pulseSlow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
@@ -219,32 +230,6 @@
     50% {
       opacity: 0.85;
       transform: scale(1.05);
-    }
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  .animate-shimmer {
-    animation: shimmer 2s ease-in-out infinite;
-  }
-  
-  @keyframes shimmer {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(100%);
     }
   }
 
