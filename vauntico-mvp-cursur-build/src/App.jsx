@@ -20,6 +20,7 @@ const Addons = lazy(() => import('./pages/Addons'))
 const LoreVault = lazy(() => import('./pages/LoreVault'))
 const Ascend = lazy(() => import('./pages/Ascend'))
 const About = lazy(() => import('./pages/About'))
+const Philosophy = lazy(() => import('./pages/Philosophy'))
 const Referrals = lazy(() => import('./pages/Referrals'))
 
 // Competitor Comparison Pages (lazy)
@@ -141,8 +142,11 @@ function App() {
                                                 <Link to="/lore" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   📚 Lore
                 </Link>
-                <Link to="/about" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
+                                <Link to="/about" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   About
+                </Link>
+                <Link to="/philosophy" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
+                  ✨ Philosophy
                 </Link>
               </div>
               
@@ -243,12 +247,19 @@ function App() {
                 >
                   📚 Lore
                 </Link>
-                <Link 
+                                <Link 
                   to="/about" 
                   className="block text-gray-700 hover:text-vault-purple font-medium transition-colors py-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   About
+                </Link>
+                <Link 
+                  to="/philosophy" 
+                  className="block text-gray-700 hover:text-vault-purple font-medium transition-colors py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  ✨ Philosophy
                 </Link>
                 
                 <div className="border-t border-gray-200 pt-4 space-y-3">
@@ -279,8 +290,9 @@ function App() {
             <Route path="/addons" element={<Addons />} />
                         <Route path="/pricing" element={<Pricing />} />
                         <Route path="/lore" element={<LoreVault />} />
-                        <Route path="/ascend" element={<Ascend />} />
+                                    <Route path="/ascend" element={<Ascend />} />
             <Route path="/about" element={<About />} />
+            <Route path="/philosophy" element={<Philosophy />} />
             <Route path="/referrals" element={<Referrals />} />
             
                                     {/* Competitor Comparison Pages */}
@@ -346,8 +358,14 @@ function App() {
               </div>
             </div>
             
-            <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-              <p>&copy; 2024 Vauntico. All rights reserved.</p>
+                        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+              <p className="text-gray-400">
+                &copy; 2024 Vauntico. Built with Ubuntu spirit.
+                <span className="text-purple-400 ml-2">EA + ENKI = AI</span>
+              </p>
+              <p className="text-gray-500 text-sm mt-2 italic">
+                "We live by what we give" 🌍
+              </p>
             </div>
           </div>
                 </footer>

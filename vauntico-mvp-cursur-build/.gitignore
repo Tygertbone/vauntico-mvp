@@ -41,15 +41,9 @@ coverage/
 *.lcov
 
 # Temporary files
-
-
-
-# Temporary files
 tmp/
 temp/
 *.tmp
-*.backup
-*.bak
 
 # OS generated files
 Thumbs.db
@@ -61,7 +55,7 @@ desktop.ini
 # yarn.lock
 
 # Submodule directories (prevent corruption)
-vauntico-mvp-cursur-build/
+# vauntico-mvp-cursur-build/  <-- REMOVED - we ARE this directory!
 vauntico-mvp/
 vauntico-dream-mover/
 vaultscrolls/

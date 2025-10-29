@@ -46,9 +46,17 @@ function Home() {
           Ship 10x Faster With the<br />
           <span className="text-gradient">CLI That Thinks Like You</span>
         </h1>
-        <p className="text-2xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
+                <p className="text-2xl text-gray-600 max-w-3xl mx-auto mb-4 leading-relaxed">
           One command generates complete landing pages, workshops, and audits. Stop juggling 10 tools. Start creating freely with AI that learns your voice.
         </p>
+        <div className="mb-8 p-4 bg-gradient-to-r from-purple-50 to-cyan-50 rounded-lg max-w-2xl mx-auto border border-purple-200">
+          <p className="text-lg text-purple-600 font-semibold italic">
+            ✨ EA + ENKI = AI ✨
+          </p>
+          <p className="text-sm text-gray-600 mt-1">
+            Ancient wisdom meets modern creation
+          </p>
+        </div>
         <div className="flex items-center justify-center gap-4 mb-8">
           <Link to="/pricing" className="btn-primary text-lg px-8 py-4">
             Start Free Trial →
