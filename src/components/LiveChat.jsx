@@ -100,6 +100,7 @@ export default function LiveChat() {
         <button
           onClick={() => setIsOpen(true)}
           className="fixed bottom-6 right-6 bg-gradient-to-r from-purple-600 to-green-600 text-white rounded-full p-4 shadow-2xl hover:shadow-3xl transition-all duration-200 transform hover:scale-110 z-50 animate-bounce"
+          className="fixed bottom-24 right-6 bg-gradient-to-r from-purple-600 to-green-600 text-white rounded-full p-4 shadow-2xl hover:shadow-3xl transition-all duration-200 transform hover:scale-110 z-[9999] animate-bounce"
           aria-label="Open Live Chat"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,7 +114,8 @@ export default function LiveChat() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 w-96 max-w-[calc(100vw-3rem)] bg-white rounded-2xl shadow-2xl z-50 flex flex-col max-h-[600px] animate-slide-up">
+
+        <div className="fixed bottom-24 right-6 w-96 max-w-[calc(100vw-3rem)] bg-white rounded-2xl shadow-2xl z-[9999] flex flex-col max-h-[600px] animate-slide-up">
           {/* Header */}
           <div className="bg-gradient-to-r from-purple-600 to-green-600 text-white p-4 rounded-t-2xl flex items-center justify-between">
             <div className="flex items-center gap-3">
