@@ -10,6 +10,7 @@ import { TrustBadges, MoneyBackGuarantee, ReviewStars } from '../components/Soci
 import { CreatorPassCTA } from '../components/MobileStickyCTA'
 import { checkoutCreatorPass as paystackCheckout, mockPaystackCheckout, isPaystackConfigured } from '../utils/paystack'
 import { UrgencyStack, PriceIncreaseWarning } from '../components/UrgencyElements'
+import { Gem, Sparkles, ScrollText, X, Swords, Shield } from 'lucide-react'
 
 function CreatorPass() {
   const [isSubscribing, setIsSubscribing] = useState(false)
@@ -77,22 +78,22 @@ function CreatorPass() {
 
     const upgradePath = [
     {
-      icon: '🔮',
+      icon: 'Gem',
       title: 'Ascend Anytime',
       description: 'Your credits, scrolls, and vault access scale with you'
     },
     {
-      icon: '📜',
+      icon: 'ScrollText',
       title: 'Prorated Credits',
       description: 'Credits rolled over and preserved during upgrades'
     },
     {
-      icon: '✨',
+      icon: 'Sparkles',
       title: 'Instant Access',
       description: 'Scroll access expands immediately upon ascension'
     },
     {
-      icon: '🧿',
+      icon: 'Swords',
       title: 'Support Scales',
       description: 'Your support tier adjusts automatically'
     },
@@ -232,7 +233,7 @@ function CreatorPass() {
             <ul className="space-y-2 mb-6 text-sm">
               {tiers.starter.features.map((feature, idx) => (
                 <li key={idx} className="flex items-start">
-                  <span className="text-green-500 mr-2 mt-0.5">📜</span>
+                  <ScrollText className="w-4 h-4 text-green-500 mr-2 mt-1" />
                   <span className="text-gray-700">{feature}</span>
                 </li>
               ))}
@@ -290,7 +291,7 @@ function CreatorPass() {
             <ul className="space-y-2 mb-6 text-sm">
               {tiers.pro.features.map((feature, idx) => (
                 <li key={idx} className="flex items-start">
-                  <span className="text-green-500 mr-2 mt-0.5">🔮</span>
+                  <Swords className="w-4 h-4 text-green-500 mr-2 mt-1" />
                   <span className="text-gray-700">{feature}</span>
                 </li>
               ))}
@@ -345,7 +346,7 @@ function CreatorPass() {
                 'Training & onboarding',
               ].map((feature, idx) => (
                 <li key={idx} className="flex items-start">
-                  <span className="text-green-500 mr-2 mt-0.5">✨</span>
+                  <Shield className="w-4 h-4 text-green-500 mr-2 mt-1" />
                   <span className="text-gray-700">{feature}</span>
                 </li>
               ))}
@@ -380,13 +381,16 @@ function CreatorPass() {
         <p className="text-center text-gray-600 mb-8">Upgrade your plan at any time. Your credits and vault access scale with you.</p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {upgradePath.map((path, index) => (
-            <div key={index} className="card text-center hover:border-vault-purple transition-all">
-              <div className="text-4xl mb-3">{path.icon}</div>
-              <h3 className="text-lg font-semibold mb-2">{path.title}</h3>
-              <p className="text-sm text-gray-600">{path.description}</p>
-            </div>
-          ))}
+          {upgradePath.map((path, index) => {
+            const Icon = { Gem, Sparkles, ScrollText, Swords }[path.icon]
+            return (
+              <div key={index} className="card text-center hover:border-vault-purple transition-all">
+                <div className="text-4xl mb-3"><Icon className="w-8 h-8 text-vault-purple mx-auto" /></div>
+                <h3 className="text-lg font-semibold mb-2">{path.title}</h3>
+                <p className="text-sm text-gray-600">{path.description}</p>
+              </div>
+            )
+          })}
         </div>
       </div>
       

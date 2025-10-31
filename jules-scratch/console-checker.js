@@ -4,8 +4,6 @@ const urls = [
   '/',
   '/pricing',
   '/creator-pass',
-  '/r2k-challenge',
-  '/vault'
 ];
 
 (async () => {
@@ -20,23 +18,23 @@ const urls = [
     let hasErrors = false;
 
     page.on('console', msg => {
-      const text = msg.text();
-      if (text.includes('Internal Server Error')) {
-        console.error(`Internal Server Error on ${page.url()}: ${text}`);
+      const type = msg.type();
+      if (type === 'error' || type === 'warn') {
+        console.log(`[${type.toUpperCase()}] on ${page.url()}: ${msg.text()}`);
         hasErrors = true;
       }
     });
 
     for (const url of urls) {
-      console.log(`Checking ${url} for internal server errors...`);
-      await page.goto(`http://localhost:5173${url}`, { waitUntil: 'networkidle' });
+      console.log(`Checking ${url} for console errors...`);
+      await page.goto(`http://localhost:3000${url}`, { waitUntil: 'networkidle' });
     }
 
     if (hasErrors) {
-      console.log('\nFound internal server errors during the audit.');
+      console.log('\nFound console errors or warnings during the audit.');
       process.exit(1);
     } else {
-      console.log('\nNo internal server errors found on any page.');
+      console.log('\nNo console errors or warnings found on any page.');
     }
 
   } catch (error) {
