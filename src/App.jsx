@@ -60,12 +60,12 @@ function App() {
             <span className="font-semibold">
               The R2,000 Challenge is LIVE! Start building your creator income today →
             </span>
-            <a
-              href="/workshop-kit"
+            <Link
+              to="/workshop-kit"
               className="bg-white text-purple-600 px-4 py-1 rounded-full text-sm font-bold hover:bg-purple-50 transition-colors"
             >
               Join Now
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -353,7 +353,6 @@ function App() {
                 <ul className="space-y-2 text-gray-400">
                   <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
                   <li><a href="mailto:hello@vauntico.com" className="hover:text-white transition-colors">Contact</a></li>
-                  <li><Link to="/ascend" className="hover:text-white transition-colors">🏔️ Ascend</Link></li>
                 </ul>
               </div>
             </div>
