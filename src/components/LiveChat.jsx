@@ -99,7 +99,6 @@ export default function LiveChat() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 bg-gradient-to-r from-purple-600 to-green-600 text-white rounded-full p-4 shadow-2xl hover:shadow-3xl transition-all duration-200 transform hover:scale-110 z-50 animate-bounce"
           className="fixed bottom-24 right-6 bg-gradient-to-r from-purple-600 to-green-600 text-white rounded-full p-4 shadow-2xl hover:shadow-3xl transition-all duration-200 transform hover:scale-110 z-[9999] animate-bounce"
           aria-label="Open Live Chat"
         >

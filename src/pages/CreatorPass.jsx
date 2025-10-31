@@ -77,22 +77,22 @@ function CreatorPass() {
 
     const upgradePath = [
     {
-      icon: '🧪',
+      icon: '🔮',
       title: 'Ascend Anytime',
       description: 'Your credits, scrolls, and vault access scale with you'
     },
     {
-      icon: '🔄',
+      icon: '📜',
       title: 'Prorated Credits',
       description: 'Credits rolled over and preserved during upgrades'
     },
     {
-      icon: '⚡',
+      icon: '✨',
       title: 'Instant Access',
       description: 'Scroll access expands immediately upon ascension'
     },
     {
-      icon: '🎖️',
+      icon: '🧿',
       title: 'Support Scales',
       description: 'Your support tier adjusts automatically'
     },
@@ -135,10 +135,11 @@ function CreatorPass() {
           ]
         }}
       />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            {/* Hero Section */}
-      <div className="text-center mb-16">
-        <div className="inline-block vault-gradient text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 tracking-wide">
+      <div className="bg-ceremonial-purple text-white" style={{backgroundImage: 'url("/assets/ceremonial-pattern.svg")', backgroundSize: 'cover'}}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+              {/* Hero Section */}
+        <div className="text-center mb-16">
+          <div className="inline-block vault-gradient text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 tracking-wide">
           THE CREATOR PASS SCROLL
         </div>
         <h1 className="text-5xl md:text-6xl font-bold mb-4">
@@ -231,7 +232,7 @@ function CreatorPass() {
             <ul className="space-y-2 mb-6 text-sm">
               {tiers.starter.features.map((feature, idx) => (
                 <li key={idx} className="flex items-start">
-                  <span className="text-green-500 mr-2 mt-0.5">✓</span>
+                  <span className="text-green-500 mr-2 mt-0.5">📜</span>
                   <span className="text-gray-700">{feature}</span>
                 </li>
               ))}
@@ -289,7 +290,7 @@ function CreatorPass() {
             <ul className="space-y-2 mb-6 text-sm">
               {tiers.pro.features.map((feature, idx) => (
                 <li key={idx} className="flex items-start">
-                  <span className="text-green-500 mr-2 mt-0.5">✓</span>
+                  <span className="text-green-500 mr-2 mt-0.5">🔮</span>
                   <span className="text-gray-700">{feature}</span>
                 </li>
               ))}
@@ -344,7 +345,7 @@ function CreatorPass() {
                 'Training & onboarding',
               ].map((feature, idx) => (
                 <li key={idx} className="flex items-start">
-                  <span className="text-green-500 mr-2 mt-0.5">✓</span>
+                  <span className="text-green-500 mr-2 mt-0.5">✨</span>
                   <span className="text-gray-700">{feature}</span>
                 </li>
               ))}
@@ -462,6 +463,7 @@ function CreatorPass() {
           </a>
         </div>
                         </div>
+        </div>
       </div>
 
       {/* Mobile Sticky CTA */}

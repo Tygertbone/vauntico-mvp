@@ -202,7 +202,7 @@ function Pricing() {
             <ul className="space-y-3 mb-8">
               {plan.features.map((feature, idx) => (
                 <li key={idx} className="flex items-start">
-                  <span className="text-green-500 mr-2 mt-1">✓</span>
+                  <span className="text-green-500 mr-2 mt-1">📜</span>
                   <span className="text-gray-700">{feature}</span>
                 </li>
               ))}
@@ -267,15 +267,15 @@ function Pricing() {
               </tr>
               <tr className="border-b">
                 <td className="py-3 px-4">Custom Branding</td>
-                <td className="text-center py-3 px-4">✗</td>
-                <td className="text-center py-3 px-4 text-green-500">✓</td>
-                <td className="text-center py-3 px-4 text-green-500">✓</td>
+                <td className="text-center py-3 px-4">⏳</td>
+                <td className="text-center py-3 px-4 text-green-500">📜</td>
+                <td className="text-center py-3 px-4 text-green-500">📜</td>
               </tr>
               <tr>
                 <td className="py-3 px-4">API Access</td>
-                <td className="text-center py-3 px-4">✗</td>
-                <td className="text-center py-3 px-4">✗</td>
-                <td className="text-center py-3 px-4 text-green-500">✓</td>
+                <td className="text-center py-3 px-4">⏳</td>
+                <td className="text-center py-3 px-4">⏳</td>
+                <td className="text-center py-3 px-4 text-green-500">📜</td>
               </tr>
             </tbody>
           </table>
@@ -296,7 +296,7 @@ function Pricing() {
               <div className="bg-vault-purple text-white text-xs font-semibold px-3 py-1 rounded-full inline-block mb-3">
                 POPULAR
               </div>
-              <div className="text-5xl mb-4">🔍</div>
+              <div className="text-5xl mb-4">🔮</div>
               <h3 className="text-xl font-bold mb-2">Audit Service</h3>
               <p className="text-gray-600 mb-4">Ongoing code health monitoring</p>
               <div className="text-3xl font-bold text-vault-purple mb-2">{auditServicePrice.formatted}<span className="text-base text-gray-600">/mo</span></div>
@@ -309,7 +309,7 @@ function Pricing() {
             </div>
           
                       <div className="card text-center hover:shadow-xl transition-all hover:scale-105">
-              <div className="text-5xl mb-4">⚡</div>
+              <div className="text-5xl mb-4">✨</div>
               <h3 className="text-xl font-bold mb-2">More Add-ons</h3>
               <p className="text-gray-600 mb-4">Automation, analytics & more</p>
               <div className="text-3xl font-bold text-vault-purple mb-4">

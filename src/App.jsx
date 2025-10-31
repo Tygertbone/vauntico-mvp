@@ -39,7 +39,7 @@ function PageLoader() {
     <div className="min-h-[60vh] flex items-center justify-center">
       <div className="text-center">
         <LoadingSpinner size="lg" color="purple" />
-        <p className="mt-4 text-gray-600">Loading...</p>
+        <p className="mt-4 text-gray-600">Conjuring Components...</p>
       </div>
     </div>
   )
@@ -106,6 +106,7 @@ function App() {
                     aria-label="Services menu"
                     aria-expanded={servicesOpen}
                     aria-haspopup="true"
+                    onClick={() => setServicesOpen(!servicesOpen)}
                     onMouseEnter={() => setServicesOpen(true)}
                     onMouseLeave={() => setServicesOpen(false)}
                     onFocus={() => setServicesOpen(true)}

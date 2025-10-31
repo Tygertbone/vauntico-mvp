@@ -22,8 +22,6 @@ export default defineConfig({
           // Markdown rendering (only used in specific pages)
           'markdown': ['react-markdown', 'remark-gfm'],
           
-          // Analytics (can be loaded async)
-          'analytics': ['mixpanel-browser'],
         },
       },
     },

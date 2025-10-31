@@ -108,6 +108,8 @@
   
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-vault-purple via-vault-blue to-vault-cyan;
+    background-size: 200% auto;
+    animation: shimmer 5s linear infinite;
   }
 }
 
@@ -234,12 +236,10 @@
   }
 
   /* Delay utilities */
-  .delay-100 { animation-delay: 100ms; }
-  .delay-200 { animation-delay: 200ms; }
-  .delay-300 { animation-delay: 300ms; }
-  .delay-400 { animation-delay: 400ms; }
-  .delay-500 { animation-delay: 500ms; }
-  .delay-600 { animation-delay: 600ms; }
+  .reveal-delay-200 { animation-delay: 200ms; }
+  .reveal-delay-400 { animation-delay: 400ms; }
+  .reveal-delay-600 { animation-delay: 600ms; }
+  .reveal-delay-800 { animation-delay: 800ms; }
 
   /* Prose styling for markdown content */
   .prose {

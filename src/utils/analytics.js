@@ -11,29 +11,34 @@
  * - Deep product analytics via Mixpanel
  */
 
-import mixpanel from 'mixpanel-browser'
+let mixpanel = null;
+
+async function getMixpanel() {
+  if (mixpanel) return mixpanel;
+  if (typeof window === 'undefined') return null;
+
+  const mixpanelLib = await import('mixpanel-browser');
+  mixpanel = mixpanelLib.default;
+
+  const MIXPANEL_TOKEN = import.meta.env.VITE_MIXPANEL_TOKEN;
+  if (MIXPANEL_TOKEN) {
+    mixpanel.init(MIXPANEL_TOKEN, {
+      debug: import.meta.env.DEV,
+      track_pageview: true,
+      persistence: 'localStorage'
+    });
+    window.mixpanel = mixpanel;
+    console.log('🎯 Mixpanel initialized with token:', MIXPANEL_TOKEN.substring(0, 8) + '...');
+  }
+  return mixpanel;
+}
+
 
 // ============================================================================
 // ANALYTICS CONFIGURATION
 // ============================================================================
 
 const MIXPANEL_TOKEN = import.meta.env.VITE_MIXPANEL_TOKEN
-
-// Initialize Mixpanel if token is available
-if (MIXPANEL_TOKEN) {
-  mixpanel.init(MIXPANEL_TOKEN, { 
-    debug: import.meta.env.DEV,
-    track_pageview: true,
-    persistence: 'localStorage'
-  })
-  
-  // Expose Mixpanel globally for console testing
-  if (typeof window !== 'undefined') {
-    window.mixpanel = mixpanel
-  }
-  
-  console.log('🎯 Mixpanel initialized with token:', MIXPANEL_TOKEN.substring(0, 8) + '...')
-}
 
 const ANALYTICS_CONFIG = {
   // Set to true to enable console logging for development
@@ -184,7 +189,7 @@ const getUTMParameters = () => {
 /**
  * Send event to all enabled analytics providers
  */
-const sendToProviders = (event) => {
+const sendToProviders = async (event) => {
   const { providers } = ANALYTICS_CONFIG
   
   // Google Analytics 4
@@ -205,8 +210,11 @@ const sendToProviders = (event) => {
   }
   
   // Mixpanel
-  if (providers.mixpanel.enabled && window.mixpanel) {
-    window.mixpanel.track(event.name, event.properties)
+  if (providers.mixpanel.enabled) {
+    const mp = await getMixpanel();
+    if (mp) {
+      mp.track(event.name, event.properties);
+    }
   }
   
   // Debug logging
@@ -710,7 +718,7 @@ export const trackComparisonCTAClick = (ctaText, ctaDestination, competitorName 
 /**
  * Track email capture success
  */
-export const trackEmailCapture = (email, leadMagnet, source) => {
+export const trackEmailCapture = async (email, leadMagnet, source) => {
   queueEvent({
     name: 'email_captured',
     category: 'conversion',
@@ -725,13 +733,14 @@ export const trackEmailCapture = (email, leadMagnet, source) => {
   })
   
   // Also track in Mixpanel with full email
-  if (window.mixpanel) {
-    window.mixpanel.people.set({
+  const mp = await getMixpanel();
+  if (mp) {
+    mp.people.set({
       $email: email,
       lead_magnet: leadMagnet,
       subscription_source: source,
       subscribed_at: new Date().toISOString()
-    })
+    });
   }
 }
 
@@ -920,9 +929,10 @@ if (import.meta.env.DEV) {
      * Wrapper for tracking custom events directly via Mixpanel
      * Usage: window.VaunticoAnalytics.trackEvent('event_name', { prop: 'value' })
      */
-    trackEvent: (eventName, props = {}) => {
-      if (window.mixpanel) {
-        window.mixpanel.track(eventName, {
+    trackEvent: async (eventName, props = {}) => {
+      const mp = await getMixpanel();
+      if (mp) {
+        mp.track(eventName, {
           ...props,
           user_id: getUserId(),
           session_id: getSessionId(),
@@ -937,10 +947,11 @@ if (import.meta.env.DEV) {
     /**
      * Set user properties in Mixpanel
      */
-    identifyUser: (userId, userProperties = {}) => {
-      if (window.mixpanel) {
-        window.mixpanel.identify(userId)
-        window.mixpanel.people.set(userProperties)
+    identifyUser: async (userId, userProperties = {}) => {
+      const mp = await getMixpanel();
+      if (mp) {
+        mp.identify(userId)
+        mp.people.set(userProperties)
         localStorage.setItem('vauntico_user_id', userId)
         console.log('👤 Mixpanel User Identified:', userId, userProperties)
       }
@@ -949,9 +960,10 @@ if (import.meta.env.DEV) {
     /**
      * Track user properties
      */
-    setUserProperties: (properties) => {
-      if (window.mixpanel) {
-        window.mixpanel.people.set(properties)
+    setUserProperties: async (properties) => {
+      const mp = await getMixpanel();
+      if (mp) {
+        mp.people.set(properties)
         console.log('👤 Mixpanel User Properties Updated:', properties)
       }
     },
@@ -959,9 +971,10 @@ if (import.meta.env.DEV) {
     /**
      * Increment user property (e.g., scrolls_read, commands_executed)
      */
-    incrementUserProperty: (property, amount = 1) => {
-      if (window.mixpanel) {
-        window.mixpanel.people.increment(property, amount)
+    incrementUserProperty: async (property, amount = 1) => {
+      const mp = await getMixpanel();
+      if (mp) {
+        mp.people.increment(property, amount)
         console.log('📈 Mixpanel Property Incremented:', property, amount)
       }
     }
@@ -972,9 +985,10 @@ if (import.meta.env.DEV) {
 } else {
   // Expose trackEvent in production as well for integrations
   window.VaunticoAnalytics = {
-    trackEvent: (eventName, props = {}) => {
-      if (window.mixpanel) {
-        window.mixpanel.track(eventName, {
+    trackEvent: async (eventName, props = {}) => {
+      const mp = await getMixpanel();
+      if (mp) {
+        mp.track(eventName, {
           ...props,
           user_id: getUserId(),
           session_id: getSessionId(),
@@ -983,23 +997,26 @@ if (import.meta.env.DEV) {
       }
     },
     
-    identifyUser: (userId, userProperties = {}) => {
-      if (window.mixpanel) {
-        window.mixpanel.identify(userId)
-        window.mixpanel.people.set(userProperties)
+    identifyUser: async (userId, userProperties = {}) => {
+      const mp = await getMixpanel();
+      if (mp) {
+        mp.identify(userId)
+        mp.people.set(userProperties)
         localStorage.setItem('vauntico_user_id', userId)
       }
     },
     
-    setUserProperties: (properties) => {
-      if (window.mixpanel) {
-        window.mixpanel.people.set(properties)
+    setUserProperties: async (properties) => {
+      const mp = await getMixpanel();
+      if (mp) {
+        mp.people.set(properties)
       }
     },
     
-    incrementUserProperty: (property, amount = 1) => {
-      if (window.mixpanel) {
-        window.mixpanel.people.increment(property, amount)
+    incrementUserProperty: async (property, amount = 1) => {
+      const mp = await getMixpanel();
+      if (mp) {
+        mp.people.increment(property, amount)
       }
     }
   }
