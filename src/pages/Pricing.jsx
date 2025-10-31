@@ -43,8 +43,8 @@ function Pricing() {
       popular: false,
       color: 'gray',
     },
-        {
-      name: 'Creator Pass',
+    {
+      name: 'Pro',
       price: creatorPassPrice.price,
       priceFormatted: creatorPassPrice.formatted,
       currency: creatorPassPrice.currency,
@@ -224,7 +224,7 @@ function Pricing() {
               <tr className="border-b">
                 <th className="text-left py-4 px-4 font-semibold">Feature</th>
                 <th className="text-center py-4 px-4 font-semibold">Free</th>
-                <th className="text-center py-4 px-4 font-semibold">Creator Pass</th>
+                <th className="text-center py-4 px-4 font-semibold">Pro</th>
                 <th className="text-center py-4 px-4 font-semibold">Enterprise</th>
               </tr>
             </thead>
@@ -291,20 +291,7 @@ function Pricing() {
           Supercharge your experience with powerful add-ons. Available with any plan.
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                      <div className="card text-center hover:shadow-xl transition-all hover:scale-105">
-              <div className="text-5xl mb-4">🎁</div>
-              <h3 className="text-xl font-bold mb-2">Workshop Kit</h3>
-              <p className="text-gray-600 mb-4">Complete brand starter pack</p>
-              <div className="text-3xl font-bold text-vault-purple mb-2">{workshopKitPrice.formatted}</div>
-              {workshopApprox && (
-                <div className="text-sm text-gray-400 mb-4">≈ {workshopApprox.formatted}</div>
-              )}
-              <a href="/workshop-kit" className="btn-outline w-full inline-block">
-                Learn More
-              </a>
-            </div>
-          
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                       <div className="card text-center hover:shadow-xl transition-all hover:scale-105 border-2 border-vault-purple">
               <div className="bg-vault-purple text-white text-xs font-semibold px-3 py-1 rounded-full inline-block mb-3">
                 POPULAR

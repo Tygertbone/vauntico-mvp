@@ -125,9 +125,6 @@ function App() {
                     role="menu"
                     aria-label="Services submenu"
                   >
-                    <Link to="/workshop-kit" className="block px-4 py-3 text-gray-700 hover:bg-vault-purple hover:text-white rounded-t-lg transition-colors">
-                      🎁 Workshop Kit
-                    </Link>
                     <Link to="/audit-service" className="block px-4 py-3 text-gray-700 hover:bg-vault-purple hover:text-white transition-colors">
                       🔍 Audit Service
                     </Link>
@@ -138,6 +135,9 @@ function App() {
                 </div>
                                                                 <Link to="/pricing" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   Pricing
+                </Link>
+                <Link to="/workshop-kit" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
+                  R2k Challenge
                 </Link>
                                                 <Link to="/lore" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   📚 Lore
@@ -211,13 +211,6 @@ function App() {
                 <div className="border-t border-gray-200 pt-4">
                   <p className="text-sm font-semibold text-gray-500 mb-2">Services</p>
                   <Link 
-                    to="/workshop-kit" 
-                    className="block text-gray-700 hover:text-vault-purple transition-colors py-2 pl-4"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    🎁 Workshop Kit
-                  </Link>
-                  <Link 
                     to="/audit-service" 
                     className="block text-gray-700 hover:text-vault-purple transition-colors py-2 pl-4"
                     onClick={() => setMobileMenuOpen(false)}
@@ -239,6 +232,13 @@ function App() {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Pricing
+                </Link>
+                <Link
+                  to="/workshop-kit"
+                  className="block text-gray-700 hover:text-vault-purple font-medium transition-colors py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  R2k Challenge
                 </Link>
                 <Link 
                   to="/lore" 
@@ -342,7 +342,6 @@ function App() {
               <div>
                 <h3 className="font-semibold mb-4">Services</h3>
                 <ul className="space-y-2 text-gray-400">
-                  <li><Link to="/workshop-kit" className="hover:text-white transition-colors">Workshop Kit</Link></li>
                   <li><Link to="/audit-service" className="hover:text-white transition-colors">Audit Service</Link></li>
                   <li><Link to="/addons" className="hover:text-white transition-colors">Add-ons</Link></li>
                 </ul>

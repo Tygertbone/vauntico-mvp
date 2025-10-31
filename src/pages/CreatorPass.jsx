@@ -142,12 +142,10 @@ function CreatorPass() {
           THE CREATOR PASS SCROLL
         </div>
         <h1 className="text-5xl md:text-6xl font-bold mb-4">
-          Unlock the Vault. Ascend the Tiers.<br/>
-          <span className="text-gradient">Scale Your Legacy.</span>
+          Unlock Your <span className="text-gradient">Creative Potential</span>
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
-          Most platforms sell subscriptions. Vauntico offers <strong>ascension</strong>.<br/>
-          The Creator Pass isn't just access—it's a <strong>covenant</strong>.
+          The Creator Pass gives you the tools and resources you need to succeed.
         </p>
         <div className="flex justify-center mb-6">
           <ReviewStars rating={4.8} reviewCount={350} />
@@ -188,10 +186,6 @@ function CreatorPass() {
         </div>
       </div>
 
-                        {/* Urgency Elements - Above pricing */}
-      <div className="mb-12">
-        <UrgencyStack tier="Pro" />
-      </div>
 
       {/* Social Proof - Testimonials */}
       <div className="mb-16">
@@ -205,19 +199,19 @@ function CreatorPass() {
       {/* Three Covenant Tiers */}
       <div className="mb-16">
         <h2 className="text-4xl font-bold text-center mb-4">
-          The Three <span className="text-gradient">Covenants</span>
+          Pricing <span className="text-gradient">Plans</span>
         </h2>
         <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-          A tiered gateway to tools, rituals, and revenue systems that scale with your soul.
+          Choose the plan that's right for you.
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Starter Tier */}
+          {/* Free Tier */}
           <div className="card hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-gray-300">
             <div className="text-center mb-4">
               <div className="text-5xl mb-3">{tiers.starter.icon}</div>
-              <h3 className="text-xl font-bold mb-1">Starter</h3>
-              <p className="text-sm text-gray-500 mb-4">The Apprentice Forge</p>
+              <h3 className="text-xl font-bold mb-1">Free</h3>
+              <p className="text-sm text-gray-500 mb-4">Perfect for getting started</p>
               <div className="flex flex-col items-center mb-3">
                 <div className="flex items-end justify-center">
                   <span className="text-4xl font-bold text-vault-purple">
@@ -275,7 +269,7 @@ function CreatorPass() {
             <div className="text-center mb-4">
               <div className="text-5xl mb-3">{tiers.pro.icon}</div>
               <h3 className="text-xl font-bold mb-1">Pro</h3>
-              <p className="text-sm text-gray-500 mb-4">The Empire Builder</p>
+              <p className="text-sm text-gray-500 mb-4">For serious content creators</p>
               <div className="flex flex-col items-center mb-3">
                 <div className="flex items-end justify-center">
                   <span className="text-4xl font-bold text-vault-purple">
@@ -322,30 +316,33 @@ function CreatorPass() {
             </button>
           </div>
           
-          {/* Legacy Tier */}
-          <div className="card hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-yellow-400 bg-gradient-to-br from-white to-yellow-50">
+          {/* Enterprise Tier */}
+          <div className="card hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-blue-400 bg-gradient-to-br from-white to-blue-50">
             <div className="text-center mb-4">
-              <div className="text-5xl mb-3">{tiers.legacy.icon}</div>
-              <h3 className="text-xl font-bold mb-1">Legacy</h3>
-              <p className="text-sm text-gray-500 mb-4">The Mythmaker</p>
+              <div className="text-5xl mb-3">🏢</div>
+              <h3 className="text-xl font-bold mb-1">Enterprise</h3>
+              <p className="text-sm text-gray-500 mb-4">For large teams and organizations</p>
               <div className="flex flex-col items-center mb-3">
                 <div className="flex items-end justify-center">
                   <span className="text-4xl font-bold text-vault-purple">
-                    {getPriceForTier('legacy', billingCycle).formatted}
+                    Custom
                   </span>
-                  <span className="text-gray-600 ml-2 mb-1">/{billingCycle === 'yearly' ? 'year' : 'month'}</span>
                 </div>
-                {getApproxForTier('legacy', billingCycle) && (
-                  <span className="text-xs text-gray-400 mt-1">
-                    ≈ {getApproxForTier('legacy', billingCycle).formatted}/{billingCycle === 'yearly' ? 'year' : 'month'}
-                  </span>
-                )}
               </div>
-              <p className="text-sm italic text-gray-600 mb-6">For the oracle who builds systems that outlive them</p>
+              <p className="text-sm italic text-gray-600 mb-6">For businesses that need a tailored solution</p>
             </div>
             
             <ul className="space-y-2 mb-6 text-sm">
-              {tiers.legacy.features.map((feature, idx) => (
+              {[
+                'Everything in Pro',
+                'Unlimited storage',
+                'Dedicated account manager',
+                'Custom integrations',
+                'SLA guarantee',
+                'Unlimited team members',
+                'Advanced security',
+                'Training & onboarding',
+              ].map((feature, idx) => (
                 <li key={idx} className="flex items-start">
                   <span className="text-green-500 mr-2 mt-0.5">✓</span>
                   <span className="text-gray-700">{feature}</span>
@@ -355,22 +352,20 @@ function CreatorPass() {
             
             <div className="border-t pt-4 mb-4">
               <p className="text-xs font-semibold text-gray-500 mb-2">IDEAL FOR:</p>
-              {tiers.legacy.idealFor.map((ideal, idx) => (
+              {[
+                'Large teams',
+                'Agencies',
+                'High-growth startups',
+              ].map((ideal, idx) => (
                 <p key={idx} className="text-xs text-gray-600 mb-1">• {ideal}</p>
               ))}
             </div>
             
-                        <button
-              onClick={() => handleSubscribe('legacy')}
-              disabled={isSubscribing || hasPass || isLoading}
-              className="btn-secondary w-full disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            <button
+              onClick={() => (window.location.href = 'mailto:sales@vauntico.com')}
+              className="btn-secondary w-full"
             >
-              {isSubscribing && selectedTier === 'legacy' ? (
-                <>
-                  <LoadingSpinner size="sm" />
-                  Processing...
-                </>
-              ) : (hasPass ? '✓ Active' : 'Forge Legend')}
+              Contact Sales
             </button>
           </div>
         </div>
@@ -379,9 +374,9 @@ function CreatorPass() {
             {/* Upgrade Path */}
       <div className="mb-16">
         <h2 className="text-3xl font-bold text-center mb-4">
-          <span className="text-gradient">🔁 Upgrade Rituals</span>
+          <span className="text-gradient">🔁 Easy Upgrades</span>
         </h2>
-        <p className="text-center text-gray-600 mb-8">Ascend anytime. Your credits, scrolls, and vault access scale with you.</p>
+        <p className="text-center text-gray-600 mb-8">Upgrade your plan at any time. Your credits and vault access scale with you.</p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {upgradePath.map((path, index) => (
@@ -415,32 +410,28 @@ function CreatorPass() {
       {/* FAQ Section */}
       <div className="mt-16 max-w-3xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-8">
-          Sacred <span className="text-gradient">Covenant Questions</span>
+          Frequently <span className="text-gradient">Asked Questions</span>
         </h2>
         <div className="space-y-4">
           <div className="card hover:border-vault-purple transition-all">
-            <h3 className="font-semibold text-lg mb-2">⚔️ Can I ascend between tiers?</h3>
-            <p className="text-gray-600">Yes! Upgrade anytime via CLI or dashboard. Credits are prorated and rolled over, scroll access expands instantly, and support tier adjusts automatically.</p>
+            <h3 className="font-semibold text-lg mb-2">Can I upgrade or downgrade my plan?</h3>
+            <p className="text-gray-600">Yes! You can upgrade or downgrade your plan at any time from your dashboard.</p>
           </div>
           <div className="card hover:border-vault-purple transition-all">
-            <h3 className="font-semibold text-lg mb-2">💳 What payment methods are accepted?</h3>
+            <h3 className="font-semibold text-lg mb-2">What payment methods are accepted?</h3>
             <p className="text-gray-600">We accept all major credit cards, PayPal, and regional payment methods. Pricing is automatically localized to ZAR or USD based on your location.</p>
           </div>
           <div className="card hover:border-vault-purple transition-all">
-            <h3 className="font-semibold text-lg mb-2">🔄 What happens to my credits when I upgrade?</h3>
-            <p className="text-gray-600">All unused credits roll over when you ascend. Pro tier allows rollover up to 1,000 credits, while Legacy tier offers unlimited rollover.</p>
+            <h3 className="font-semibold text-lg mb-2">What happens to my credits when I upgrade?</h3>
+            <p className="text-gray-600">All unused credits roll over when you upgrade your plan.</p>
           </div>
           <div className="card hover:border-vault-purple transition-all">
-            <h3 className="font-semibold text-lg mb-2">📜 What are scrolls?</h3>
-            <p className="text-gray-600">Scrolls are Vauntico's codified rituals—pre-built workflows, templates, and automation sequences that scale your creative output. Higher tiers unlock more scrolls.</p>
+            <h3 className="font-semibold text-lg mb-2">What are templates?</h3>
+            <p className="text-gray-600">Templates are pre-built workflows and content structures that help you create high-quality content faster.</p>
           </div>
           <div className="card hover:border-vault-purple transition-all">
-            <h3 className="font-semibold text-lg mb-2">🎖️ Is there a free trial?</h3>
+            <h3 className="font-semibold text-lg mb-2">Is there a free trial?</h3>
             <p className="text-gray-600">Yes! All tiers include a 14-day trial period. Cancel anytime within the trial and you won't be charged.</p>
-          </div>
-          <div className="card hover:border-vault-purple transition-all">
-            <h3 className="font-semibold text-lg mb-2">👑 What makes Legacy tier special?</h3>
-            <p className="text-gray-600">Legacy members get quarterly co-creation sessions with Tyrone, custom scroll creation, API access, a dedicated success architect, and their name inscribed in the Founder's Codex.</p>
           </div>
         </div>
       </div>
