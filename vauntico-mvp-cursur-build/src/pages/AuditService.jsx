@@ -289,7 +289,16 @@ function AuditService() {
             >
               {accessStatus.hasAccess ? '✓ Access Granted' : 'Start Free Audit'}
             </button>
-            <button className="btn-outline text-lg px-8 py-3">
+            <button 
+              onClick={() => {
+                // Scroll to sample report section
+                const sampleSection = document.querySelector('.card.bg-gradient-to-br.from-gray-50.to-white')
+                if (sampleSection) {
+                  sampleSection.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                }
+              }}
+              className="btn-outline text-lg px-8 py-3"
+            >
               View Sample Report
             </button>
           </div>
@@ -383,7 +392,13 @@ function AuditService() {
             ))}
           </div>
 
-          <button className="w-full mt-6 btn-primary">
+          <button 
+            onClick={() => {
+              alert('📥 Sample report would download here. In production, this would trigger a PDF download.')
+              // TODO: Implement actual PDF download
+            }}
+            className="w-full mt-6 btn-primary"
+          >
             📥 Download Full Sample Report
           </button>
         </div>
@@ -443,8 +458,20 @@ function AuditService() {
                 ))}
               </ul>
               
-              <button className={plan.popular ? 'btn-primary w-full' : 'btn-outline w-full'}>
-                {plan.cta}
+              <button 
+                onClick={() => {
+                  if (plan.id === 'enterprise') {
+                    window.open('mailto:sales@vauntico.com?subject=Enterprise Audit Inquiry', '_blank')
+                  } else if (accessStatus.hasAccess) {
+                    alert('✅ You already have access!')
+                  } else {
+                    handleSubscribe(plan.id)
+                  }
+                }}
+                disabled={isSubscribing && selectedPlan === plan.id}
+                className={plan.popular ? 'btn-primary w-full' : 'btn-outline w-full'}
+              >
+                {isSubscribing && selectedPlan === plan.id ? 'Processing...' : plan.cta}
               </button>
             </div>
           ))}
@@ -467,7 +494,13 @@ function AuditService() {
               <h3 className="font-bold text-lg mb-2">{addon.name}</h3>
               <div className="text-2xl font-bold text-vault-purple mb-2">{addon.price}</div>
               <p className="text-sm text-gray-600 mb-4">{addon.description}</p>
-              <button className="btn-outline w-full text-sm">
+              <button 
+                onClick={() => {
+                  alert(`🎨 ${addon.name} addon would be added here. Payment integration coming soon!`)
+                  // TODO: Implement addon purchase flow
+                }}
+                className="btn-outline w-full text-sm"
+              >
                 Add to Plan
               </button>
             </div>
@@ -512,10 +545,28 @@ function AuditService() {
           Get your first audit free. No credit card required. See what we can find in your code.
         </p>
         <div className="flex items-center justify-center space-x-4">
-          <button className="btn-primary text-lg px-12 py-4">
+          <button 
+            onClick={() => {
+              if (accessStatus.hasAccess) {
+                alert('✅ You already have access! Check your dashboard.')
+              } else {
+                // Scroll to pricing section
+                document.querySelector('.grid.grid-cols-1.md\\:grid-cols-3.gap-8').scrollIntoView({ 
+                  behavior: 'smooth', 
+                  block: 'center' 
+                })
+              }
+            }}
+            className="btn-primary text-lg px-12 py-4"
+          >
             🔍 Start Free Audit
           </button>
-          <button className="btn-outline text-lg px-8 py-4">
+          <button 
+            onClick={() => {
+              window.open('mailto:support@vauntico.com?subject=Audit Service Inquiry', '_blank')
+            }}
+            className="btn-outline text-lg px-8 py-4"
+          >
             💬 Talk to an Expert
           </button>
         </div>
