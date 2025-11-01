@@ -22,11 +22,11 @@ const Testimonials = ({ variant = 'carousel', limit = 3 }) => {
       name: 'Sarah Chen',
       role: 'Solo Creator',
       tier: 'Pro',
-      avatar: '👩‍💼',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop&crop=faces',
       quote: 'Vauntico transformed my content workflow. I went from 2 posts a week to 10, without sacrificing quality.',
       metrics: { before: '2 posts/week', after: '10 posts/week' },
       verified: true,
-      video: null, // TODO: Add video URL
+      video: null,
       platform: 'Twitter',
       handle: '@sarahcreates',
     },
@@ -35,11 +35,11 @@ const Testimonials = ({ variant = 'carousel', limit = 3 }) => {
       name: 'Marcus Rodriguez',
       role: 'Agency Owner',
       tier: 'Legacy',
-      avatar: '👨‍💻',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop&crop=faces',
       quote: 'The CLI saved us 20+ hours per week. Our team can now serve 3x more clients with the same headcount.',
       metrics: { before: '5 clients', after: '15 clients' },
       verified: true,
-      video: null, // TODO: Add video URL
+      video: null,
       platform: 'LinkedIn',
       handle: 'marcusrodriguez',
     },
@@ -48,11 +48,11 @@ const Testimonials = ({ variant = 'carousel', limit = 3 }) => {
       name: 'Zara Patel',
       role: 'Course Creator',
       tier: 'Pro',
-      avatar: '👩‍🏫',
+      avatar: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=120&h=120&fit=crop&crop=faces',
       quote: 'I built and launched my entire course funnel in 7 days using Vauntico. ROI was positive by week 2.',
       metrics: { before: '$0 revenue', after: '$12k/mo' },
       verified: true,
-      video: null, // TODO: Add video URL
+      video: null,
       platform: 'YouTube',
       handle: 'zarapatelcourses',
     },
@@ -111,9 +111,14 @@ const TestimonialCard = ({ testimonial }) => {
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 bg-gradient-to-br from-vault-purple to-vault-blue rounded-full flex items-center justify-center text-2xl">
-            {testimonial.avatar}
-          </div>
+          <img 
+            src={testimonial.avatar} 
+            alt={testimonial.name}
+            className="w-12 h-12 rounded-full object-cover"
+            onError={(e) => {
+              e.target.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(testimonial.name) + '&background=7C3AED&color=fff&size=120'
+            }}
+          />
           <div>
             <div className="flex items-center space-x-2">
               <h4 className="font-bold text-lg">{testimonial.name}</h4>

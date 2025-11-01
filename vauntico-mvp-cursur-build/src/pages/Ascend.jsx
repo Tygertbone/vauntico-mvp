@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { getCreatorPassTier } from '../utils/pricing'
 import { trackAscendPageView, trackSoulStackUnlock } from '../utils/analytics'
+import TodaysQuest from '../components/quests/TodaysQuest'
+import CreatorLevel from '../components/quests/CreatorLevel'
 
 /**
  * Ascend Page - Soul Stack Progression Map
@@ -161,9 +163,25 @@ function Ascend() {
         </div>
       </section>
 
+      {/* Quest System Section */}
+      <section className="py-12 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 mb-12">
+            {/* Today's Quest */}
+            <TodaysQuest />
+            
+            {/* Creator Level */}
+            <CreatorLevel variant="full" />
+          </div>
+        </div>
+      </section>
+
       {/* Soul Stack Visualization */}
       <section className="py-12 px-4">
         <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-12 text-gradient">
+            Your Soul Stack Journey
+          </h2>
           <div className="space-y-6">
             {SOUL_STACK_TIERS.map((tier, index) => {
               const isUnlocked = progress.unlockedLayers?.[index]?.unlocked || false

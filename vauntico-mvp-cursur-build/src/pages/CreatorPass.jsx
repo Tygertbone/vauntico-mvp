@@ -20,15 +20,21 @@ function CreatorPass() {
     // Get tier-based pricing
   const tiers = PRICING.CREATOR_PASS.tiers
   
-  const getPriceForTier = (tier, cycle) => {
+    const getPriceForTier = (tier, cycle) => {
     const tierData = tiers[tier]
-    if (!tierData) return null
+    if (!tierData) {
+      console.error(`Invalid tier: ${tier}`)
+      return { price: 0, currency: 'ZAR', formatted: 'R0', symbol: 'R' }
+    }
     
     const priceKey = cycle === 'yearly' ? 'yearlyPrice' : 'price'
     const localizedKey = cycle === 'yearly' ? 'localizedYearlyPrices' : 'localizedPrices'
     
     const userCurrency = localStorage.getItem('vauntico_locale') || 'ZAR'
-    const price = tierData[localizedKey][userCurrency] || tierData[priceKey]
+    
+    // Safe access with fallbacks
+    const localizedPrices = tierData[localizedKey] || {}
+    const price = localizedPrices[userCurrency] || tierData[priceKey] || 0
     const symbol = userCurrency === 'ZAR' ? 'R' : '$'
     
     return {
@@ -39,14 +45,19 @@ function CreatorPass() {
     }
   }
   
-  const getApproxForTier = (tier, cycle) => {
+    const getApproxForTier = (tier, cycle) => {
     const priceData = getPriceForTier(tier, cycle)
-    if (!priceData) return null
+    if (!priceData || priceData.price === 0) return null
     
-    if (priceData.currency === 'ZAR') {
-      return getApproximatePrice(priceData.price, 'ZAR', 'USD')
-    } else {
-      return getApproximatePrice(priceData.price, 'USD', 'ZAR')
+    try {
+      if (priceData.currency === 'ZAR') {
+        return getApproximatePrice(priceData.price, 'ZAR', 'USD')
+      } else {
+        return getApproximatePrice(priceData.price, 'USD', 'ZAR')
+      }
+    } catch (error) {
+      console.error('Error getting approximate price:', error)
+      return null
     }
   }
 

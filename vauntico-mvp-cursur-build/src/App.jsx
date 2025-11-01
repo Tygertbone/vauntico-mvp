@@ -19,6 +19,7 @@ const AuditService = lazy(() => import('./pages/AuditService'))
 const Addons = lazy(() => import('./pages/Addons'))
 const LoreVault = lazy(() => import('./pages/LoreVault'))
 const Ascend = lazy(() => import('./pages/Ascend'))
+const Quests = lazy(() => import('./pages/Quests'))
 const About = lazy(() => import('./pages/About'))
 const Philosophy = lazy(() => import('./pages/Philosophy'))
 const Referrals = lazy(() => import('./pages/Referrals'))
@@ -306,8 +307,11 @@ function App() {
             <Route path="/r2000-challenge/dashboard" element={<R2000Dashboard />} />
             <Route path="/r2000-challenge/day/:dayNumber" element={<DayLesson />} />
 
-            {/* 🧪 Mystical Components Test Page */}
+                        {/* 🧪 Mystical Components Test Page */}
             <Route path="/mystical-test" element={<MysticalTest />} />
+            
+            {/* 🎯 Creator Quests System */}
+            <Route path="/quests" element={<Quests />} />
             
             {/* 404 Catch-all */}
             <Route path="*" element={<NotFound />} />
