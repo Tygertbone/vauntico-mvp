@@ -21,26 +21,16 @@ import { trackSubscriptionSuccess, trackUpgradeClick } from './analytics'
 // PAYSTACK CONFIGURATION
 // ============================================================================
 
-// Load from environment variables (Vite uses import.meta.env)
-const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || 'pk_test_fallback_key'
 
-// ⚠️ SECURITY: Secret key should NEVER be in frontend code!
-// It should only exist in backend API routes/serverless functions
-// Frontend only needs the public key for Paystack.js initialization
-const PAYSTACK_SECRET_KEY = null // Not used in frontend
 
 // TEMPORARY FIX: Hardcoded keys for immediate testing
+// TODO: Fix environment variable loading issue
+const PAYSTACK_PUBLIC_KEY = 'pk_live_6170742d40545d6ee122fb1d8878be1cf4eb1b4e'
+const PAYSTACK_SECRET_KEY = 'sk_live_f1afbe03e8d99a47aed871f2870db061ea28afec'
 
-
-
-// Development fallback warning
-if (import.meta.env.DEV && PAYSTACK_PUBLIC_KEY === 'pk_test_fallback_key') {
-  console.warn('⚠️ PAYSTACK: Using fallback test key. Set VITE_PAYSTACK_PUBLIC_KEY in .env')
-}
-
-
-
-
+// Original code (not working in build):
+// const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || 'pk_test_YOUR_KEY_HERE'
+// const PAYSTACK_SECRET_KEY = import.meta.env.VITE_PAYSTACK_SECRET_KEY || 'sk_test_YOUR_KEY_HERE'
 
 // Paystack Plan Codes (create these in Paystack Dashboard)
 export const PAYSTACK_PLAN_CODES = {
@@ -77,7 +67,7 @@ export const PAYSTACK_PRICING = {
   },
   workshop_kit: {
     one_time: 99700,  // R997 one-time (PREMIUM)
-    payment_plan: 34900  // R349 x 3 monthly payments (R1,047 total)
+    payment_plan: 'PLN_5cobwk237hoymro'  // R349 x 3 monthly payments (R1,047 total)
   }
 }
 
@@ -189,9 +179,9 @@ export const checkoutCreatorPass = async (tier, billingCycle = 'monthly', userEm
  */
 export const checkoutWorkshopKit = async (userEmail = '', paymentType = 'one_time', name = '') => {
   try {
-    const amount = PAYSTACK_PRICING.workshop_kit[paymentType]
+    const paymentData = PAYSTACK_PRICING.workshop_kit[paymentType]
     
-    if (!amount) {
+    if (!paymentData) {
       throw new Error(`Invalid payment type: ${paymentType}`)
     }
 
@@ -205,13 +195,10 @@ export const checkoutWorkshopKit = async (userEmail = '', paymentType = 'one_tim
     console.log('Email:', userEmail)
     console.log('Payment Type:', paymentType)
     console.log('Name:', name)
-    console.log('Amount (kobo):', amount)
-    console.log('Amount (ZAR):', amount / 100)
+    console.log('Payment Data:', paymentData)
     console.log('Currency: ZAR')
     console.log('Reference:', reference)
     console.log('Public Key:', PAYSTACK_PUBLIC_KEY)
-    console.log('Is Payment Plan?', paymentType === 'payment_plan')
-    console.log('Plan Code:', paymentType === 'payment_plan' ? 'PLN_5cobwk237hoymro' : 'N/A')
     console.log('===============================')
 
     // Build config based on payment type
@@ -222,14 +209,17 @@ export const checkoutWorkshopKit = async (userEmail = '', paymentType = 'one_tim
       ref: reference
     }
 
-    // For one-time payment: use amount
+    // For one-time payment: use amount (in kobo)
     // For payment plan: use plan code (NO amount!)
     if (paymentType === 'one_time') {
-      setupConfig.amount = amount
-      console.log('✅ Using one-time payment with amount:', amount)
+      setupConfig.amount = paymentData  // 99700 kobo (R997)
+      console.log('✅ Using one-time payment with amount:', paymentData, 'kobo (R' + (paymentData / 100) + ')')
+    } else if (paymentType === 'payment_plan') {
+      setupConfig.plan = paymentData  // 'PLN_5cobwk237hoymro'
+      console.log('✅ Using payment plan with code:', paymentData)
+      // Do NOT include amount when using plan code
     } else {
-      setupConfig.plan = 'PLN_5cobwk237hoymro'
-      console.log('✅ Using payment plan with code: PLN_5cobwk237hoymro')
+      throw new Error(`Unknown payment type: ${paymentType}`)
     }
 
     // Add metadata
@@ -258,10 +248,10 @@ export const checkoutWorkshopKit = async (userEmail = '', paymentType = 'one_tim
       console.log('✅ Payment successful:', response.reference)
       
       // Save payment locally
-      const paymentData = {
+      const savedPaymentData = {
         reference: response.reference,
         email: userEmail,
-        amount: amount,
+        amount: paymentType === 'one_time' ? 99700 : 34900,
         currency: 'ZAR',
         product: 'r2000_challenge',
         payment_type: paymentType,
@@ -269,7 +259,7 @@ export const checkoutWorkshopKit = async (userEmail = '', paymentType = 'one_tim
         status: 'success'
       }
       
-      localStorage.setItem('vauntico_workshop_kit_payment', JSON.stringify(paymentData))
+      localStorage.setItem('vauntico_workshop_kit_payment', JSON.stringify(savedPaymentData))
       localStorage.setItem('vauntico_workshop_kit', 'true')
       
       // Track success
@@ -277,7 +267,7 @@ export const checkoutWorkshopKit = async (userEmail = '', paymentType = 'one_tim
         window.VaunticoAnalytics.trackEvent('r2000_challenge_purchased', {
           reference: response.reference,
           payment_type: paymentType,
-          amount: amount / 100
+          amount: paymentType === 'one_time' ? 997 : 349
         })
       }
       

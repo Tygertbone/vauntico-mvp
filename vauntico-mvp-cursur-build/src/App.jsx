@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+﻿import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { useState, lazy, Suspense } from 'react'
 import ErrorBoundary from './components/ErrorBoundary'
 import LoadingSpinner from './components/LoadingSpinner'
@@ -28,6 +28,7 @@ const VsJasper = lazy(() => import('./pages/vs/VsJasper'))
 const VsChatGPT = lazy(() => import('./pages/vs/VsChatGPT'))
 const VsNotion = lazy(() => import('./pages/vs/VsNotion'))
 const VsCopyAI = lazy(() => import('./pages/vs/VsCopyAI'))
+const MysticalTest = lazy(() => import('./pages/MysticalTest'))
 
 // R2,000 Challenge Pages (lazy)
 const R2000Dashboard = lazy(() => import('./pages/r2000/R2000Dashboard'))
@@ -56,9 +57,9 @@ function App() {
                         {/* Launch Banner */}
         <div className="bg-gradient-to-r from-purple-600 to-green-600 text-white py-3 text-center">
           <div className="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-center gap-4">
-            <span className="text-xl">🎉</span>
+            <span className="text-xl">ðŸŽ‰</span>
             <span className="font-semibold">
-              The R2,000 Challenge is LIVE! Start building your creator income today →
+              The R2,000 Challenge is LIVE! Start building your creator income today â†’
             </span>
             <a
               href="/workshop-kit"
@@ -126,13 +127,13 @@ function App() {
                     aria-label="Services submenu"
                   >
                     <Link to="/workshop-kit" className="block px-4 py-3 text-gray-700 hover:bg-vault-purple hover:text-white rounded-t-lg transition-colors">
-                      🎁 Workshop Kit
+                      ðŸŽ Workshop Kit
                     </Link>
                     <Link to="/audit-service" className="block px-4 py-3 text-gray-700 hover:bg-vault-purple hover:text-white transition-colors">
-                      🔍 Audit Service
+                      ðŸ” Audit Service
                     </Link>
                     <Link to="/addons" className="block px-4 py-3 text-gray-700 hover:bg-vault-purple hover:text-white rounded-b-lg transition-colors">
-                      ⚡ Add-ons
+                      âš¡ Add-ons
                     </Link>
                   </div>
                 </div>
@@ -140,13 +141,13 @@ function App() {
                   Pricing
                 </Link>
                                                 <Link to="/lore" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
-                  📚 Lore
+                  ðŸ“š Lore
                 </Link>
                                 <Link to="/about" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   About
                 </Link>
                 <Link to="/philosophy" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
-                  ✨ Philosophy
+                  âœ¨ Philosophy
                 </Link>
               </div>
               
@@ -215,21 +216,21 @@ function App() {
                     className="block text-gray-700 hover:text-vault-purple transition-colors py-2 pl-4"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    🎁 Workshop Kit
+                    ðŸŽ Workshop Kit
                   </Link>
                   <Link 
                     to="/audit-service" 
                     className="block text-gray-700 hover:text-vault-purple transition-colors py-2 pl-4"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    🔍 Audit Service
+                    ðŸ” Audit Service
                   </Link>
                   <Link 
                     to="/addons" 
                     className="block text-gray-700 hover:text-vault-purple transition-colors py-2 pl-4"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    ⚡ Add-ons
+                    âš¡ Add-ons
                   </Link>
                 </div>
                 
@@ -245,7 +246,7 @@ function App() {
                   className="block text-gray-700 hover:text-vault-purple font-medium transition-colors py-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  📚 Lore
+                  ðŸ“š Lore
                 </Link>
                                 <Link 
                   to="/about" 
@@ -259,7 +260,7 @@ function App() {
                   className="block text-gray-700 hover:text-vault-purple font-medium transition-colors py-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  ✨ Philosophy
+                  âœ¨ Philosophy
                 </Link>
                 
                 <div className="border-t border-gray-200 pt-4 space-y-3">
@@ -304,6 +305,9 @@ function App() {
             {/* R2,000 Challenge Member Area */}
             <Route path="/r2000-challenge/dashboard" element={<R2000Dashboard />} />
             <Route path="/r2000-challenge/day/:dayNumber" element={<DayLesson />} />
+
+            {/* 🧪 Mystical Components Test Page */}
+            <Route path="/mystical-test" element={<MysticalTest />} />
             
             {/* 404 Catch-all */}
             <Route path="*" element={<NotFound />} />
@@ -334,8 +338,8 @@ function App() {
                   <li><Link to="/vaults" className="hover:text-white transition-colors">Vaults</Link></li>
                   <li><Link to="/dream-mover" className="hover:text-white transition-colors">Dream Mover</Link></li>
                                     <li><Link to="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-                  <li><Link to="/lore" className="hover:text-white transition-colors">📚 Lore Vault</Link></li>
-                  <li><Link to="/ascend" className="hover:text-white transition-colors">🏔️ Ascend</Link></li>
+                  <li><Link to="/lore" className="hover:text-white transition-colors">ðŸ“š Lore Vault</Link></li>
+                  <li><Link to="/ascend" className="hover:text-white transition-colors">ðŸ”ï¸ Ascend</Link></li>
                 </ul>
               </div>
               
@@ -353,7 +357,7 @@ function App() {
                 <ul className="space-y-2 text-gray-400">
                   <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
                   <li><a href="mailto:hello@vauntico.com" className="hover:text-white transition-colors">Contact</a></li>
-                  <li><Link to="/ascend" className="hover:text-white transition-colors">🏔️ Ascend</Link></li>
+                  <li><Link to="/ascend" className="hover:text-white transition-colors">ðŸ”ï¸ Ascend</Link></li>
                 </ul>
               </div>
             </div>
@@ -364,7 +368,7 @@ function App() {
                 <span className="text-purple-400 ml-2">EA + ENKI = AI</span>
               </p>
               <p className="text-gray-500 text-sm mt-2 italic">
-                "We live by what we give" 🌍
+                "We live by what we give" ðŸŒ
               </p>
             </div>
           </div>
@@ -376,3 +380,5 @@ function App() {
 }
 
 export default App
+
+

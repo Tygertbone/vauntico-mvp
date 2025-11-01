@@ -7,6 +7,8 @@ import CourseComparisonTable from '../components/CourseComparisonTable'
 import NicheQuiz from '../components/NicheQuiz'
 import CountdownTimer from '../components/CountdownTimer'
 
+import { CosmicBackground, EnhancedUnicorn, VaultOpeningCTA, NeuralNetworkProgress } from '../components/mystical'
+
 export default function WorkshopKit() {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
@@ -16,6 +18,7 @@ export default function WorkshopKit() {
   const [showStickyFooter, setShowStickyFooter] = useState(false)
   const [recentSignups, setRecentSignups] = useState(487) // Mock counter starting point
   const [showExitOffer, setShowExitOffer] = useState(false)
+  const [showVault, setShowVault] = useState(false)
 
   useEffect(() => {
     const purchaseData = localStorage.getItem('r2k_challenge_payment')
@@ -77,6 +80,11 @@ export default function WorkshopKit() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 via-white to-green-50">
+      {/* ?? Cosmic Background */}
+      <CosmicBackground variant="space" showGlyphs={true} glyphDensity="high" />
+      
+      {/* ?? Galloping Unicorn */}
+      <EnhancedUnicorn behavior="galloping" size="large" showTrail={true} position="bottom-right" />
       {/* Exit Intent Offer */}
       <ExitIntentOffer onAccept={handleExitOfferAccept} onClose={() => setShowExitOffer(false)} />
       
@@ -258,8 +266,21 @@ export default function WorkshopKit() {
                 </button>
               </div>
 
-              <button
-                onClick={handlePurchase}
+              <VaultOpeningCTA
+                triggerOpen={showVault}
+                onOpen={() => {
+                  setTimeout(() => {
+                    handlePurchase()
+                    setShowVault(false)
+                  }, 3000)
+                }}
+              >
+                <button
+                  onClick={(e) => {
+                    e.preventDefault()
+                    if (!email || !name || isPurchasing) return
+                    setShowVault(true)
+                  }}
                 disabled={isPurchasing || !email || !name}
                 className="w-full bg-gradient-to-r from-purple-600 to-green-600 hover:from-purple-700 hover:to-green-700 text-white font-bold text-lg py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
               >
@@ -269,6 +290,7 @@ export default function WorkshopKit() {
                     ? '🚀 Get Instant Access - R997'
                     : '🚀 Start Today - R349/month'}
               </button>
+              </VaultOpeningCTA>
               
               <p className="text-center text-xs text-gray-600 mt-3 italic">
                 🛡️ Protected by our 60-day guarantee - if you don't make R2,000, you don't pay
@@ -389,6 +411,46 @@ export default function WorkshopKit() {
           <CountdownTimer title="Next Cohort Starts Soon" />
         </div>
       </section>
+
+      {/* Neural Network Progress Visualization */}
+      <section className="py-20 px-4 bg-gradient-to-br from-purple-900 via-vault-purple to-purple-900 text-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="text-5xl mb-4">??</div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Your 60-Day Neural Journey to R2,000
+            </h2>
+            <p className="text-xl text-gray-300 mb-2">
+              Watch your creator brain light up as you complete each day
+            </p>
+            <p className="text-sm text-cyan-400 italic">
+              Inspired by Duolingo addiction loop - visual progress you can feel
+            </p>
+          </div>
+          
+          {/* Demo Neural Network */}
+          <div className="mb-8">
+            <NeuralNetworkProgress 
+              currentDay={7}
+              completedDays={[1,2,3,4,5,6,7]}
+              showThirdEye={false}
+            />
+          </div>
+          
+          <div className="text-center space-y-4">
+            <p className="text-lg text-gray-300">
+              This is what <strong className="text-cyan-400">Day 7</strong> looks like
+            </p>
+            <p className="text-gray-400">
+              By Day 60 your entire neural network will be glowing with activated pathways
+            </p>
+            <p className="text-sm text-purple-300 italic">
+              Each completed day strengthens your creator superpowers
+            </p>
+          </div>
+        </div>
+      </section>
+
 
       {/* What You Get Section */}
       <section className="py-20 px-4 bg-white">
@@ -1006,3 +1068,5 @@ export default function WorkshopKit() {
     </div>
   )
 }
+
+
