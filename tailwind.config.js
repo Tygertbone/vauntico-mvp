@@ -21,7 +21,8 @@ export default {
         },
         vault: {
           dark: '#1a1a2e',
-          purple: '#6c5ce7',
+          purple: '#4D2DB7', // A richer, more ceremonial purple
+          'ceremonial-purple': '#3F1E80', // A deeper, more mystical purple
           blue: '#0984e3',
           cyan: '#00cec9',
         }

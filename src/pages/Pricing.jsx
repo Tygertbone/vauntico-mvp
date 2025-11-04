@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import SEO from '../components/SEO'
 import StructuredData from '../components/StructuredData'
 import { getLocalizedPrice, PRICING as PRICING_DATA, getUserCurrency, getApproximatePrice } from '../utils/pricing'
+import { Gem, Sparkles, ScrollText, X } from 'lucide-react'
 
 function Pricing() {
   // Get localized pricing
@@ -43,8 +44,8 @@ function Pricing() {
       popular: false,
       color: 'gray',
     },
-        {
-      name: 'Creator Pass',
+    {
+      name: 'Pro',
       price: creatorPassPrice.price,
       priceFormatted: creatorPassPrice.formatted,
       currency: creatorPassPrice.currency,
@@ -202,7 +203,7 @@ function Pricing() {
             <ul className="space-y-3 mb-8">
               {plan.features.map((feature, idx) => (
                 <li key={idx} className="flex items-start">
-                  <span className="text-green-500 mr-2 mt-1">✓</span>
+                  <ScrollText className="w-4 h-4 text-green-500 mr-2 mt-1" />
                   <span className="text-gray-700">{feature}</span>
                 </li>
               ))}
@@ -224,7 +225,7 @@ function Pricing() {
               <tr className="border-b">
                 <th className="text-left py-4 px-4 font-semibold">Feature</th>
                 <th className="text-center py-4 px-4 font-semibold">Free</th>
-                <th className="text-center py-4 px-4 font-semibold">Creator Pass</th>
+                <th className="text-center py-4 px-4 font-semibold">Pro</th>
                 <th className="text-center py-4 px-4 font-semibold">Enterprise</th>
               </tr>
             </thead>
@@ -267,15 +268,15 @@ function Pricing() {
               </tr>
               <tr className="border-b">
                 <td className="py-3 px-4">Custom Branding</td>
-                <td className="text-center py-3 px-4">✗</td>
-                <td className="text-center py-3 px-4 text-green-500">✓</td>
-                <td className="text-center py-3 px-4 text-green-500">✓</td>
+                <td className="text-center py-3 px-4"><X className="w-4 h-4 text-gray-400 mx-auto" /></td>
+                <td className="text-center py-3 px-4"><ScrollText className="w-4 h-4 text-green-500 mx-auto" /></td>
+                <td className="text-center py-3 px-4"><ScrollText className="w-4 h-4 text-green-500 mx-auto" /></td>
               </tr>
               <tr>
                 <td className="py-3 px-4">API Access</td>
-                <td className="text-center py-3 px-4">✗</td>
-                <td className="text-center py-3 px-4">✗</td>
-                <td className="text-center py-3 px-4 text-green-500">✓</td>
+                <td className="text-center py-3 px-4"><X className="w-4 h-4 text-gray-400 mx-auto" /></td>
+                <td className="text-center py-3 px-4"><X className="w-4 h-4 text-gray-400 mx-auto" /></td>
+                <td className="text-center py-3 px-4"><ScrollText className="w-4 h-4 text-green-500 mx-auto" /></td>
               </tr>
             </tbody>
           </table>
@@ -291,25 +292,12 @@ function Pricing() {
           Supercharge your experience with powerful add-ons. Available with any plan.
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                      <div className="card text-center hover:shadow-xl transition-all hover:scale-105">
-              <div className="text-5xl mb-4">🎁</div>
-              <h3 className="text-xl font-bold mb-2">Workshop Kit</h3>
-              <p className="text-gray-600 mb-4">Complete brand starter pack</p>
-              <div className="text-3xl font-bold text-vault-purple mb-2">{workshopKitPrice.formatted}</div>
-              {workshopApprox && (
-                <div className="text-sm text-gray-400 mb-4">≈ {workshopApprox.formatted}</div>
-              )}
-              <a href="/workshop-kit" className="btn-outline w-full inline-block">
-                Learn More
-              </a>
-            </div>
-          
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                       <div className="card text-center hover:shadow-xl transition-all hover:scale-105 border-2 border-vault-purple">
               <div className="bg-vault-purple text-white text-xs font-semibold px-3 py-1 rounded-full inline-block mb-3">
                 POPULAR
               </div>
-              <div className="text-5xl mb-4">🔍</div>
+              <div className="text-5xl mb-4"><Gem className="w-12 h-12 text-vault-purple mx-auto" /></div>
               <h3 className="text-xl font-bold mb-2">Audit Service</h3>
               <p className="text-gray-600 mb-4">Ongoing code health monitoring</p>
               <div className="text-3xl font-bold text-vault-purple mb-2">{auditServicePrice.formatted}<span className="text-base text-gray-600">/mo</span></div>
@@ -322,7 +310,7 @@ function Pricing() {
             </div>
           
                       <div className="card text-center hover:shadow-xl transition-all hover:scale-105">
-              <div className="text-5xl mb-4">⚡</div>
+              <div className="text-5xl mb-4"><Sparkles className="w-12 h-12 text-vault-purple mx-auto" /></div>
               <h3 className="text-xl font-bold mb-2">More Add-ons</h3>
               <p className="text-gray-600 mb-4">Automation, analytics & more</p>
               <div className="text-3xl font-bold text-vault-purple mb-4">

@@ -42,14 +42,14 @@ function Home() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Hero Section - Outcome Focused */}
       <div className="text-center mb-20">
-        <h1 className="text-6xl font-bold mb-6">
+        <h1 className="text-6xl font-bold mb-6 animate-fade-in">
           Ship 10x Faster With the<br />
           <span className="text-gradient">CLI That Thinks Like You</span>
         </h1>
-                <p className="text-2xl text-gray-600 max-w-3xl mx-auto mb-4 leading-relaxed">
+                <p className="text-2xl text-gray-600 max-w-3xl mx-auto mb-4 leading-relaxed animate-fade-in reveal-delay-200">
           One command generates complete landing pages, workshops, and audits. Stop juggling 10 tools. Start creating freely with AI that learns your voice.
         </p>
-                <div className="mb-8 p-6 bg-gradient-to-r from-purple-50 to-cyan-50 rounded-xl max-w-2xl mx-auto border-2 border-purple-300 shadow-lg">
+                <div className="mb-8 p-6 bg-gradient-to-r from-purple-50 to-cyan-50 rounded-xl max-w-2xl mx-auto border-2 border-purple-300 shadow-lg animate-fade-in reveal-delay-400">
           <div className="flex items-center gap-4">
             <img 
               src="/images/brand/vauntico-unicorn-hero.png" 
@@ -66,7 +66,7 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-center gap-4 mb-8">
+        <div className="flex items-center justify-center gap-4 mb-8 animate-fade-in reveal-delay-600">
           <Link to="/pricing" className="btn-primary text-lg px-8 py-4">
             Start Free Trial →
           </Link>
@@ -74,7 +74,7 @@ function Home() {
             The Story Behind It
           </Link>
         </div>
-        <p className="text-gray-500">
+        <p className="text-gray-500 animate-fade-in reveal-delay-800">
           ✓ No credit card required &nbsp;•&nbsp; ✓ 14-day free trial &nbsp;•&nbsp; ✓ Cancel anytime
         </p>
       </div>
@@ -358,7 +358,7 @@ function Home() {
       </div>
     </div>
     </>
-  )
+  );
 }
 
 export default Home
