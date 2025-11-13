@@ -644,9 +644,17 @@ export const getUserCurrency = () => {
  */
 export const getLocalizedPrice = (product, productKey = null) => {
   const userCurrency = getUserCurrency()
-  
+  let source = product;
+
+  // If a productKey (for a sub-plan) is provided, use that for pricing info
+  if (productKey && product.plans && product.plans[productKey]) {
+    source = product.plans[productKey];
+  } else if (productKey && product.tiers && product.tiers[productKey]) {
+    source = product.tiers[productKey];
+  }
+
   // Handle custom pricing
-  if (product.price === 'custom') {
+  if (source.price === 'custom') {
     return {
       price: 'custom',
       currency: userCurrency,
@@ -654,25 +662,25 @@ export const getLocalizedPrice = (product, productKey = null) => {
       symbol: getCurrencySymbol(userCurrency)
     }
   }
-  
+
   // Get localized price if available
-  let price = product.price
-  let currency = product.currency || 'USD'
-  
-  if (product.localizedPrices && product.localizedPrices[userCurrency]) {
-    price = product.localizedPrices[userCurrency]
-    currency = userCurrency
+  let price = source.price;
+  let currency = source.currency || 'USD';
+
+  if (source.localizedPrices && source.localizedPrices[userCurrency]) {
+    price = source.localizedPrices[userCurrency];
+    currency = userCurrency;
   }
-  
-  const symbol = getCurrencySymbol(currency)
-  const formatted = formatPrice(price, currency)
-  
+
+  const symbol = getCurrencySymbol(currency);
+  const formatted = formatPrice(price, currency);
+
   return {
     price,
     currency,
     formatted,
     symbol
-  }
+  };
 }
 
 /**
