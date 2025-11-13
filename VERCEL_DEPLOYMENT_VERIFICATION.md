@@ -66,7 +66,7 @@
 
 **Required Variables:**
 ```
-VITE_STRIPE_PUBLISHABLE_KEY=pk_live_...
+VITE_PAYSTACK_PUBLIC_KEY=pk_live_...
 VITE_API_URL=https://your-backend.com
 ```
 
@@ -187,15 +187,15 @@ VITE_NOTION_WORKSPACE_ID=...
 **Navigate to:** `/vaults` → Select Vault → Click "Get Vault"
 
 **Expected:**
-1. ✅ Stripe payment modal opens
+1. ✅ Paystack payment modal opens
 2. ✅ Checkout form loads with correct product
 3. ✅ Test card (`4242 4242 4242 4242`) works in test mode
 4. ✅ Redirect to `/vault-success` after payment
 5. ✅ Success page displays confirmation
 
 **Environment Variables Check:**
-- ✅ `VITE_STRIPE_PUBLISHABLE_KEY` is injected
-- ✅ Stripe SDK loads without errors
+- ✅ `VITE_PAYSTACK_PUBLIC_KEY` is injected
+- ✅ Paystack SDK loads without errors
 
 ---
 
