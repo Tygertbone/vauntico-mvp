@@ -14,7 +14,10 @@ export default function PricingTable() {
         </ul>
         <CTAButton text="Join Monthly" />
       </div>
-      <div className="bg-gray-900 p-6 rounded-lg">
+      <div className="bg-gray-900 p-6 rounded-lg relative">
+        <div className="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-bl-lg">
+          Save $149
+        </div>
         <h3 className="text-xl font-bold text-vauntico-gold mb-2">Yearly</h3>
         <p className="text-white text-lg mb-2">$199/year</p>
         <ul className="text-gray-300 text-sm mb-4 list-disc list-inside">

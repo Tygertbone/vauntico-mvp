@@ -1,9 +1,10 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import SEO from '../components/SEO'
 import StructuredData from '../components/StructuredData'
 import { getLocalizedPrice, PRICING as PRICING_DATA, getUserCurrency, getApproximatePrice } from '../utils/pricing'
 
 function Pricing() {
+  const [billingCycle, setBillingCycle] = useState('monthly')
   // Get localized pricing
   const currentCurrency = useMemo(() => getUserCurrency(), [])
   const creatorPassPrice = useMemo(() => getLocalizedPrice(PRICING_DATA.CREATOR_PASS), [])
@@ -29,7 +30,7 @@ function Pricing() {
   const plans = [
     {
       name: 'Free',
-      price: '0',
+      price: { monthly: '0', annual: '0' },
       description: 'Perfect for getting started',
       features: [
         '3 Vaults',
@@ -43,10 +44,10 @@ function Pricing() {
       popular: false,
       color: 'gray',
     },
-        {
+    {
       name: 'Creator Pass',
-      price: creatorPassPrice.price,
-      priceFormatted: creatorPassPrice.formatted,
+      price: { monthly: creatorPassPrice.price, annual: '999' },
+      priceFormatted: { monthly: creatorPassPrice.formatted, annual: '$999' },
       currency: creatorPassPrice.currency,
       description: 'For serious content creators',
       features: [
@@ -65,7 +66,7 @@ function Pricing() {
     },
     {
       name: 'Enterprise',
-      price: 'Custom',
+      price: { monthly: 'Custom', annual: 'Custom' },
       description: 'For large teams and organizations',
       features: [
         'Everything in Creator Pass',
@@ -156,10 +157,24 @@ function Pricing() {
         
         {/* Billing Toggle */}
         <div className="inline-flex items-center bg-gray-100 rounded-full p-1">
-          <button className="px-6 py-2 rounded-full bg-white shadow-sm font-medium">
+          <button
+            onClick={() => setBillingCycle('monthly')}
+            className={`px-6 py-2 rounded-full font-medium ${
+              billingCycle === 'monthly'
+                ? 'bg-white shadow-sm'
+                : 'text-gray-600'
+            }`}
+          >
             Monthly
           </button>
-          <button className="px-6 py-2 rounded-full font-medium text-gray-600">
+          <button
+            onClick={() => setBillingCycle('annual')}
+            className={`px-6 py-2 rounded-full font-medium ${
+              billingCycle === 'annual'
+                ? 'bg-white shadow-sm'
+                : 'text-gray-600'
+            }`}
+          >
             Annual <span className="text-green-600 text-sm ml-1">(Save 20%)</span>
           </button>
         </div>
@@ -171,8 +186,8 @@ function Pricing() {
           <div
             key={index}
             className={`card ${
-              plan.popular 
-                ? 'border-2 border-vault-purple shadow-2xl scale-105 relative' 
+              plan.popular
+                ? 'border-2 border-vault-purple shadow-2xl scale-105 relative'
                 : ''
             }`}
           >
@@ -183,22 +198,26 @@ function Pricing() {
                 </span>
               </div>
             )}
-            
+
             <div className="text-center mb-6">
               <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
               <p className="text-gray-600 mb-4">{plan.description}</p>
               <div className="flex items-end justify-center mb-2">
-                                {plan.price === 'Custom' ? (
-                  <span className="text-4xl font-bold">{plan.price}</span>
+                {plan.price[billingCycle] === 'Custom' ? (
+                  <span className="text-4xl font-bold">{plan.price[billingCycle]}</span>
                 ) : (
                   <>
-                    <span className="text-5xl font-bold">{plan.priceFormatted || `$${plan.price}`}</span>
-                    <span className="text-gray-600 ml-2 mb-2">/month</span>
+                    <span className="text-5xl font-bold">
+                      {plan.priceFormatted ? plan.priceFormatted[billingCycle] : `$${plan.price[billingCycle]}`}
+                    </span>
+                    <span className="text-gray-600 ml-2 mb-2">
+                      /{billingCycle === 'monthly' ? 'month' : 'year'}
+                    </span>
                   </>
                 )}
               </div>
             </div>
-            
+
             <ul className="space-y-3 mb-8">
               {plan.features.map((feature, idx) => (
                 <li key={idx} className="flex items-start">
