@@ -1,41 +1,20 @@
-import { useEffect } from 'react'
+import { Helmet } from 'react-helmet-async'
 
 /**
- * StructuredData Component - Inject JSON-LD schema
+ * StructuredData Component - Inject JSON-LD schema using React Helmet
  * 
  * Usage:
  * <StructuredData type="Product" data={{ name: "...", price: "..." }} />
  */
 function StructuredData({ type, data }) {
-  useEffect(() => {
-    const schema = generateSchema(type, data)
-    if (!schema) return
+  const schema = generateSchema(type, data)
+  if (!schema) return null
 
-    const scriptId = `structured-data-${type.toLowerCase()}`
-    
-    // Remove existing script if present
-    const existingScript = document.getElementById(scriptId)
-    if (existingScript) {
-      existingScript.remove()
-    }
-
-    // Add new script
-    const script = document.createElement('script')
-    script.id = scriptId
-    script.type = 'application/ld+json'
-    script.text = JSON.stringify(schema)
-    document.head.appendChild(script)
-
-    // Cleanup on unmount
-    return () => {
-      const scriptToRemove = document.getElementById(scriptId)
-      if (scriptToRemove) {
-        scriptToRemove.remove()
-      }
-    }
-  }, [type, data])
-
-  return null
+  return (
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(schema)}</script>
+    </Helmet>
+  )
 }
 
 // Schema generators
