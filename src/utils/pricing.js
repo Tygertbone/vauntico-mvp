@@ -735,9 +735,24 @@ export const getApproximatePrice = (price, fromCurrency, toCurrency) => {
  */
 export const formatPrice = (price, currency = 'ZAR') => {
   if (price === 'custom') return 'Custom Pricing'
-  
-  const symbol = getCurrencySymbol(currency)
-  return `${symbol}${price.toLocaleString()}`
+
+  try {
+    const formatted = new Intl.NumberFormat(undefined, {
+      style: 'currency',
+      currency: currency,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(price);
+
+    if (currency === 'ZAR') {
+      return formatted.replace(/ZAR\s/g, 'R');
+    }
+    return formatted;
+  } catch (e) {
+    // Fallback for unsupported currencies or errors
+    const symbol = getCurrencySymbol(currency);
+    return `${symbol}${price}`;
+  }
 }
 
 /**
