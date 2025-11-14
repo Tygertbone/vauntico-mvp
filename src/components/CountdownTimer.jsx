@@ -15,7 +15,7 @@ export default function CountdownTimer({ deadline = null, title = "Limited Time 
     return newDeadline
   }
 
-  const [timeLeft, setTimeLeft] = useState({})
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
   const [isExpired, setIsExpired] = useState(false)
 
   useEffect(() => {
