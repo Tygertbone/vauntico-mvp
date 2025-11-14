@@ -24,7 +24,7 @@ const PaystackButton = ({
     
     initializePaystackPayment(
       userEmail,
-      amount,
+      amount * 100,
       async (response) => {
         // Payment successful - verify payment
         console.log('Payment successful:', response)

@@ -45,13 +45,11 @@ function PageLoader() {
   )
 }
 
-function App() {
+export function AppContent() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
 
     return (
-    <ErrorBoundary>
-      <Router>
         <div className="min-h-screen bg-gray-50">
                         {/* Launch Banner */}
         <div className="bg-gradient-to-r from-purple-600 to-green-600 text-white py-3 text-center">
@@ -353,7 +351,6 @@ function App() {
                 <ul className="space-y-2 text-gray-400">
                   <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
                   <li><a href="mailto:hello@vauntico.com" className="hover:text-white transition-colors">Contact</a></li>
-                  <li><Link to="/ascend" className="hover:text-white transition-colors">🏔️ Ascend</Link></li>
                 </ul>
               </div>
             </div>
@@ -370,6 +367,14 @@ function App() {
           </div>
                 </footer>
         </div>
+  )
+}
+
+function App() {
+  return (
+    <ErrorBoundary>
+      <Router>
+        <AppContent />
       </Router>
     </ErrorBoundary>
   )

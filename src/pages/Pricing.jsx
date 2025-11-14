@@ -140,6 +140,11 @@ function Pricing() {
               name: 'Creator Pass',
               price: creatorPassPrice.price.toString(),
               priceCurrency: creatorPassPrice.currency
+            },
+            {
+              '@type': 'Offer',
+              name: 'Enterprise',
+              price: 'Custom',
             }
           ]
         }}
