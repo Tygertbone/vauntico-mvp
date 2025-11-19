@@ -206,11 +206,59 @@ export const checkoutWorkshopKit = async (userEmail = '', paymentType = 'one_tim
       key: PAYSTACK_PUBLIC_KEY,
       email: userEmail || 'customer@vauntico.com',
       currency: 'ZAR',
-      ref: reference
+      ref: reference,
+      metadata: {
+        custom_fields: [
+          {
+            display_name: 'Product',
+            variable_name: 'product',
+            value: 'The R2,000 Challenge'
+          },
+          {
+            display_name: 'Customer Name',
+            variable_name: 'customer_name',
+            value: name || 'Not provided'
+          },
+          {
+            display_name: 'Payment Type',
+            variable_name: 'payment_type',
+            value: paymentType === 'one_time' ? 'R997 One-time' : '3x R349 Plan'
+          }
+        ]
+      },
+      callback: function(response) {
+        console.log('✅ Payment successful:', response.reference)
+        
+        const savedPaymentData = {
+          reference: response.reference,
+          email: userEmail,
+          amount: paymentType === 'one_time' ? 99700 : 34900,
+          currency: 'ZAR',
+          product: 'r2000_challenge',
+          payment_type: paymentType,
+          timestamp: new Date().toISOString(),
+          status: 'success'
+        }
+        
+        localStorage.setItem('vauntico_workshop_kit_payment', JSON.stringify(savedPaymentData))
+        localStorage.setItem('vauntico_workshop_kit', 'true')
+        
+        if (window.VaunticoAnalytics && window.VaunticoAnalytics.trackEvent) {
+          window.VaunticoAnalytics.trackEvent('r2000_challenge_purchased', {
+            reference: response.reference,
+            payment_type: paymentType,
+            amount: paymentType === 'one_time' ? 997 : 349
+          })
+        }
+        
+        window.location.href = `/workshop-kit/success?ref=${response.reference}`
+      },
+      onClose: function() {
+        console.log('Payment window closed')
+      }
     }
 
-    // For one-time payment: use amount (in kobo)
-    // For payment plan: use plan code (NO amount!)
+    // CRITICAL: For one-time payment use amount, for payment plan use plan code ONLY
     if (paymentType === 'one_time') {
       setupConfig.amount = paymentData  // 99700 kobo (R997)
       console.log('✅ Using one-time payment with amount:', paymentData, 'kobo (R' + (paymentData / 100) + ')')
@@ -222,64 +270,7 @@ export const checkoutWorkshopKit = async (userEmail = '', paymentType = 'one_tim
       throw new Error(`Unknown payment type: ${paymentType}`)
     }
 
-    // Add metadata
-    setupConfig.metadata = {
-      custom_fields: [
-        {
-          display_name: 'Product',
-          variable_name: 'product',
-          value: 'The R2,000 Challenge'
-        },
-        {
-          display_name: 'Customer Name',
-          variable_name: 'customer_name',
-          value: name || 'Not provided'
-        },
-        {
-          display_name: 'Payment Type',
-          variable_name: 'payment_type',
-          value: paymentType === 'one_time' ? 'R997 One-time' : '3x R349 Plan'
-        }
-      ]
-    }
-
-    // Add callback
-    setupConfig.callback = function(response) {
-      console.log('✅ Payment successful:', response.reference)
-      
-      // Save payment locally
-      const savedPaymentData = {
-        reference: response.reference,
-        email: userEmail,
-        amount: paymentType === 'one_time' ? 99700 : 34900,
-        currency: 'ZAR',
-        product: 'r2000_challenge',
-        payment_type: paymentType,
-        timestamp: new Date().toISOString(),
-        status: 'success'
-      }
-      
-      localStorage.setItem('vauntico_workshop_kit_payment', JSON.stringify(savedPaymentData))
-      localStorage.setItem('vauntico_workshop_kit', 'true')
-      
-      // Track success
-      if (window.VaunticoAnalytics && window.VaunticoAnalytics.trackEvent) {
-        window.VaunticoAnalytics.trackEvent('r2000_challenge_purchased', {
-          reference: response.reference,
-          payment_type: paymentType,
-          amount: paymentType === 'one_time' ? 997 : 349
-        })
-      }
-      
-      // Redirect to success page
-      window.location.href = `/workshop-kit/success?ref=${response.reference}`
-    }
-
-    setupConfig.onClose = function() {
-      console.log('Payment window closed')
-    }
-
-    // NOW create the handler with the complete config
+    // Create the handler with the complete config
     console.log('📦 Final Paystack config:', setupConfig)
     const handler = PaystackPop.setup(setupConfig)
     handler.openIframe()

@@ -72,11 +72,7 @@ export const loadStripe = async () => {
   }
 
   stripeInstance = window.Stripe(STRIPE_PUBLIC_KEY)
-
-    stripeInstance = window.Stripe(STRIPE_PUBLIC_KEY)
-  if (import.meta.env.DEV) {
-    console.log('✅ Stripe initialized')
-  }
+  console.log('✅ Stripe initialized')
   return stripeInstance
 }
 
@@ -104,15 +100,9 @@ export const checkoutCreatorPass = async (tier, billingCycle = 'monthly', userEm
     // Get Stripe price ID
     const priceId = STRIPE_PRICE_IDS.CREATOR_PASS[tier][billingCycle]
     
-
-
-
-
-
-        if (priceId.startsWith('price_')) {
-      if (import.meta.env.DEV) {
-        console.warn('⚠️  Stripe price ID not configured. Set up products in Stripe Dashboard.')
-      }
+    if (priceId.startsWith('price_')) {
+      // TODO: Replace with actual Stripe price ID
+      console.warn('⚠️  Stripe price ID not configured. Set up products in Stripe Dashboard.')
       alert('Payment system not yet configured. Please contact support.')
       return
     }
@@ -146,24 +136,12 @@ export const checkoutCreatorPass = async (tier, billingCycle = 'monthly', userEm
       sessionId: session.id,
     })
 
-
-
-
-
-
-
-
-
-        if (error) {
-      if (import.meta.env.DEV) {
-        console.error('Stripe checkout error:', error)
-      }
+    if (error) {
+      console.error('Stripe checkout error:', error)
       alert('Payment failed. Please try again.')
     }
   } catch (error) {
-    if (import.meta.env.DEV) {
-      console.error('Checkout error:', error)
-    }
+    console.error('Checkout error:', error)
     alert('Something went wrong. Please try again.')
   }
 }
@@ -176,14 +154,8 @@ export const checkoutWorkshopKit = async (userEmail = null) => {
   try {
     const priceId = STRIPE_PRICE_IDS.WORKSHOP_KIT.oneTime
     
-
-
-
-
-        if (priceId.startsWith('price_')) {
-      if (import.meta.env.DEV) {
-        console.warn('⚠️  Stripe price ID not configured')
-      }
+    if (priceId.startsWith('price_')) {
+      console.warn('⚠️  Stripe price ID not configured')
       alert('Payment system not yet configured. Please contact support.')
       return
     }
@@ -211,24 +183,12 @@ export const checkoutWorkshopKit = async (userEmail = null) => {
       sessionId: session.id,
     })
 
-
-
-
-
-
-
-
-
-        if (error) {
-      if (import.meta.env.DEV) {
-        console.error('Stripe checkout error:', error)
-      }
+    if (error) {
+      console.error('Stripe checkout error:', error)
       alert('Payment failed. Please try again.')
     }
   } catch (error) {
-    if (import.meta.env.DEV) {
-      console.error('Checkout error:', error)
-    }
+    console.error('Checkout error:', error)
     alert('Something went wrong. Please try again.')
   }
 }
@@ -248,14 +208,8 @@ export const checkoutAuditService = async (plan, userEmail = null) => {
 
     const priceId = STRIPE_PRICE_IDS.AUDIT_SERVICE[plan]
     
-
-
-
-
-        if (priceId.startsWith('price_')) {
-      if (import.meta.env.DEV) {
-        console.warn('⚠️  Stripe price ID not configured')
-      }
+    if (priceId.startsWith('price_')) {
+      console.warn('⚠️  Stripe price ID not configured')
       alert('Payment system not yet configured. Please contact support.')
       return
     }
@@ -284,24 +238,12 @@ export const checkoutAuditService = async (plan, userEmail = null) => {
       sessionId: session.id,
     })
 
-
-
-
-
-
-
-
-
-        if (error) {
-      if (import.meta.env.DEV) {
-        console.error('Stripe checkout error:', error)
-      }
+    if (error) {
+      console.error('Stripe checkout error:', error)
       alert('Payment failed. Please try again.')
     }
   } catch (error) {
-    if (import.meta.env.DEV) {
-      console.error('Checkout error:', error)
-    }
+    console.error('Checkout error:', error)
     alert('Something went wrong. Please try again.')
   }
 }
@@ -315,18 +257,11 @@ export const checkoutAuditService = async (plan, userEmail = null) => {
  * This simulates a successful payment and updates local state
  * USE ONLY FOR DEVELOPMENT - Remove in production
  */
-
-
-
-
-
 export const mockCheckout = async (product, tier = null, billingCycle = null) => {
-  if (import.meta.env.DEV) {
-    console.log('🧪 MOCK CHECKOUT - This is for testing only')
-    console.log(`Product: ${product}`)
-    if (tier) console.log(`Tier: ${tier}`)
-    if (billingCycle) console.log(`Billing: ${billingCycle}`)
-  }
+  console.log('🧪 MOCK CHECKOUT - This is for testing only')
+  console.log(`Product: ${product}`)
+  if (tier) console.log(`Tier: ${tier}`)
+  if (billingCycle) console.log(`Billing: ${billingCycle}`)
 
   // Simulate payment processing delay
   await new Promise(resolve => setTimeout(resolve, 2000))
@@ -385,13 +320,8 @@ export const openCustomerPortal = async () => {
 
     const session = await response.json()
     window.location.href = session.url
-
-
-
-    } catch (error) {
-    if (import.meta.env.DEV) {
-      console.error('Portal error:', error)
-    }
+  } catch (error) {
+    console.error('Portal error:', error)
     alert('Unable to open billing portal. Please try again.')
   }
 }
@@ -457,13 +387,8 @@ export const verifyPayment = async (sessionId) => {
     }
 
     return { success: false, error: 'Payment not completed' }
-
-
-
-    } catch (error) {
-    if (import.meta.env.DEV) {
-      console.error('Verification error:', error)
-    }
+  } catch (error) {
+    console.error('Verification error:', error)
     return { success: false, error: error.message }
   }
 }
