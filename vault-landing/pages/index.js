@@ -1,1 +1,1 @@
-export default () => 'Vault Landing Alive'
+export default () => "Vault Landing Alive";
