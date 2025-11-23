@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-﻿# Dependencies
+# Dependencies
 node_modules/
 .pnpm-store/
 .yarn/
@@ -78,11 +77,3 @@ docs/
 !vercel.json
 !components.json
 .vercel
-=======
-node_modules/ node_modules/
-node_modules/
-node_modules/
-node_modules/
-.vscode/
-.continue/
->>>>>>> e72fc940 (chore: cleanup ignores)
