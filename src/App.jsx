@@ -14,7 +14,7 @@ const Vaults = lazy(() => import('./pages/Vaults'))
 const DreamMover = lazy(() => import('./pages/DreamMover'))
 const Pricing = lazy(() => import('./pages/Pricing'))
 const WorkshopKit = lazy(() => import('./pages/WorkshopKit'))
-const WorkshopKitSuccess = lazy(() => import('./pages/WorkshopKitSuccess'))
+const VaultSuccessPage = lazy(() => import('./pages/VaultSuccessPage'))
 const AuditService = lazy(() => import('./pages/AuditService'))
 const Addons = lazy(() => import('./pages/Addons'))
 const LoreVault = lazy(() => import('./pages/LoreVault'))
@@ -58,12 +58,12 @@ export function AppContent() {
             <span className="font-semibold">
               The R2,000 Challenge is LIVE! Start building your creator income today →
             </span>
-            <a
-              href="/workshop-kit"
+            <Link
+              to="/workshop-kit"
               className="bg-white text-purple-600 px-4 py-1 rounded-full text-sm font-bold hover:bg-purple-50 transition-colors"
             >
               Join Now
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -137,7 +137,7 @@ export function AppContent() {
                                                                 <Link to="/pricing" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   Pricing
                 </Link>
-                                                <Link to="/lore" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
+                                                <Link to="/lore-vault" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   📚 Lore
                 </Link>
                                 <Link to="/about" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
@@ -170,10 +170,10 @@ export function AppContent() {
 
               {/* Desktop CTA buttons */}
               <div className="hidden lg:flex items-center space-x-4">
-                <button className="btn-outline text-sm" aria-label="Sign in to your account">
+                <button className="btn-outline text-sm" aria-label="Sign in to your account" onClick={() => console.log('Sign In clicked')}>
                   Sign In
                 </button>
-                <button className="btn-primary text-sm" aria-label="Get started with Vauntico">
+                <button className="btn-primary text-sm" aria-label="Get started with Vauntico" onClick={() => console.log('Get Started clicked')}>
                   Get Started
                 </button>
               </div>
@@ -239,7 +239,7 @@ export function AppContent() {
                   Pricing
                 </Link>
                 <Link 
-                  to="/lore" 
+                  to="/lore-vault"
                   className="block text-gray-700 hover:text-vault-purple font-medium transition-colors py-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -261,10 +261,10 @@ export function AppContent() {
                 </Link>
                 
                 <div className="border-t border-gray-200 pt-4 space-y-3">
-                  <button className="btn-outline w-full" aria-label="Sign in to your account">
+                  <button className="btn-outline w-full" aria-label="Sign in to your account" onClick={() => console.log('Sign In clicked')}>
                     Sign In
                   </button>
-                  <button className="btn-primary w-full" aria-label="Get started with Vauntico">
+                  <button className="btn-primary w-full" aria-label="Get started with Vauntico" onClick={() => console.log('Get Started clicked')}>
                     Get Started
                   </button>
                 </div>
@@ -283,7 +283,7 @@ export function AppContent() {
             <Route path="/vaults" element={<Vaults />} />
             <Route path="/dream-mover" element={<DreamMover />} />
             <Route path="/workshop-kit" element={<WorkshopKit />} />
-            <Route path="/workshop-kit/success" element={<WorkshopKitSuccess />} />
+            <Route path="/workshop-kit/success" element={<VaultSuccessPage />} />
             <Route path="/audit-service" element={<AuditService />} />
             <Route path="/addons" element={<Addons />} />
                         <Route path="/pricing" element={<Pricing />} />
@@ -332,7 +332,7 @@ export function AppContent() {
                   <li><Link to="/vaults" className="hover:text-white transition-colors">Vaults</Link></li>
                   <li><Link to="/dream-mover" className="hover:text-white transition-colors">Dream Mover</Link></li>
                                     <li><Link to="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-                  <li><Link to="/lore" className="hover:text-white transition-colors">📚 Lore Vault</Link></li>
+                  <li><Link to="/lore-vault" className="hover:text-white transition-colors">📚 Lore Vault</Link></li>
                   <li><Link to="/ascend" className="hover:text-white transition-colors">🏔️ Ascend</Link></li>
                 </ul>
               </div>
