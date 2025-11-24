@@ -35,6 +35,11 @@ const MysticalTest = lazy(() => import('./pages/MysticalTest'))
 const R2000Dashboard = lazy(() => import('./pages/r2000/R2000Dashboard'))
 const DayLesson = lazy(() => import('./pages/r2000/DayLesson'))
 
+// Auth Pages (lazy)
+const SignIn = lazy(() => import('./pages/SignIn'))
+const SignUp = lazy(() => import('./pages/SignUp'))
+const Welcome = lazy(() => import('./pages/Welcome'))
+
 // Loading fallback component
 function PageLoader() {
   return (
@@ -174,12 +179,12 @@ function App() {
 
               {/* Desktop CTA buttons */}
               <div className="hidden lg:flex items-center space-x-4">
-                <button className="btn-outline text-sm" aria-label="Sign in to your account">
+                <Link to="/signin" className="btn-outline text-sm" aria-label="Sign in to your account">
                   Sign In
-                </button>
-                <button className="btn-primary text-sm" aria-label="Get started with Vauntico">
+                </Link>
+                <Link to="/signup" className="btn-primary text-sm" aria-label="Get started with Vauntico">
                   Get Started
-                </button>
+                </Link>
               </div>
                         </div>
           </div>
@@ -265,12 +270,12 @@ function App() {
                 </Link>
                 
                 <div className="border-t border-gray-200 pt-4 space-y-3">
-                  <button className="btn-outline w-full" aria-label="Sign in to your account">
+                  <Link to="/signin" className="btn-outline w-full text-center" aria-label="Sign in to your account">
                     Sign In
-                  </button>
-                  <button className="btn-primary w-full" aria-label="Get started with Vauntico">
+                  </Link>
+                  <Link to="/signup" className="btn-primary w-full text-center" aria-label="Get started with Vauntico">
                     Get Started
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -313,6 +318,11 @@ function App() {
             {/* 🎯 Creator Quests System */}
             <Route path="/quests" element={<Quests />} />
             
+            {/* Auth Routes */}
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/welcome" element={<Welcome />} />
+
             {/* 404 Catch-all */}
             <Route path="*" element={<NotFound />} />
             </Routes>
