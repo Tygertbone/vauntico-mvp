@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import App from './App.jsx'
 import './index.css'
 import { initPerformanceMonitoring } from './utils/performance.js'
-import { AuthProvider } from './contexts/AuthContext.js'
+import { AuthProvider } from './contexts/AuthContext.jsx'
 
 const queryClient = new QueryClient()
 
