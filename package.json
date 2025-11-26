@@ -16,12 +16,16 @@
     "validate": "npm run lint && npm run build"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.11",
     "crypto-js": "^4.2.0",
+    "lucide-react": "^0.554.0",
     "mixpanel-browser": "^2.71.0",
     "react": "^18.2.0",
+    "react-confetti": "^6.4.0",
     "react-dom": "^18.2.0",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^6.21.0",
+    "recharts": "^3.5.0",
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {

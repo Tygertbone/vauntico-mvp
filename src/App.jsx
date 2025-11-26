@@ -9,6 +9,7 @@ import NotFound from './pages/NotFound'
 
 // Lazy load all other pages
 const Dashboard = lazy(() => import('./pages/Dashboard'))
+const TrustScoreDashboard = lazy(() => import('./pages/TrustScoreDashboard'))
 const CreatorPass = lazy(() => import('./pages/CreatorPass'))
 const Vaults = lazy(() => import('./pages/Vaults'))
 const DreamMover = lazy(() => import('./pages/DreamMover'))
@@ -94,6 +95,9 @@ export function AppContent() {
                 </Link>
                 <Link to="/creator-pass" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   Creator Pass
+                </Link>
+                <Link to="/dashboard/trust-score" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
+                  Trust Score
                 </Link>
                 <Link to="/vaults" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   Vaults
@@ -279,6 +283,7 @@ export function AppContent() {
             <Routes>
                         <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/trust-score" element={<TrustScoreDashboard />} />
             <Route path="/creator-pass" element={<CreatorPass />} />
             <Route path="/vaults" element={<Vaults />} />
             <Route path="/dream-mover" element={<DreamMover />} />
