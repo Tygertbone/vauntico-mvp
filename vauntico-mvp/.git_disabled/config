@@ -1,0 +1,23 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[branch "main"]
+	vscode-merge-base = origin/main
+[lfs]
+	repositoryformatversion = 0
+[branch "master"]
+	vscode-merge-base = origin/master
+[branch "production"]
+	vscode-merge-base = origin/production
+[user]
+	email = tyatjamesd@gmail.com
+	name = Tyrone James
+[branch "feat/fix-livechat-bug"]
+	vscode-merge-base = origin/main
+[remote "origin"]
+	url = https://github.com/Tygertbone/vauntico-frontend.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
