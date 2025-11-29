@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { useState, lazy, Suspense } from 'react'
 import ErrorBoundary from './components/ErrorBoundary'
 import LoadingSpinner from './components/LoadingSpinner'
+import { AuthProvider, useAuth } from './components/auth/AuthProvider'
 
 // Eager load homepage (critical)
 import Home from './pages/Home'
@@ -51,7 +52,8 @@ function App() {
 
     return (
     <ErrorBoundary>
-      <Router>
+      <AuthProvider>
+        <Router>
         <div className="min-h-screen bg-gray-50">
                         {/* Launch Banner */}
         <div className="bg-gradient-to-r from-purple-600 to-green-600 text-white py-3 text-center">
@@ -370,7 +372,8 @@ function App() {
           </div>
                 </footer>
         </div>
-      </Router>
+        </Router>
+      </AuthProvider>
     </ErrorBoundary>
   )
 }
