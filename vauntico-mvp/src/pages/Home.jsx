@@ -67,7 +67,7 @@ function Home() {
           </div>
         </div>
         <div className="flex items-center justify-center gap-4 mb-8">
-          <Link to="/pricing" className="btn-primary text-lg px-8 py-4">
+          <Link to="/signup" className="btn-primary text-lg px-8 py-4">
             Start Free Trial →
           </Link>
           <Link to="/about" className="btn-outline text-lg px-8 py-4">
@@ -345,7 +345,7 @@ function Home() {
           Join thousands of creators who've stopped fighting their tools and started shipping faster.
         </p>
         <div className="flex items-center justify-center gap-4 mb-6">
-          <Link to="/pricing" className="btn-primary text-xl px-10 py-5">
+          <Link to="/signup" className="btn-primary text-xl px-10 py-5">
             Start Free Trial →
           </Link>
           <Link to="/lore" className="btn-outline text-xl px-10 py-5">
