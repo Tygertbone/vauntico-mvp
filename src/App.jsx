@@ -1,5 +1,7 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { useState, lazy, Suspense } from 'react'
+import { HelmetProvider } from 'react-helmet-async'
+import { AuthProvider } from './components/auth/AuthProvider'
 import ErrorBoundary from './components/ErrorBoundary'
 import LoadingSpinner from './components/LoadingSpinner'
 
@@ -377,11 +379,15 @@ export function AppContent() {
 
 function App() {
   return (
-    <ErrorBoundary>
-      <Router>
-        <AppContent />
-      </Router>
-    </ErrorBoundary>
+    <HelmetProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <ErrorBoundary>
+            <AppContent />
+          </ErrorBoundary>
+        </BrowserRouter>
+      </AuthProvider>
+    </HelmetProvider>
   )
 }
 
