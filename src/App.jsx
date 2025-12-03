@@ -1,7 +1,5 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+﻿import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { useState, lazy, Suspense } from 'react'
-import { HelmetProvider } from 'react-helmet-async'
-import { AuthProvider } from './components/auth/AuthProvider'
 import ErrorBoundary from './components/ErrorBoundary'
 import LoadingSpinner from './components/LoadingSpinner'
 
@@ -11,30 +9,24 @@ import NotFound from './pages/NotFound'
 
 // Lazy load all other pages
 const Dashboard = lazy(() => import('./pages/Dashboard'))
-const TrustScoreDashboard = lazy(() => import('./pages/TrustScoreDashboard'))
 const CreatorPass = lazy(() => import('./pages/CreatorPass'))
 const Vaults = lazy(() => import('./pages/Vaults'))
 const DreamMover = lazy(() => import('./pages/DreamMover'))
 const Pricing = lazy(() => import('./pages/Pricing'))
 const WorkshopKit = lazy(() => import('./pages/WorkshopKit'))
-const VaultSuccessPage = lazy(() => import('./pages/VaultSuccessPage'))
+
 const AuditService = lazy(() => import('./pages/AuditService'))
 const Addons = lazy(() => import('./pages/Addons'))
 const LoreVault = lazy(() => import('./pages/LoreVault'))
 const Ascend = lazy(() => import('./pages/Ascend'))
+
 const About = lazy(() => import('./pages/About'))
 const Philosophy = lazy(() => import('./pages/Philosophy'))
 const Referrals = lazy(() => import('./pages/Referrals'))
 
-// Competitor Comparison Pages (lazy)
-const VsJasper = lazy(() => import('./pages/vs/VsJasper'))
-const VsChatGPT = lazy(() => import('./pages/vs/VsChatGPT'))
-const VsNotion = lazy(() => import('./pages/vs/VsNotion'))
-const VsCopyAI = lazy(() => import('./pages/vs/VsCopyAI'))
 
-// R2,000 Challenge Pages (lazy)
-const R2000Dashboard = lazy(() => import('./pages/r2000/R2000Dashboard'))
-const DayLesson = lazy(() => import('./pages/r2000/DayLesson'))
+
+
 
 // Loading fallback component
 function PageLoader() {
@@ -48,25 +40,27 @@ function PageLoader() {
   )
 }
 
-export function AppContent() {
+function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
 
     return (
+    <ErrorBoundary>
+      <Router>
         <div className="min-h-screen bg-gray-50">
                         {/* Launch Banner */}
         <div className="bg-gradient-to-r from-purple-600 to-green-600 text-white py-3 text-center">
           <div className="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-center gap-4">
-            <span className="text-xl">🎉</span>
+            <span className="text-xl">ðŸŽ‰</span>
             <span className="font-semibold">
-              The R2,000 Challenge is LIVE! Start building your creator income today →
+              The R2,000 Challenge is LIVE! Start building your creator income today â†’
             </span>
-            <Link
-              to="/workshop-kit"
+            <a
+              href="/workshop-kit"
               className="bg-white text-purple-600 px-4 py-1 rounded-full text-sm font-bold hover:bg-purple-50 transition-colors"
             >
               Join Now
-            </Link>
+            </a>
           </div>
         </div>
 
@@ -98,9 +92,6 @@ export function AppContent() {
                 <Link to="/creator-pass" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   Creator Pass
                 </Link>
-                <Link to="/dashboard/trust-score" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
-                  Trust Score
-                </Link>
                 <Link to="/vaults" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   Vaults
                 </Link>
@@ -130,27 +121,27 @@ export function AppContent() {
                     aria-label="Services submenu"
                   >
                     <Link to="/workshop-kit" className="block px-4 py-3 text-gray-700 hover:bg-vault-purple hover:text-white rounded-t-lg transition-colors">
-                      🎁 Workshop Kit
+                      ðŸŽ Workshop Kit
                     </Link>
                     <Link to="/audit-service" className="block px-4 py-3 text-gray-700 hover:bg-vault-purple hover:text-white transition-colors">
-                      🔍 Audit Service
+                      ðŸ” Audit Service
                     </Link>
                     <Link to="/addons" className="block px-4 py-3 text-gray-700 hover:bg-vault-purple hover:text-white rounded-b-lg transition-colors">
-                      ⚡ Add-ons
+                      âš¡ Add-ons
                     </Link>
                   </div>
                 </div>
                                                                 <Link to="/pricing" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   Pricing
                 </Link>
-                                                <Link to="/lore-vault" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
-                  📚 Lore
+                                                <Link to="/lore" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
+                  ðŸ“š Lore
                 </Link>
                                 <Link to="/about" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
                   About
                 </Link>
                 <Link to="/philosophy" className="text-gray-700 hover:text-vault-purple font-medium transition-colors">
-                  ✨ Philosophy
+                  âœ¨ Philosophy
                 </Link>
               </div>
               
@@ -176,12 +167,12 @@ export function AppContent() {
 
               {/* Desktop CTA buttons */}
               <div className="hidden lg:flex items-center space-x-4">
-                <button className="btn-outline text-sm" aria-label="Sign in to your account" onClick={() => console.log('Sign In clicked')}>
+                <Link to="/signin" className="btn-outline text-sm" aria-label="Sign in to your account">
                   Sign In
-                </button>
-                <button className="btn-primary text-sm" aria-label="Get started with Vauntico" onClick={() => console.log('Get Started clicked')}>
+                </Link>
+                <Link to="/signup" className="btn-primary text-sm" aria-label="Get started with Vauntico">
                   Get Started
-                </button>
+                </Link>
               </div>
                         </div>
           </div>
@@ -219,21 +210,21 @@ export function AppContent() {
                     className="block text-gray-700 hover:text-vault-purple transition-colors py-2 pl-4"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    🎁 Workshop Kit
+                    ðŸŽ Workshop Kit
                   </Link>
                   <Link 
                     to="/audit-service" 
                     className="block text-gray-700 hover:text-vault-purple transition-colors py-2 pl-4"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    🔍 Audit Service
+                    ðŸ” Audit Service
                   </Link>
                   <Link 
                     to="/addons" 
                     className="block text-gray-700 hover:text-vault-purple transition-colors py-2 pl-4"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    ⚡ Add-ons
+                    âš¡ Add-ons
                   </Link>
                 </div>
                 
@@ -245,11 +236,11 @@ export function AppContent() {
                   Pricing
                 </Link>
                 <Link 
-                  to="/lore-vault"
+                  to="/lore" 
                   className="block text-gray-700 hover:text-vault-purple font-medium transition-colors py-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  📚 Lore
+                  ðŸ“š Lore
                 </Link>
                                 <Link 
                   to="/about" 
@@ -263,16 +254,16 @@ export function AppContent() {
                   className="block text-gray-700 hover:text-vault-purple font-medium transition-colors py-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  ✨ Philosophy
+                  âœ¨ Philosophy
                 </Link>
                 
                 <div className="border-t border-gray-200 pt-4 space-y-3">
-                  <button className="btn-outline w-full" aria-label="Sign in to your account" onClick={() => console.log('Sign In clicked')}>
+                  <Link to="/signin" className="btn-outline w-full text-center" aria-label="Sign in to your account">
                     Sign In
-                  </button>
-                  <button className="btn-primary w-full" aria-label="Get started with Vauntico" onClick={() => console.log('Get Started clicked')}>
+                  </Link>
+                  <Link to="/signup" className="btn-primary w-full text-center" aria-label="Get started with Vauntico">
                     Get Started
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -285,12 +276,11 @@ export function AppContent() {
             <Routes>
                         <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard/trust-score" element={<TrustScoreDashboard />} />
             <Route path="/creator-pass" element={<CreatorPass />} />
             <Route path="/vaults" element={<Vaults />} />
             <Route path="/dream-mover" element={<DreamMover />} />
             <Route path="/workshop-kit" element={<WorkshopKit />} />
-            <Route path="/workshop-kit/success" element={<VaultSuccessPage />} />
+
             <Route path="/audit-service" element={<AuditService />} />
             <Route path="/addons" element={<Addons />} />
                         <Route path="/pricing" element={<Pricing />} />
@@ -300,16 +290,9 @@ export function AppContent() {
             <Route path="/philosophy" element={<Philosophy />} />
             <Route path="/referrals" element={<Referrals />} />
             
-                                    {/* Competitor Comparison Pages */}
-            <Route path="/vs/jasper" element={<VsJasper />} />
-            <Route path="/vs/chatgpt" element={<VsChatGPT />} />
-            <Route path="/vs/notion" element={<VsNotion />} />
-            <Route path="/vs/copyai" element={<VsCopyAI />} />
-            
-            {/* R2,000 Challenge Member Area */}
-            <Route path="/r2000-challenge/dashboard" element={<R2000Dashboard />} />
-            <Route path="/r2000-challenge/day/:dayNumber" element={<DayLesson />} />
-            
+
+
+
             {/* 404 Catch-all */}
             <Route path="*" element={<NotFound />} />
             </Routes>
@@ -339,8 +322,8 @@ export function AppContent() {
                   <li><Link to="/vaults" className="hover:text-white transition-colors">Vaults</Link></li>
                   <li><Link to="/dream-mover" className="hover:text-white transition-colors">Dream Mover</Link></li>
                                     <li><Link to="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-                  <li><Link to="/lore-vault" className="hover:text-white transition-colors">📚 Lore Vault</Link></li>
-                  <li><Link to="/ascend" className="hover:text-white transition-colors">🏔️ Ascend</Link></li>
+                  <li><Link to="/lore" className="hover:text-white transition-colors">ðŸ“š Lore Vault</Link></li>
+                  <li><Link to="/ascend" className="hover:text-white transition-colors">ðŸ”ï¸ Ascend</Link></li>
                 </ul>
               </div>
               
@@ -358,6 +341,7 @@ export function AppContent() {
                 <ul className="space-y-2 text-gray-400">
                   <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
                   <li><a href="mailto:hello@vauntico.com" className="hover:text-white transition-colors">Contact</a></li>
+                  <li><Link to="/ascend" className="hover:text-white transition-colors">ðŸ”ï¸ Ascend</Link></li>
                 </ul>
               </div>
             </div>
@@ -368,26 +352,14 @@ export function AppContent() {
                 <span className="text-purple-400 ml-2">EA + ENKI = AI</span>
               </p>
               <p className="text-gray-500 text-sm mt-2 italic">
-                "We live by what we give" 🌍
+                "We live by what we give" ðŸŒ
               </p>
             </div>
           </div>
                 </footer>
         </div>
-  )
-}
-
-function App() {
-  return (
-    <HelmetProvider>
-      <AuthProvider>
-        <BrowserRouter>
-          <ErrorBoundary>
-            <AppContent />
-          </ErrorBoundary>
-        </BrowserRouter>
-      </AuthProvider>
-    </HelmetProvider>
+      </Router>
+    </ErrorBoundary>
   )
 }
 

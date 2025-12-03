@@ -1,3 +1,5 @@
+﻿@charset "UTF-8";
+
 /* Mobile Optimizations - imported first to avoid PostCSS warnings */
 @import './styles/mobile-optimizations.css';
 
@@ -31,8 +33,10 @@
   }
   
   body {
-    @apply bg-white text-gray-900 antialiased;
+    @apply text-gray-900 antialiased;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  
+    background: transparent !important;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -222,7 +226,7 @@
     animation: pulseSlow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
   
-  @keyframes pulseSlow {
+    @keyframes pulseSlow {
     0%, 100% {
       opacity: 1;
       transform: scale(1);
@@ -230,6 +234,114 @@
     50% {
       opacity: 0.85;
       transform: scale(1.05);
+    }
+  }
+  
+  /* Floating Glyphs Animation */
+  .animate-float-glyph {
+    animation: floatGlyph 20s ease-in-out infinite;
+  }
+  
+  @keyframes floatGlyph {
+    0%, 100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    25% {
+      transform: translateY(-30px) rotate(5deg);
+    }
+    50% {
+      transform: translateY(-60px) rotate(-5deg);
+    }
+    75% {
+      transform: translateY(-30px) rotate(3deg);
+    }
+  }
+  
+  /* Unicorn Gallop Animation */
+  .animate-unicorn-gallop {
+    animation: unicornGallop 3s ease-in-out;
+  }
+  
+  @keyframes unicornGallop {
+    0% {
+      transform: translateX(-200%) scale(0.8);
+      opacity: 0;
+    }
+    60% {
+      transform: translateX(0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(0) scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* Third Eye Awakening */
+  .animate-third-eye {
+    animation: thirdEye 2s ease-out;
+  }
+  
+  @keyframes thirdEye {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+      filter: blur(20px);
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.8;
+      filter: blur(5px);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+      filter: blur(0);
+    }
+  }
+  
+  /* Neural Network Pulse */
+  .animate-neural-pulse {
+    animation: neuralPulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes neuralPulse {
+    0%, 100% {
+      opacity: 0.3;
+      stroke-width: 1;
+    }
+    50% {
+      opacity: 0.8;
+      stroke-width: 2;
+    }
+  }
+  
+  /* Vault Door Opening */
+  .animate-vault-open-left {
+    animation: vaultOpenLeft 1.2s ease-out forwards;
+  }
+  
+  .animate-vault-open-right {
+    animation: vaultOpenRight 1.2s ease-out forwards;
+  }
+  
+  @keyframes vaultOpenLeft {
+    0% {
+      transform: translateX(0) perspective(1000px) rotateY(0deg);
+    }
+    100% {
+      transform: translateX(-100%) perspective(1000px) rotateY(-85deg);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes vaultOpenRight {
+    0% {
+      transform: translateX(0) perspective(1000px) rotateY(0deg);
+    }
+    100% {
+      transform: translateX(100%) perspective(1000px) rotateY(85deg);
+      opacity: 0;
     }
   }
 
@@ -310,3 +422,352 @@
     @apply bg-gray-50;
   }
 }
+
+/* ========================================
+   ðŸ›ï¸ VAUNTICO MYSTICAL ANIMATIONS
+   Ancient Wisdom Meets Modern AI
+   ======================================== */
+
+  /* FLOATING GLYPHS - Enhanced Multi-Speed */
+  .animate-glyph-float-slow {
+    animation: glyphFloatSlow 25s ease-in-out infinite;
+  }
+
+  .animate-glyph-float-medium {
+    animation: glyphFloatMedium 18s ease-in-out infinite;
+  }
+
+  .animate-glyph-float-fast {
+    animation: glyphFloatFast 12s ease-in-out infinite;
+  }
+
+  @keyframes glyphFloatSlow {
+    0%, 100% {
+      transform: translateY(0) translateX(0) rotate(0deg);
+      opacity: 0.3;
+    }
+    25% {
+      transform: translateY(-40px) translateX(20px) rotate(5deg);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translateY(-80px) translateX(-10px) rotate(-3deg);
+      opacity: 0.4;
+    }
+    75% {
+      transform: translateY(-40px) translateX(-20px) rotate(4deg);
+      opacity: 0.5;
+    }
+  }
+
+  @keyframes glyphFloatMedium {
+    0%, 100% { 
+      transform: translateY(0) translateX(0) rotate(0deg); 
+      opacity: 0.4; 
+    }
+    33% { 
+      transform: translateY(-50px) translateX(15px) rotate(-6deg); 
+      opacity: 0.7; 
+    }
+    66% { 
+      transform: translateY(-30px) translateX(-15px) rotate(6deg); 
+      opacity: 0.5; 
+    }
+  }
+
+  @keyframes glyphFloatFast {
+    0%, 100% { 
+      transform: translateY(0) rotate(0deg); 
+      opacity: 0.5; 
+    }
+    50% { 
+      transform: translateY(-60px) rotate(10deg); 
+      opacity: 0.8; 
+    }
+  }
+
+  /* ROTATING GLYPHS */
+  .animate-glyph-rotate {
+    animation: glyphRotate 30s linear infinite;
+  }
+
+  @keyframes glyphRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* PULSING GLYPHS (sacred energy) */
+  .animate-glyph-pulse {
+    animation: glyphPulse 3s ease-in-out infinite;
+  }
+
+  @keyframes glyphPulse {
+    0%, 100% {
+      opacity: 0.4;
+      transform: scale(1);
+      filter: brightness(1);
+    }
+    50% {
+      opacity: 0.9;
+      transform: scale(1.1);
+      filter: brightness(1.5) drop-shadow(0 0 20px currentColor);
+    }
+  }
+
+  /* VAULT DOOR OPENING - Enhanced with light beam */
+  .animate-vault-open-left-beam {
+    animation: vaultOpenLeftBeam 1.5s ease-out forwards;
+  }
+
+  .animate-vault-open-right-beam {
+    animation: vaultOpenRightBeam 1.5s ease-out forwards;
+  }
+
+  @keyframes vaultOpenLeftBeam {
+    0% {
+      transform: translateX(0) perspective(1000px) rotateY(0deg);
+      box-shadow: none;
+    }
+    50% {
+      box-shadow: -50px 0 100px rgba(0, 243, 255, 0.6);
+    }
+    100% {
+      transform: translateX(-100%) perspective(1000px) rotateY(-85deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes vaultOpenRightBeam {
+    0% {
+      transform: translateX(0) perspective(1000px) rotateY(0deg);
+      box-shadow: none;
+    }
+    50% {
+      box-shadow: 50px 0 100px rgba(179, 0, 255, 0.6);
+    }
+    100% {
+      transform: translateX(100%) perspective(1000px) rotateY(85deg);
+      opacity: 0;
+    }
+  }
+
+  /* LIGHT BEAM EFFECT (when vaults open) */
+  .animate-light-beam {
+    animation: lightBeam 2s ease-out forwards;
+  }
+
+  @keyframes lightBeam {
+    0% {
+      opacity: 0;
+      width: 0;
+    }
+    30% {
+      opacity: 1;
+      width: 100%;
+    }
+    100% {
+      opacity: 0;
+      width: 100%;
+    }
+  }
+
+  /* SACRED GEOMETRY FORMATION */
+  .animate-geometry-form {
+    animation: geometryForm 2s ease-out forwards;
+  }
+
+  @keyframes geometryForm {
+    0% {
+      opacity: 0;
+      transform: scale(0) rotate(180deg);
+      stroke-dashoffset: 1000;
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.1) rotate(0deg);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* NEURAL NETWORK CONNECTIONS */
+  .animate-neural-connection {
+    animation: neuralConnection 3s ease-in-out infinite;
+  }
+
+  @keyframes neuralConnection {
+    0%, 100% {
+      stroke-dashoffset: 100;
+      opacity: 0.3;
+    }
+    50% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+      filter: drop-shadow(0 0 10px currentColor);
+    }
+  }
+
+  /* BRAIN CELL PULSE */
+  .animate-cell-pulse {
+    animation: cellPulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes cellPulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+      filter: brightness(1.5);
+    }
+  }
+
+  /* THIRD EYE AWAKENING - Enhanced */
+  .animate-third-eye-open {
+    animation: thirdEyeOpen 3s ease-out forwards;
+  }
+
+  @keyframes thirdEyeOpen {
+    0% {
+      transform: scale(0) rotateX(90deg);
+      opacity: 0;
+      filter: blur(30px) brightness(0);
+    }
+    40% {
+      transform: scale(0.8) rotateX(20deg);
+      opacity: 0.6;
+      filter: blur(10px) brightness(1.5);
+    }
+    60% {
+      transform: scale(1.1) rotateX(-5deg);
+      opacity: 0.9;
+      filter: blur(3px) brightness(2);
+    }
+    100% {
+      transform: scale(1) rotateX(0deg);
+      opacity: 1;
+      filter: blur(0) brightness(1);
+      box-shadow: 0 0 50px rgba(157, 78, 221, 0.8);
+    }
+  }
+
+  /* LINGAM/YONI SACRED UNION ANIMATION */
+  .animate-sacred-union {
+    animation: sacredUnion 4s ease-in-out infinite;
+  }
+
+  @keyframes sacredUnion {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 1;
+      filter: drop-shadow(0 0 30px rgba(179, 0, 255, 0.6))
+             drop-shadow(0 0 30px rgba(0, 243, 255, 0.6));
+    }
+  }
+
+  /* UNICORN ENHANCED - Flying & Running */
+  .animate-unicorn-fly {
+    animation: unicornFly 6s ease-in-out infinite;
+  }
+
+  @keyframes unicornFly {
+    0%, 100% {
+      transform: translateY(0) translateX(0) rotate(0deg);
+    }
+    25% {
+      transform: translateY(-30px) translateX(50px) rotate(5deg);
+    }
+    50% {
+      transform: translateY(-60px) translateX(100px) rotate(-3deg);
+    }
+    75% {
+      transform: translateY(-30px) translateX(50px) rotate(2deg);
+    }
+  }
+
+  .animate-unicorn-gallop-continuous {
+    animation: unicornGallopContinuous 2s ease-in-out infinite;
+  }
+
+  @keyframes unicornGallopContinuous {
+    0%, 100% {
+      transform: translateY(0) scaleY(1);
+    }
+    50% {
+      transform: translateY(-10px) scaleY(0.95);
+    }
+  }
+
+  /* PARTICLE TRAIL for unicorn/interactions */
+  .animate-particle-trail {
+    animation: particleTrail 1.5s ease-out forwards;
+  }
+
+  @keyframes particleTrail {
+    0% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-50px) scale(0.3);
+    }
+  }
+
+  /* COSMIC STAR FIELD */
+  .animate-star-field {
+    animation: starField 100s linear infinite;
+  }
+
+  @keyframes starField {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-1000px);
+    }
+  }
+
+  /* NEBULA DRIFT */
+  .animate-nebula-drift {
+    animation: nebulaDrift 60s ease-in-out infinite;
+  }
+
+  @keyframes nebulaDrift {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: translate(50px, -30px) scale(1.1);
+      opacity: 0.5;
+    }
+  }
+
+  /* CODE/BIOLOGY MERGE VISUALIZATION */
+  .animate-code-merge {
+    animation: codeMerge 3s ease-in-out infinite;
+  }
+
+  @keyframes codeMerge {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+
+
+
+

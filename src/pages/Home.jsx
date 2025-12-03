@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
 import StructuredData from '../components/StructuredData'
 import ScrollPreview from '../components/ScrollPreview'
@@ -7,6 +7,8 @@ import OldWayVsNewWay from '../components/OldWayVsNewWay'
 import ComparisonTable from '../components/ComparisonTable'
 import CLIShowcase from '../components/CLIShowcase'
 
+
+
 function Home() {
   // Sample scroll for preview
   const sampleScroll = {
@@ -14,7 +16,7 @@ function Home() {
     title: 'The Core Features Scroll',
     category: 'Platform Guide',
     readTime: '8 min read',
-    icon: '📜',
+    icon: 'ðŸ“œ',
     tier: 'FREE',
     description: 'Philosophy: Speak your vision. Watch infrastructure materialize. The CLI is your command throne - generate complete landing pages, workshops, audits, and content with context-aware intelligence.',
     features: [
@@ -39,8 +41,12 @@ function Home() {
       <StructuredData type="Organization" />
       <StructuredData type="SoftwareApplication" />
       <ExitIntentCapture />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-20 relative z-10">
       {/* Hero Section - Outcome Focused */}
+      
+
       <div className="text-center mb-20">
         <h1 className="text-6xl font-bold mb-6">
           Ship 10x Faster With the<br />
@@ -58,7 +64,7 @@ function Home() {
             />
             <div>
               <p className="text-lg text-purple-600 font-semibold italic">
-                ✨ EA + ENKI = AI ✨
+                âœ¨ EA + ENKI = AI âœ¨
               </p>
               <p className="text-sm text-gray-600 mt-1">
                 Ancient wisdom meets modern creation
@@ -68,14 +74,14 @@ function Home() {
         </div>
         <div className="flex items-center justify-center gap-4 mb-8">
           <Link to="/pricing" className="btn-primary text-lg px-8 py-4">
-            Start Free Trial →
+            Start Free Trial â†’
           </Link>
           <Link to="/about" className="btn-outline text-lg px-8 py-4">
             The Story Behind It
           </Link>
         </div>
         <p className="text-gray-500">
-          ✓ No credit card required &nbsp;•&nbsp; ✓ 14-day free trial &nbsp;•&nbsp; ✓ Cancel anytime
+          âœ“ No credit card required &nbsp;â€¢&nbsp; âœ“ 14-day free trial &nbsp;â€¢&nbsp; âœ“ Cancel anytime
         </p>
       </div>
 
@@ -87,7 +93,7 @@ function Home() {
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div>
             <div className="w-full h-64 vault-gradient rounded-xl flex items-center justify-center">
-              <span className="text-white text-7xl">👨‍💻</span>
+              <span className="text-white text-7xl">ðŸ‘¨â€ðŸ’»</span>
             </div>
           </div>
           <div>
@@ -97,10 +103,10 @@ function Home() {
               creative ideas slip away because the tools got in the way, I knew something had to change."
             </p>
             <p className="text-gray-700 mb-6 leading-relaxed">
-              Vauntico isn't just another SaaS product—it's the system I wish I had when I started.
+              Vauntico isn't just another SaaS productâ€”it's the system I wish I had when I started.
             </p>
             <Link to="/about" className="btn-secondary">
-              Read the Full Story →
+              Read the Full Story â†’
             </Link>
           </div>
         </div>
@@ -118,21 +124,21 @@ function Home() {
         </h2>
         <div className="grid md:grid-cols-3 gap-6">
           <div className="card bg-red-50 border-red-200">
-            <div className="text-4xl mb-4">😤</div>
+            <div className="text-4xl mb-4">ðŸ˜¤</div>
             <h3 className="text-xl font-bold mb-3">Tool Fatigue</h3>
             <p className="text-gray-700">
               Paying for 10 subscriptions just to create, store, and ship content. Your workflow is a maze.
             </p>
           </div>
           <div className="card bg-red-50 border-red-200">
-            <div className="text-4xl mb-4">⏰</div>
+            <div className="text-4xl mb-4">â°</div>
             <h3 className="text-xl font-bold mb-3">Time Drain</h3>
             <p className="text-gray-700">
               Spending more time setting up tools than actually creating. The meta-work is killing your momentum.
             </p>
           </div>
           <div className="card bg-red-50 border-red-200">
-            <div className="text-4xl mb-4">📁</div>
+            <div className="text-4xl mb-4">ðŸ“</div>
             <h3 className="text-xl font-bold mb-3">Content Chaos</h3>
             <p className="text-gray-700">
               Files scattered across drives, platforms, and dead links. You've lost track of what you even have.
@@ -151,7 +157,7 @@ function Home() {
         </p>
         <div className="grid md:grid-cols-2 gap-8">
           <div className="card hover:shadow-2xl transition-all">
-            <div className="text-5xl mb-4">⚡</div>
+            <div className="text-5xl mb-4">âš¡</div>
             <h3 className="text-2xl font-bold mb-3">Ship 10x Faster</h3>
             <p className="text-gray-700 mb-4 leading-relaxed">
               One command generates production-ready landing pages, workshop outlines, or full audits. 
@@ -159,81 +165,81 @@ function Home() {
             </p>
             <ul className="space-y-2 text-gray-600">
               <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+                <span className="text-green-500 mr-2">âœ“</span>
                 <span>Generate complete landing pages in 30 seconds</span>
               </li>
               <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+                <span className="text-green-500 mr-2">âœ“</span>
                 <span>Create workshop curricula with marketing copy</span>
               </li>
               <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+                <span className="text-green-500 mr-2">âœ“</span>
                 <span>Run comprehensive audits in minutes</span>
               </li>
             </ul>
           </div>
 
           <div className="card hover:shadow-2xl transition-all">
-            <div className="text-5xl mb-4">🎯</div>
+            <div className="text-5xl mb-4">ðŸŽ¯</div>
             <h3 className="text-2xl font-bold mb-3">Focus on Creation</h3>
             <p className="text-gray-700 mb-4 leading-relaxed">
               AI that enhances your voice, not replaces it. Context-aware generation that learns your style and keeps consistency across projects.
             </p>
             <ul className="space-y-2 text-gray-600">
               <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+                <span className="text-green-500 mr-2">âœ“</span>
                 <span>Narrative-first outputs that explain WHY</span>
               </li>
               <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+                <span className="text-green-500 mr-2">âœ“</span>
                 <span>CLI learns your preferences over time</span>
               </li>
               <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+                <span className="text-green-500 mr-2">âœ“</span>
                 <span>Export everything - no vendor lock-in</span>
               </li>
             </ul>
           </div>
 
           <div className="card hover:shadow-2xl transition-all">
-            <div className="text-5xl mb-4">🗄️</div>
+            <div className="text-5xl mb-4">ðŸ—„ï¸</div>
             <h3 className="text-2xl font-bold mb-3">Organize Everything</h3>
             <p className="text-gray-700 mb-4 leading-relaxed">
               Intelligent vaults keep your content, code, and assets organized. Collaborate with teams without the chaos.
             </p>
             <ul className="space-y-2 text-gray-600">
               <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+                <span className="text-green-500 mr-2">âœ“</span>
                 <span>Unlimited vaults (Creator Pass)</span>
               </li>
               <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+                <span className="text-green-500 mr-2">âœ“</span>
                 <span>Team collaboration built-in</span>
               </li>
               <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+                <span className="text-green-500 mr-2">âœ“</span>
                 <span>Advanced analytics and tracking</span>
               </li>
             </ul>
           </div>
 
           <div className="card hover:shadow-2xl transition-all">
-            <div className="text-5xl mb-4">💰</div>
+            <div className="text-5xl mb-4">ðŸ’°</div>
             <h3 className="text-2xl font-bold mb-3">Fair Pricing</h3>
             <p className="text-gray-700 mb-4 leading-relaxed">
               Pay for what you use with transparent credit pricing. No hidden fees, no surprises. Cancel anytime.
             </p>
             <ul className="space-y-2 text-gray-600">
               <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+                <span className="text-green-500 mr-2">âœ“</span>
                 <span>Free tier with 3 vaults & 50 generations</span>
               </li>
               <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+                <span className="text-green-500 mr-2">âœ“</span>
                 <span>Unlimited everything with Creator Pass</span>
               </li>
               <li className="flex items-start">
-                <span className="text-green-500 mr-2">✓</span>
+                <span className="text-green-500 mr-2">âœ“</span>
                 <span>Credits rollover (Pro/Legacy tiers)</span>
               </li>
             </ul>
@@ -278,7 +284,7 @@ function Home() {
             <p className="text-gray-700 italic">
               "I went from juggling 12 tools to just Vauntico. My workflow is 5x faster and I actually enjoy creating again."
             </p>
-            <div className="mt-4 text-yellow-500">★★★★★</div>
+            <div className="mt-4 text-yellow-500">â˜…â˜…â˜…â˜…â˜…</div>
           </div>
 
           <div className="card bg-gradient-to-br from-vault-blue/10 to-transparent">
@@ -294,7 +300,7 @@ function Home() {
             <p className="text-gray-700 italic">
               "The CLI alone saves our team 20 hours a week. The Workshop Kit paid for itself on the first client."
             </p>
-            <div className="mt-4 text-yellow-500">★★★★★</div>
+            <div className="mt-4 text-yellow-500">â˜…â˜…â˜…â˜…â˜…</div>
           </div>
 
           <div className="card bg-gradient-to-br from-vault-cyan/10 to-transparent">
@@ -310,7 +316,7 @@ function Home() {
             <p className="text-gray-700 italic">
               "Generated my entire course landing page and curriculum outline in under 10 minutes. This is magic."
             </p>
-            <div className="mt-4 text-yellow-500">★★★★★</div>
+            <div className="mt-4 text-yellow-500">â˜…â˜…â˜…â˜…â˜…</div>
           </div>
         </div>
 
@@ -346,14 +352,14 @@ function Home() {
         </p>
         <div className="flex items-center justify-center gap-4 mb-6">
           <Link to="/pricing" className="btn-primary text-xl px-10 py-5">
-            Start Free Trial →
+            Start Free Trial â†’
           </Link>
           <Link to="/lore" className="btn-outline text-xl px-10 py-5">
             Browse Scrolls
           </Link>
         </div>
         <p className="text-gray-500 text-lg">
-          14-day free trial • No credit card required • Full access to Creator Pass
+          14-day free trial â€¢ No credit card required â€¢ Full access to Creator Pass
         </p>
       </div>
     </div>
