@@ -1,66 +1,60 @@
-# Vauntico Prompt Vault
-
-A premium AI prompt library for founders, built with React and Vite. This application provides a curated collection of high-converting prompts designed to help entrepreneurs launch faster, scale smarter, and monetize with precision.
-
-## Features
-
-- 🚀 **Modern React App** - Built with React 19, Vite, and Tailwind CSS
-- 💳 **Paystack Integration** - Secure payment processing for Nigerian and international customers
-- 📱 **Responsive Design** - Mobile-first approach with beautiful UI components
-- 🔒 **Secure Payments** - Environment-based configuration and payment verification
-- 📚 **Notion Integration** - Embedded content delivery through Notion
-
-## Quick Start
-
-### Prerequisites
-
-- Node.js 18+ 
-- pnpm (recommended) or npm
-- Paystack account for payments
-
-### Installation
-
-1. **Clone the repository**
+6. **Build for production**
    ```bash
-   git clone <repository-url>
-   cd vauntico-mvp
-   ```
-
-2. **Install dependencies**
-   ```bash
-   pnpm install
-   ```
-
-3. **Set up environment variables**
-   ```bash
-   cp env.example .env
-   ```
-   
-   Edit `.env` with your actual values:
-   ```env
-   VITE_PAYSTACK_PUBLIC_KEY=pk_live_your_live_key_here
-   VITE_PAYSTACK_SECRET_KEY=sk_live_your_secret_key_here
-   VITE_CURRENCY=NGN
-   VITE_PRODUCT_PRICE=97
-   VITE_NOTION_EMBED_URL=your_notion_embed_url
-   ```
-
-4. **Start development server**
-   ```bash
-   pnpm run dev
-   ```
-
-5. **Build for production**
-   ```bash
+   # Frontend
    pnpm run build
+
+   # Backend
+   cd server-v2 && pnpm run build
    ```
 
-## Configuration
+## Integration with https://api.vauntico.com
+
+The frontend is configured to communicate with the backend API at `https://api.vauntico.com`.
+
+### API Client
+
+The application includes a comprehensive API client (`src/lib/api.js`) that handles:
+- Authentication with JWT tokens
+- Trust score calculations
+- Request/response logging
+- Automatic token refresh
+
+### Authentication Flow
+
+1. User logs in via `apiClient.login({email, password})`
+2. JWT token stored in localStorage
+3. Automatic token attachment to all requests
+4. Auto token refresh on expiration
+5. Logout clears tokens
+
+### Trust Score Integration
+
+```jsx
+import { useTrustScore } from './hooks/useTrustScore';
+
+function MyComponent() {
+  const { calculateTrustScore, loading, error } = useTrustScore();
+
+  const handleCalculate = async () => {
+    try {
+      const result = await calculateTrustScore({
+        userId: userId,
+        platform: 'youtube',
+        metrics: { followers: 1000, engagement: 0.05 }
+      });
+      console.log('Trust score:', result.score);
+    } catch (err) {
+      console.error('Calculation failed:', err);
+    }
+  };
+}
+```
 
 ### Environment Variables
 
 | Variable | Description | Default |
 |----------|-------------|---------|
+| `VITE_API_BASE_URL` | Backend API base URL | `https://api.vauntico.com` |
 | `VITE_PAYSTACK_PUBLIC_KEY` | Paystack public key | `pk_test_your_test_key_here` |
 | `VITE_PAYSTACK_SECRET_KEY` | Paystack secret key (for backend) | `sk_test_your_secret_key_here` |
 | `VITE_CURRENCY` | Payment currency | `NGN` |
@@ -69,121 +63,60 @@ A premium AI prompt library for founders, built with React and Vite. This applic
 | `VITE_APP_NAME` | Application name | `Vauntico Prompt Vault` |
 | `VITE_APP_URL` | Application URL | `https://vauntico.com` |
 
-### Paystack Setup
+## Monitoring & Alerting
 
-1. **Create Paystack Account**
-   - Sign up at [paystack.com](https://paystack.com)
-   - Complete business verification
+### Vercel Dashboard Monitoring
+- Visit [Vercel Dashboard](https://vercel.com/dashboard) for your project
+- Real-time function logs via Functions tab
+- Error tracking and performance metrics
+- Automatic uptime monitoring
 
-2. **Get API Keys**
-   - Go to Settings > API Keys & Webhooks
-   - Copy your public and secret keys
-   - Use test keys for development, live keys for production
+### Winston Logging
+The backend uses structured logging with Winston:
+```javascript
+logger.info('Request completed', {
+  method: req.method,
+  url: req.url,
+  statusCode: res.statusCode,
+  duration: `${duration}ms`
+});
+```
 
-3. **Configure Webhooks** (Recommended)
-   - Set up webhook URL for payment verification
-   - Implement backend verification endpoint
+Logs are captured in Vercel's function logs for:
+- API requests/responses
+- Errors and exceptions
+- Database query performance
+- Authentication events
 
-## Deployment
+### Error Alerting Setup
+For additional error tracking, consider:
 
-### Vercel (Recommended)
-
-1. **Connect Repository**
+1. **Sentry Integration** (Recommended for production)
    ```bash
-   vercel --prod
+   cd server-v2
+   pnpm add @sentry/node @sentry/tracing
    ```
 
-2. **Set Environment Variables**
-   - Go to Vercel Dashboard > Project Settings > Environment Variables
-   - Add all variables from `env.example`
-
-3. **Deploy**
+2. **Logtail for Centralized Logging**
    ```bash
-   git push origin main
+   pnpm add @logtail/node
    ```
 
-### Other Platforms
+### Uptime Monitoring
 
-The app can be deployed to any static hosting platform:
-- Netlify
-- GitHub Pages
-- AWS S3 + CloudFront
-- Firebase Hosting
+For external uptime monitoring, consider:
+- **Pingdom**: Set up endpoint monitoring for `/health`
+- **UptimeRobot**: Free tier monitoring every 5 minutes
+- **Vercel Analytics**: Built-in uptime and performance tracking
 
-## Payment Flow
-
-1. **User clicks "Buy" button**
-2. **Email collection** (if not provided)
-3. **Paystack payment popup**
-4. **Payment processing**
-5. **Payment verification** (client-side)
-6. **Redirect to success page**
-7. **Content delivery via Notion embed**
+Set monitoring URL: `https://api.vauntico.com/health`
 
 ## Security Considerations
 
 - ✅ **Environment Variables** - Sensitive keys stored in environment
-- ✅ **Payment Verification** - Client-side verification implemented
-- ⚠️ **Backend Verification** - Recommended for production
-- ✅ **HTTPS Only** - Required for Paystack integration
-- ✅ **Input Validation** - Email and amount validation
-
-## Development
-
-### Available Scripts
-
-- `pnpm run dev` - Start development server
-- `pnpm run build` - Build for production
-- `pnpm run preview` - Preview production build
-- `pnpm run lint` - Run ESLint
-
-### Project Structure
-
-```
-src/
-├── components/          # React components
-│   ├── ui/             # Reusable UI components
-│   ├── PaystackButton.jsx
-│   ├── PromptVaultPage.jsx
-│   ├── VaultSuccessPage.jsx
-│   └── VaultsPage.jsx
-├── utils/              # Utility functions
-│   └── paystack.js     # Payment integration
-├── assets/             # Static assets
-├── App.jsx             # Main app component
-└── main.jsx            # Entry point
-```
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Payment not working**
-   - Check Paystack keys are correct
-   - Verify currency settings
-   - Ensure HTTPS in production
-
-2. **Notion embed not loading**
-   - Check Notion URL is public
-   - Verify iframe permissions
-   - Test in different browsers
-
-3. **Build errors**
-   - Clear node_modules and reinstall
-   - Check environment variables
-   - Verify all dependencies installed
-
-## Support
-
-For support and questions:
-- Create an issue in the repository
-- Contact: [your-email@domain.com]
-- Documentation: [your-docs-url]
-
-## License
-
-This project is proprietary software. All rights reserved.
-
----
-
-**Built with ❤️ by Vauntico**
+- ✅ **CORS Restricted** - API only accepts requests from vauntico.com domains
+- ✅ **JWT Tokens** - Secure authentication with auto-refresh
+- ✅ **Input Validation** - Server-side validation on all endpoints
+- ✅ **Rate Limiting** - Prevents abuse with configurable limits
+- ✅ **HTTPS Only** - Required for all API communications
+- ✅ **Helmet.js** - Security headers including CSP
