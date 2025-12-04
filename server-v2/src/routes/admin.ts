@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { securityMonitor } from '../middleware/security';
+import { featureFlagManager, FeatureFlagType } from '../utils/featureFlags';
 
 const router = Router();
 
@@ -173,6 +174,212 @@ router.get('/system/info', requireAdmin, async (req: Request, res: Response) => 
     res.status(500).json({
       success: false,
       error: 'Failed to fetch system info',
+      details: (error as Error).message
+    });
+  }
+});
+
+// GET /admin/features - List all feature flags
+router.get('/features', requireAdmin, async (req: Request, res: Response) => {
+  try {
+    const flags = await featureFlagManager.listFeatureFlags();
+
+    res.json({
+      success: true,
+      data: {
+        flags,
+        count: flags.length,
+        timestamp: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch feature flags',
+      details: (error as Error).message
+    });
+  }
+});
+
+// GET /admin/features/analytics - Feature flag analytics
+router.get('/features/analytics', requireAdmin, async (req: Request, res: Response) => {
+  try {
+    const analytics = await featureFlagManager.getAnalytics();
+
+    res.json({
+      success: true,
+      data: analytics
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch feature analytics',
+      details: (error as Error).message
+    });
+  }
+});
+
+// GET /admin/features/:key - Get specific feature flag
+router.get('/features/:key', requireAdmin, async (req: Request, res: Response) => {
+  try {
+    const { key } = req.params;
+    const flag = await featureFlagManager.getFeatureFlag(key);
+
+    if (!flag) {
+      return res.status(404).json({
+        success: false,
+        error: 'Feature flag not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      data: flag
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch feature flag',
+      details: (error as Error).message
+    });
+  }
+});
+
+// POST /admin/features - Create/update feature flag
+router.post('/features', requireAdmin, async (req: Request, res: Response) => {
+  try {
+    const {
+      key,
+      type,
+      enabled,
+      description,
+      percentage,
+      userIds,
+      environments
+    } = req.body;
+
+    if (!key || !type) {
+      return res.status(400).json({
+        success: false,
+        error: 'Feature flag key and type are required'
+      });
+    }
+
+    if (!Object.values(FeatureFlagType).includes(type)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid feature flag type',
+        validTypes: Object.values(FeatureFlagType)
+      });
+    }
+
+    const success = await featureFlagManager.setFeatureFlag({
+      key,
+      type,
+      enabled: enabled || false,
+      description,
+      percentage: type === FeatureFlagType.PERCENTAGE ? percentage : undefined,
+      userIds: type === FeatureFlagType.USER_TARGETING ? userIds : undefined,
+      environments: type === FeatureFlagType.ENVIRONMENT ? environments : undefined,
+      createdBy: 'admin'
+    });
+
+    if (!success) {
+      return res.status(500).json({
+        success: false,
+        error: 'Failed to create/update feature flag'
+      });
+    }
+
+    const flag = await featureFlagManager.getFeatureFlag(key);
+
+    res.json({
+      success: true,
+      message: 'Feature flag created/updated successfully',
+      data: flag
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to create/update feature flag',
+      details: (error as Error).message
+    });
+  }
+});
+
+// DELETE /admin/features/:key - Delete feature flag
+router.delete('/features/:key', requireAdmin, async (req: Request, res: Response) => {
+  try {
+    const { key } = req.params;
+
+    const success = await featureFlagManager.deleteFeatureFlag(key);
+
+    if (!success) {
+      return res.status(404).json({
+        success: false,
+        error: 'Feature flag not found or could not be deleted'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Feature flag deleted successfully'
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to delete feature flag',
+      details: (error as Error).message
+    });
+  }
+});
+
+// POST /admin/features/emergency-disable - Emergency disable all feature flags
+router.post('/features/emergency-disable', requireAdmin, async (req: Request, res: Response) => {
+  try {
+    await featureFlagManager.emergencyDisableAll();
+
+    res.json({
+      success: true,
+      message: 'All feature flags have been disabled (emergency mode)',
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to disable feature flags',
+      details: (error as Error).message
+    });
+  }
+});
+
+// GET /admin/features/:key/check - Check if feature is enabled for current context
+router.get('/features/:key/check', requireAdmin, async (req: Request, res: Response) => {
+  try {
+    const { key } = req.params;
+    const { userId, userEmail } = req.query;
+
+    const context = {
+      key,
+      userId: userId as string,
+      userEmail: userEmail as string
+    };
+
+    const enabled = await featureFlagManager.isEnabled(key, context);
+
+    res.json({
+      success: true,
+      data: {
+        key,
+        enabled,
+        context,
+        timestamp: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to check feature flag status',
       details: (error as Error).message
     });
   }
