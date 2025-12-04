@@ -5,7 +5,6 @@ import {
   verifyPassword,
   generateAccessToken,
   generateRefreshToken,
-  generateAccessToken,
   verifyRefreshToken,
   invalidateRefreshToken,
   getCurrentTokenVersion,

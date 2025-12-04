@@ -64,3 +64,4 @@ coverage/
 
 # DynamoDB Local files
 .dynamodb/
+.vercel

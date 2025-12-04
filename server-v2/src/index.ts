@@ -154,6 +154,7 @@ app.use('*', (req, res) => {
 
 // Global error handler
 app.use((error: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error("Error:", error);
   const statusCode = error.statusCode || error.status || 500;
   const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -166,71 +167,71 @@ app.use((error: any, req: express.Request, res: express.Response, next: express.
   });
 
   res.status(statusCode).json({
-    error: statusCode >= 500 ? 'Internal Server Error' : error.message,
-    message: isDevelopment ? error.message : 'Something went wrong',
-    ...(isDevelopment && { stack: error.stack }),
+    error: "Internal Server Error",
     timestamp: new Date().toISOString(),
   });
 });
 
-// Server configuration
-const PORT = parseInt(process.env.PORT || '3001', 10);
-
-// Start server
-const server = app.listen(PORT, '0.0.0.0', () => {
-  logger.info('Vauntico Trust Score backend started', {
-    port: PORT,
-    environment: process.env.NODE_ENV || 'development',
-    nodeVersion: process.version,
-    platform: process.platform,
-  });
-});
-
-// Graceful shutdown
-const gracefulShutdown = (signal: string) => {
-  logger.info(`Received ${signal}, starting graceful shutdown...`);
-
-  server.close(async () => {
-    logger.info('HTTP server closed');
-
-    try {
-      await closeDatabase();
-      logger.info('Database connections closed');
-    } catch (error) {
-      logger.error('Error closing database connections', {
-        error: error instanceof Error ? error.message : 'Unknown error',
-      });
-    }
-
-    process.exit(0);
-  });
-
-  // Force shutdown after 30 seconds
-  setTimeout(() => {
-    logger.error('Forced shutdown after timeout');
-    process.exit(1);
-  }, 30000);
-};
-
-// Handle shutdown signals
-process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
-process.on('SIGINT', () => gracefulShutdown('SIGINT'));
-
-// Handle uncaught exceptions
-process.on('uncaughtException', (error) => {
-  logger.error('Uncaught exception', {
-    error: error.message,
-    stack: error.stack,
-  });
-  process.exit(1);
-});
-
-process.on('unhandledRejection', (reason, promise) => {
-  logger.error('Unhandled rejection', {
-    reason: reason instanceof Error ? reason.message : String(reason),
-    promise: promise.toString(),
-  });
-  process.exit(1);
-});
-
+// Export for Vercel serverless function
 export default app;
+
+// For local development support
+if (require.main === module) {
+  const PORT = parseInt(process.env.PORT || '3001', 10);
+
+  const server = app.listen(PORT, '0.0.0.0', () => {
+    logger.info('Vauntico Trust Score backend started', {
+      port: PORT,
+      environment: process.env.NODE_ENV || 'development',
+      nodeVersion: process.version,
+      platform: process.platform,
+    });
+  });
+
+  // Graceful shutdown for local development
+  const gracefulShutdown = (signal: string) => {
+    logger.info(`Received ${signal}, starting graceful shutdown...`);
+
+    server.close(async () => {
+      logger.info('HTTP server closed');
+
+      try {
+        await closeDatabase();
+        logger.info('Database connections closed');
+      } catch (error) {
+        logger.error('Error closing database connections', {
+          error: error instanceof Error ? error.message : 'Unknown error',
+        });
+      }
+
+      process.exit(0);
+    });
+
+    // Force shutdown after 30 seconds
+    setTimeout(() => {
+      logger.error('Forced shutdown after timeout');
+      process.exit(1);
+    }, 30000);
+  };
+
+  // Handle shutdown signals for local development
+  process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+  process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+
+  // Handle uncaught exceptions for local development
+  process.on('uncaughtException', (error) => {
+    logger.error('Uncaught exception', {
+      error: error.message,
+      stack: error.stack,
+    });
+    process.exit(1);
+  });
+
+  process.on('unhandledRejection', (reason, promise) => {
+    logger.error('Unhandled rejection', {
+      reason: reason instanceof Error ? reason.message : String(reason),
+      promise: promise.toString(),
+    });
+    process.exit(1);
+  });
+}

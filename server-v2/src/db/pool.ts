@@ -1,5 +1,5 @@
 import { Pool, PoolConfig } from 'pg';
-import { logger } from './logger';
+import { logger } from '../utils/logger';
 
 // Neon PostgreSQL connection configuration
 const dbConfig: PoolConfig = {
@@ -19,22 +19,18 @@ const dbConfig: PoolConfig = {
 const pool = new Pool(dbConfig);
 
 // Connection event handlers
-pool.on('connect', (client) => {
-  logger.info('New database connection established', {
-    database: client.database,
-    host: client.host,
-    port: client.port,
-  });
+pool.on('connect', (client: any) => {
+  logger.info('New database connection established');
 });
 
-pool.on('error', (err, client) => {
+pool.on('error', (err: Error, client: any) => {
   logger.error('Unexpected error on idle database client', {
     error: err.message,
     stack: err.stack,
   });
 });
 
-pool.on('remove', (client) => {
+pool.on('remove', (client: any) => {
   logger.info('Database connection removed from pool');
 });
 
@@ -81,7 +77,7 @@ export async function checkDatabaseHealth(): Promise<{
 export async function query<T = any>(
   text: string,
   params?: any[]
-): Promise<{ rows: T[]; rowCount: number }> {
+): Promise<{ rows: T[]; rowCount: number | null }> {
   const start = Date.now();
   try {
     const result = await pool.query(text, params);

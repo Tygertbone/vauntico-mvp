@@ -1,14 +1,11 @@
 import { Redis } from '@upstash/redis';
-import { logger } from './logger';
+import { logger } from '../utils/logger';
 
 // Upstash Redis configuration (REST API, not TCP)
-const redisConfig = {
-  url: process.env.UPSTASH_REDIS_REST_URL,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN,
-};
-
-// Create Upstash Redis client (REST API)
-const redis = new Redis(redisConfig);
+export const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
 
 // Health check function
 export async function checkRedisHealth(): Promise<{
@@ -129,7 +126,7 @@ export class RedisCache {
       const keys = await redis.keys(fullPattern);
 
       if (keys.length > 0) {
-        await redis.del(...keys);
+        await redis.del(...(keys as string[]));
         logger.debug('Cache clear pattern', {
           pattern: fullPattern,
           deletedKeys: keys.length,
@@ -199,10 +196,10 @@ export class JobQueue {
       await redis.hset(jobKey, { status: 'processing' });
 
       return {
-        id: jobData.id,
-        name: jobData.name,
-        data: JSON.parse(jobData.data),
-        timestamp: parseInt(jobData.timestamp),
+        id: jobData.id as string,
+        name: jobData.name as string,
+        data: JSON.parse(jobData.data as string),
+        timestamp: parseInt(jobData.timestamp as string),
       };
     } catch (error) {
       logger.error('Failed to get next job', {
@@ -269,9 +266,6 @@ export class RateLimiter {
 
 // Export main cache instance
 export const cache = new RedisCache('vauntico');
-
-// Export Redis client for direct usage
-export { redis };
 
 // Export default cache instance
 export default cache;

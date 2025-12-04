@@ -33,7 +33,7 @@ export function generateAccessToken(payload: Omit<JWTPayload, 'iat' | 'exp'>): s
   try {
     const token = jwt.sign(payload, JWT_CONFIG.accessToken.secret, {
       expiresIn: JWT_CONFIG.accessToken.expiresIn,
-    });
+    } as jwt.SignOptions);
 
     logger.debug('Access token generated', {
       userId: payload.userId,
@@ -56,7 +56,7 @@ export function generateRefreshToken(payload: Omit<RefreshTokenPayload, 'iat' | 
   try {
     const token = jwt.sign(payload, JWT_CONFIG.refreshToken.secret, {
       expiresIn: JWT_CONFIG.refreshToken.expiresIn,
-    });
+    } as jwt.SignOptions);
 
     logger.debug('Refresh token generated', {
       userId: payload.userId,
