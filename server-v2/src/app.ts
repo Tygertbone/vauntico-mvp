@@ -5,12 +5,15 @@ import compression from 'compression';
 import morgan from 'morgan';
 import { sendSlackAlert } from './utils/slack-alerts';
 import logger from './utils/logger';
+import { securityLogger, suspiciousActivityDetector } from './middleware/security';
+import { authRateLimit, apiRateLimit } from './middleware/rateLimit';
 
 // Routes
 import healthRoutes from './routes/health';
 import authRoutes from './routes/auth';
 import oauthRoutes from './routes/oauth';
 import trustScoreRoutes from './routes/trust-score';
+import adminRoutes from './routes/admin';
 
 const app = express();
 
@@ -73,11 +76,20 @@ app.use(morgan(':method :url :status :response-time ms - :res[content-length]', 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+// Security monitoring middleware
+app.use(securityLogger);
+app.use(suspiciousActivityDetector);
+
+// Apply rate limiting to specific routes
+app.use('/auth', authRateLimit);
+app.use('/api', apiRateLimit);
+
 // Routes
 app.use('/', healthRoutes);
 app.use('/auth', authRoutes);
 app.use('/oauth', oauthRoutes);
 app.use('/trustscore', trustScoreRoutes);
+app.use('/admin', adminRoutes);
 
 // Error handling
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

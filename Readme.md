@@ -28,6 +28,8 @@
 
 ### 🛡️ **Admin Features**
 - **Anomaly Detection** - AI-powered fraud prevention (8 detection rules)
+- **Security Monitoring** - Real-time security event tracking and alerting
+- **Rate Limit Analytics** - Per-IP and per-user monitoring
 - **Admin Dashboard** - System monitoring and user management
 - **Manual Sync** - Real-time data refresh controls
 - **Tenant Isolation** - Multi-tenant database architecture
@@ -222,11 +224,13 @@ VITE_APP_ENV=production
 - **Session Management**: Automatic token rotation
 
 ### Platform Protection
-- **Rate Limiting**: Configurable per endpoint
+- **Rate Limiting**: Configurable per endpoint with security event logging
 - **CORS**: Domain-restricted API access
-- **Input Validation**: Server-side validation middleware
-- **Security Headers**: Helmet.js comprehensive headers
-- **Anomaly Detection**: AI-powered fraud prevention
+- **Input Validation**: Server-side validation with SQL/XSS detection
+- **Security Headers**: Helmet.js comprehensive headers with CSRF protection
+- **Anomaly Detection**: AI-powered fraud prevention with real-time alerting
+- **Security Monitoring**: Comprehensive event tracking and analytics
+- **Suspicious Activity Detection**: Automated threat pattern recognition
 
 ## 📈 Scoring Algorithm
 

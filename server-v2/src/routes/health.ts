@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { sendSlackAlert } from '../utils/slack-alerts';
+import { securityMonitor } from '../middleware/security';
 
 const router = Router();
 
@@ -41,6 +42,20 @@ router.get('/', async (req: Request, res: Response) => {
     health.redisError = (error as Error).message;
     // Alert on Redis issues
     sendSlackAlert('Redis connection failed', { error: (error as Error).message, timestamp: now });
+  }
+
+  // Add security monitoring statistics
+  try {
+    const securityStats = securityMonitor.getSecurityStats(24); // Last 24 hours
+    health.security = {
+      totalEvents: securityStats.totalEvents,
+      eventsByType: securityStats.eventsByType,
+      eventsBySeverity: securityStats.eventsBySeverity,
+      topIPs: securityStats.topIPs.slice(0, 5), // Top 5 IPs for brevity
+      status: securityStats.eventsBySeverity.high > 0 || securityStats.eventsBySeverity.critical > 0 ? 'warning' : 'healthy'
+    };
+  } catch (error) {
+    health.security = { error: 'Failed to get security stats', details: (error as Error).message };
   }
 
   // Send alert if system is unhealthy
