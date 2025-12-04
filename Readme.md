@@ -1,149 +1,301 @@
-6. **Build for production**
-   ```bash
-   # Frontend
-   pnpm run build
+# Vauntico Trust Score Platform ⚡
 
-   # Backend
-   cd server-v2 && pnpm run build
+**Creator Analytics Platform** - Data-driven trust scoring for content creators across multiple platforms including Google Analytics, YouTube, Stripe, and Substack.
+
+[![CI/CD](https://github.com/Tygertbone/vauntico-mvp/actions/workflows/deploy-validate.yml/badge.svg)](https://github.com/Tygertbone/vauntico-mvp/actions/workflows/deploy-validate.yml)
+[![Deployment](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Tygertbone/vauntico-mvp)
+
+## 🚀 Core Features
+
+### 📊 **Trust Score Engine**
+- **5-Component Scoring**: Analytics, Audience, Consistency, Growth, Reputation
+- **Real-time Calculation**: Automated scoring from platform data
+- **Historical Tracking**: Score progression with visual charts
+- **UEI Algorithm**: Unique Engagement Index for content quality
+
+### 🔗 **Platform Integrations**
+- **Google Analytics** - Website traffic and audience insights
+- **YouTube Analytics** - Video performance and engagement metrics
+- **Stripe** - Revenue and monetization data
+- **Substack** - Newsletter subscriber and engagement tracking
+- **OAuth Security** - Encrypted token storage and refresh
+
+### 🏆 **Gamification System**
+- **Leaderboard Rankings** - Anonymous creator comparisons
+- **Achievement Badges** - Milestone celebration system (8+ badge types)
+- **Score History** - Visual progress tracking with Chart.js
+- **Social Sharing** - Viral growth mechanics
+
+### 🛡️ **Admin Features**
+- **Anomaly Detection** - AI-powered fraud prevention (8 detection rules)
+- **Admin Dashboard** - System monitoring and user management
+- **Manual Sync** - Real-time data refresh controls
+- **Tenant Isolation** - Multi-tenant database architecture
+
+## 🏗️ Architecture
+
+```
+┌─────────────────┐    ┌──────────────────┐    ┌────────────────┐
+│   Frontend      │    │   Backend API    │    │   Database     │
+│   (React + Vite)│◄──►│   (Express.js)   │◄──►│ (PostgreSQL)   │
+│                 │    │   server-v2/     │    │                │
+└─────────────────┘    └──────────────────┘    └────────────────┘
+         │                       │                       │
+         └───────── Vercel ──────┼─ Railway/Render ──────┼─ Neon/Supabase
+                                 │                       │
+                                 └───────────── Redis ──┼─ Upstash
+                                                         │
+                                                         └────── Redis Queue
+```
+
+### Tech Stack
+- **Frontend**: React 18, Vite, Tailwind CSS, Chart.js
+- **Backend**: Node.js, Express.js, TypeScript, Winston logging
+- **Database**: PostgreSQL (Neon), Redis (Upstash), Prisma ORM
+- **Hosting**: Vercel (Frontend), Railway/Render (Backend)
+- **CI/CD**: GitHub Actions, Vercel auto-deploy
+- **Security**: JWT auth, CORS, Helmet, rate limiting
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+
+- pnpm (recommended) or npm
+- PostgreSQL database (local or cloud)
+- Redis instance (local or Upstash)
+
+### Local Development Setup
+
+1. **Clone and Install Dependencies**
+   ```bash
+   git clone https://github.com/Tygertbone/vauntico-mvp.git
+   cd vauntico-mvp
+
+   # Install frontend dependencies
+   pnpm install
+
+   # Install backend dependencies
+   cd server-v2
+   pnpm install
+   cd ..
    ```
 
-## Integration with https://api.vauntico.com
+2. **Configure Environment Variables**
+   ```bash
+   # Copy environment templates
+   cp .env.example .env
+   cp server-v2/.env.example server-v2/.env
 
-The frontend is configured to communicate with the backend API at `https://api.vauntico.com`.
+   # Edit with your values (database, JWT secrets, OAuth keys)
+   ```
 
-### API Client
+3. **Setup Database**
+   ```bash
+   cd server-v2
 
-The application includes a comprehensive API client (`src/lib/api.js`) that handles:
-- Authentication with JWT tokens
-- Trust score calculations
-- Request/response logging
-- Automatic token refresh
+   # Create database schema
+   psql $DATABASE_URL -f migrations/001_create_schema.sql
+
+   # Run all migrations in order
+   node scripts/migrate.js
+   ```
+
+4. **Start Development Servers**
+   ```bash
+   # Backend (port 3001)
+   cd server-v2 && pnpm dev
+
+   # Frontend (port 5173) - in new terminal
+   cd .. && pnpm dev
+   ```
+
+5. **Verify Setup**
+   ```bash
+   # Test health endpoint
+   curl http://localhost:3001/health
+
+   # Access frontend
+   open http://localhost:5173
+   ```
+
+## 📊 API Documentation
+
+### Core Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/auth/register` | POST | User registration |
+| `/api/auth/login` | POST | User authentication |
+| `/api/trust-score` | GET | Get current trust score |
+| `/api/oauth/google` | POST | Connect Google Analytics |
+| `/api/badges` | GET | Get user achievements |
+| `/health` | GET | System health check |
 
 ### Authentication Flow
+```javascript
+import { apiClient } from './src/lib/api.js';
 
-1. User logs in via `apiClient.login({email, password})`
-2. JWT token stored in localStorage
-3. Automatic token attachment to all requests
-4. Auto token refresh on expiration
-5. Logout clears tokens
+// Register user
+await apiClient.auth.register({
+  email: 'creator@example.com',
+  password: 'securepass123'
+});
 
-### Trust Score Integration
+// Login
+const { accessToken } = await apiClient.auth.login({
+  email: 'creator@example.com',
+  password: 'securepass123'
+});
 
-```jsx
-import { useTrustScore } from './hooks/useTrustScore';
+// Use authenticated requests
+const score = await apiClient.trustScore.getCurrent();
+```
 
-function MyComponent() {
+### Trust Score Calculation
+```javascript
+import { useTrustScore } from './src/hooks/useTrustScore.jsx';
+
+function ScoreCalculator() {
   const { calculateTrustScore, loading, error } = useTrustScore();
 
-  const handleCalculate = async () => {
-    try {
-      const result = await calculateTrustScore({
-        userId: userId,
-        platform: 'youtube',
-        metrics: { followers: 1000, engagement: 0.05 }
-      });
-      console.log('Trust score:', result.score);
-    } catch (err) {
-      console.error('Calculation failed:', err);
-    }
+  const handleSync = async () => {
+    const result = await calculateTrustScore({
+      platforms: ['google_analytics', 'youtube'],
+      manual: true
+    });
+    console.log('New score:', result.score);
   };
 }
 ```
 
-### Environment Variables
+## 🔧 Production Deployment
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `VITE_API_BASE_URL` | Backend API base URL | `https://api.vauntico.com` |
-| `VITE_PAYSTACK_PUBLIC_KEY` | Paystack public key | `pk_test_your_test_key_here` |
-| `VITE_PAYSTACK_SECRET_KEY` | Paystack secret key (for backend) | `sk_test_your_secret_key_here` |
-| `VITE_CURRENCY` | Payment currency | `NGN` |
-| `VITE_PRODUCT_PRICE` | Product price | `97` |
-| `VITE_NOTION_EMBED_URL` | Notion embed URL for content | Notion URL |
-| `VITE_APP_NAME` | Application name | `Vauntico Prompt Vault` |
-| `VITE_APP_URL` | Application URL | `https://vauntico.com` |
+### Automated CI/CD Pipeline
 
-## Monitoring & Alerting
+The platform includes full CI/CD automation:
 
-### Vercel Dashboard Monitoring
-- Visit [Vercel Dashboard](https://vercel.com/dashboard) for your project
-- Real-time function logs via Functions tab
-- Error tracking and performance metrics
-- Automatic uptime monitoring
+#### GitHub Actions Workflow
+- **Deploy**: Automatic deployment on main branch
+- **Validation**: Post-deployment endpoint validation
+- **Rollback**: Failed validations maintain previous deployment
 
-### Winston Logging
-The backend uses structured logging with Winston:
-```javascript
-logger.info('Request completed', {
-  method: req.method,
-  url: req.url,
-  statusCode: res.statusCode,
-  duration: `${duration}ms`
-});
+#### Environment Variables Required
+```bash
+# Backend (Railway/Vercel)
+DATABASE_URL=postgresql://...
+REDIS_URL=rediss://...
+JWT_SECRET=your-secret-here
+GOOGLE_CLIENT_ID=...
+STRIPE_SECRET_KEY=...
+
+# Frontend (Vercel)
+VITE_API_URL=https://your-backend-url.com
+VITE_APP_ENV=production
 ```
 
-Logs are captured in Vercel's function logs for:
-- API requests/responses
-- Errors and exceptions
-- Database query performance
-- Authentication events
+#### Deployment Steps
+1. **Push to main**: Auto-deploys backend and frontend
+2. **Environment setup**: Configure variables in hosting providers
+3. **Database migration**: Run migrations on production database
+4. **Post-deploy validation**: Health checks and endpoint testing
 
-### Error Alerting Setup
-For additional error tracking, consider:
+## 📊 Performance & Usage
 
-1. **Sentry Integration** (Recommended for production)
-   ```bash
-   cd server-v2
-   pnpm add @sentry/node @sentry/tracing
-   ```
+### Production Metrics (Expected)
+- **Page Load**: <3 seconds
+- **API Response**: <500ms average
+- **Database Load**: Optimized queries with indexing
+- **Concurrent Users**: 10k+ with current architecture
 
-2. **Logtail for Centralized Logging**
-   ```bash
-   pnpm add @logtail/node
-   ```
+### Scaling Features
+- **Connection Pooling**: Efficient database connections
+- **Caching**: Redis-backed response caching
+- **Rate Limiting**: Progressive rate limiting
+- **CDN**: Static assets via Vercel CDN
 
-### Uptime Monitoring
+## 🔒 Security Features
 
-For external uptime monitoring, consider:
-- **Pingdom**: Set up endpoint monitoring for `/health`
-- **UptimeRobot**: Free tier monitoring every 5 minutes
-- **Vercel Analytics**: Built-in uptime and performance tracking
+### Authentication & Authorization
+- **JWT Tokens**: Access (15min) + Refresh (7 days) tokens
+- **Password Hashing**: bcrypt with 12 salt rounds
+- **OAuth Secure**: Encrypted token storage
+- **Session Management**: Automatic token rotation
 
-Set monitoring URL: `https://api.vauntico.com/health`
+### Platform Protection
+- **Rate Limiting**: Configurable per endpoint
+- **CORS**: Domain-restricted API access
+- **Input Validation**: Server-side validation middleware
+- **Security Headers**: Helmet.js comprehensive headers
+- **Anomaly Detection**: AI-powered fraud prevention
 
-## CI/CD Deployment Pipeline
+## 📈 Scoring Algorithm
 
-### GitHub Actions Automation
-The project includes automated deployment and validation via GitHub Actions:
+### Trust Score Components (100-point scale)
 
-- **Deploy**: On every push to `main`, the project deploys to Vercel
-- **Validation**: Endpoint validation runs automatically post-deployment
-- **Rollback**: Failed validations maintain the previous successful deployment
+1. **Analytics Performance (25 points)**
+   - Website traffic, page views, time on site
+   - YouTube views, watch time, engagement rate
+   - Audience growth velocity
 
-### Workflow Configuration
-Located in `.github/workflows/deploy-validate.yml`:
-- Uses `VERCEL_TOKEN` from GitHub Actions secrets
-- Executes `vercel --prod --yes --confirm` for non-interactive deployment
-- Captures deployment URL and passes it to validation script
-- Runs `./server-v2/validate-endpoints.sh` against live deployment
+2. **Content Quality (20 points)**
+   - UEI (Unique Engagement Index)
+   - Content consistency scoring
+   - Platform-specific quality metrics
 
-### Root Directory Setting
-In Vercel Dashboard → Project Settings → Build & Deploy:
-- Set **Root Directory** to: `server-v2`
-- This deploys the backend API instead of frontend
+3. **Audience Loyalty (20 points)**
+   - Subscriber retention
+   - Repeat visitor rate
+   - Engagement depth
 
-### Deployment URL
-After successful deployment, the production URL is available and validated endpoints include:
-- Health check (`/` → 200 with `{"ok":true}`)
-- Authentication endpoints (`/auth/*`)
-- Error handling (invalid routes → 404)
+4. **Growth Trajectory (20 points)**
+   - YoY growth rate
+   - New audience acquisition
+   - Trend analysis
 
-## Security Considerations
+5. **Platform Reputation (15 points)**
+   - Cross-platform consistency
+   - Monetization readiness
+   - Authority indicators
 
-- ✅ **Environment Variables** - Sensitive keys stored in environment
-- ✅ **CORS Restricted** - API only accepts requests from vauntico.com domains
-- ✅ **JWT Tokens** - Secure authentication with auto-refresh
-- ✅ **Input Validation** - Server-side validation on all endpoints
-- ✅ **Rate Limiting** - Prevents abuse with configurable limits
-- ✅ **HTTPS Only** - Required for all API communications
-- ✅ **Helmet.js** - Security headers including CSP
+### Badge System Examples
+- 🏅 **Rising Star**: First 70+ score
+- 🎯 **Analytics Ace**: Google Analytics connected
+- 🚀 **Growth Hacker**: 50% YoY growth
+- 🛡️ **Consistent Creator**: 90+ day streak
+- 💰 **Revenue Champion**: $10k+ monthly revenue
+
+## 🧪 Testing & Quality
+
+### Test Coverage
+```bash
+# Frontend tests
+pnpm test
+
+# Backend tests
+cd server-v2 && pnpm test
+
+# E2E testing
+pnpm test:e2e
+```
+
+### Code Quality
+- **ESLint**: Strict JavaScript/TypeScript rules
+- **Prettier**: Automated code formatting
+- **TypeScript**: Static type checking
+- **Jest**: Unit and integration tests
+
+## 📞 Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for development guidelines and workflow.
+
+## 📄 License
+
+Copyright 2024 Vauntico. All rights reserved.
+
+## 🎯 Mission
+
+**Vauntico** empowers content creators with data-driven insights to build audience trust and accelerate monetization through transparent, comprehensive platform analytics.
+
+---
+
+**Ready to launch your creator analytics career?** Connect your platforms and get your Trust Score today! 🚀

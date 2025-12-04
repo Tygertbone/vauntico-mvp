@@ -30,6 +30,19 @@ router.get('/', async (req: Request, res: Response) => {
     sendSlackAlert('Database connection failed', { error: (error as Error).message, timestamp: now });
   }
 
+  // Check Redis connection
+  try {
+    const { redis } = await import('../queue/upstash');
+    await redis.ping();
+    health.redis = 'healthy';
+  } catch (error) {
+    health.ok = false;
+    health.redis = 'unhealthy';
+    health.redisError = (error as Error).message;
+    // Alert on Redis issues
+    sendSlackAlert('Redis connection failed', { error: (error as Error).message, timestamp: now });
+  }
+
   // Send alert if system is unhealthy
   if (!health.ok) {
     sendSlackAlert('Health check failed', health);
