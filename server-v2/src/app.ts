@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import morgan from 'morgan';
+import { sendSlackAlert } from './utils/slack-alerts';
 import logger from './utils/logger';
 
 // Routes
@@ -85,6 +86,16 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
     stack: err.stack,
     status: err.status || 500
   });
+
+  // Alert only for server errors (5xx), not client errors (4xx)
+  if (!err.status || err.status >= 500) {
+    sendSlackAlert(`Server error: ${err.message}`, {
+      url: req.url,
+      method: req.method,
+      status: err.status || 500,
+      ip: req.ip
+    });
+  }
 
   res.status(err.status || 500).json({
     success: false,

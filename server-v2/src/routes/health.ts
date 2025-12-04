@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express';
+import { sendSlackAlert } from '../utils/slack-alerts';
 
 const router = Router();
 
@@ -6,9 +7,36 @@ const router = Router();
 router.get('/', async (req: Request, res: Response) => {
   const now = new Date().toISOString();
 
-  res.json({
+  // Basic system health checks
+  const health: any = {
     ok: true,
-    now
+    timestamp: now,
+    uptime: process.uptime(),
+    memory: process.memoryUsage(),
+    environment: process.env.NODE_ENV || 'development'
+  };
+
+  // Check database connection (basic ping)
+  try {
+    // Import pool here to avoid circular dependencies
+    const { pool } = await import('../db/pool');
+    await pool.query('SELECT 1');
+    health.database = 'healthy';
+  } catch (error) {
+    health.ok = false;
+    health.database = 'unhealthy';
+    health.databaseError = (error as Error).message;
+    // Alert on database issues
+    sendSlackAlert('Database connection failed', { error: (error as Error).message, timestamp: now });
+  }
+
+  // Send alert if system is unhealthy
+  if (!health.ok) {
+    sendSlackAlert('Health check failed', health);
+  }
+
+  res.json({
+    ...health
   });
 });
 
