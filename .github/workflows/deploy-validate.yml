@@ -1,0 +1,24 @@
+name: Deploy and Validate
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Deploy to Vercel
+        run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Validate Endpoints
+        run: ./server-v2/validate-endpoints.sh https://your-deployment-url.vercel.app
+
+
