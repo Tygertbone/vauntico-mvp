@@ -16,9 +16,8 @@ jobs:
         run: npm install -g vercel
 
       - name: Deploy to Vercel
-        run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
+        id: vercel
+        run: echo "url=$(vercel --prod --yes --confirm --token=${{ secrets.VERCEL_TOKEN }})" >> $GITHUB_OUTPUT
 
       - name: Validate Endpoints
-        run: ./server-v2/validate-endpoints.sh https://your-deployment-url.vercel.app
-
-
+        run: ./server-v2/validate-endpoints.sh ${{ steps.vercel.outputs.url }}
