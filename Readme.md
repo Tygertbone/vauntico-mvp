@@ -111,6 +111,33 @@ For external uptime monitoring, consider:
 
 Set monitoring URL: `https://api.vauntico.com/health`
 
+## CI/CD Deployment Pipeline
+
+### GitHub Actions Automation
+The project includes automated deployment and validation via GitHub Actions:
+
+- **Deploy**: On every push to `main`, the project deploys to Vercel
+- **Validation**: Endpoint validation runs automatically post-deployment
+- **Rollback**: Failed validations maintain the previous successful deployment
+
+### Workflow Configuration
+Located in `.github/workflows/deploy-validate.yml`:
+- Uses `VERCEL_TOKEN` from GitHub Actions secrets
+- Executes `vercel --prod --yes --confirm` for non-interactive deployment
+- Captures deployment URL and passes it to validation script
+- Runs `./server-v2/validate-endpoints.sh` against live deployment
+
+### Root Directory Setting
+In Vercel Dashboard → Project Settings → Build & Deploy:
+- Set **Root Directory** to: `server-v2`
+- This deploys the backend API instead of frontend
+
+### Deployment URL
+After successful deployment, the production URL is available and validated endpoints include:
+- Health check (`/` → 200 with `{"ok":true}`)
+- Authentication endpoints (`/auth/*`)
+- Error handling (invalid routes → 404)
+
 ## Security Considerations
 
 - ✅ **Environment Variables** - Sensitive keys stored in environment
