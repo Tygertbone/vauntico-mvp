@@ -54,5 +54,11 @@ jobs:
         id: vercel
         run: echo "url=$(vercel --prod --yes --confirm --token=${{ secrets.VERCEL_TOKEN }})" >> $GITHUB_OUTPUT
 
+      - name: Wait for domain propagation
+        run: sleep 30
+
       - name: Validate Endpoints
+        run: ./server-v2/validate-endpoints.sh https://api.vauntico.com
+
+      - name: Validate Vercel deployment
         run: ./server-v2/validate-endpoints.sh ${{ steps.vercel.outputs.url }}
