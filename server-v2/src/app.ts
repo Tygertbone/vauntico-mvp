@@ -119,55 +119,14 @@ app.use('/oauth', oauthRoutes);
 app.use('/trustscore', trustScoreRoutes);
 app.use('/admin', adminRoutes);
 
-// Error handling
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  logger.error(`Error processing ${req.method} ${req.url}:`, {
-    error: err.message,
-    stack: err.stack,
-    status: err.status || 500
-  });
+import { errorHandler, notFoundHandler } from './middleware/errorHandler';
+import { addRequestId } from './middleware/errorHandler';
 
-  // Capture error with Sentry for monitoring and analytics
-  Sentry.captureException(err, {
-    tags: {
-      url: req.url,
-      method: req.method,
-      status: err.status || 500,
-      userAgent: req.get('User-Agent'),
-      ip: req.ip
-    },
-    extra: {
-      body: req.body,
-      query: req.query,
-      params: req.params,
-      headers: req.headers
-    }
-  });
+// Add request ID middleware early in the pipeline
+app.use(addRequestId);
 
-  // Alert only for server errors (5xx), not client errors (4xx)
-  if (!err.status || err.status >= 500) {
-    sendSlackAlert(`Server error: ${err.message}`, {
-      url: req.url,
-      method: req.method,
-      status: err.status || 500,
-      ip: req.ip
-    });
-  }
-
-  res.status(err.status || 500).json({
-    success: false,
-    error: err.message || 'Internal server error',
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
-  });
-});
-
-// 404 handler
-app.use('*', (req: express.Request, res: express.Response) => {
-  logger.warn(`Route not found: ${req.method} ${req.url}`);
-  res.status(404).json({
-    success: false,
-    error: 'Route not found'
-  });
-});
+// Error handling and 404 handler at the very end
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 export default app;
