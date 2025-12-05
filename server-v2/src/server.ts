@@ -3,6 +3,16 @@ import dotenv from 'dotenv';
 // Load environment variables
 dotenv.config();
 
+// Validate environment before starting server
+import { validateEnvironment } from './utils/env-validation';
+const envValidation = validateEnvironment();
+
+// Exit if environment validation fails
+if (!envValidation.isValid) {
+  console.error('Server startup aborted due to environment configuration issues');
+  process.exit(1);
+}
+
 const PORT = parseInt(process.env.PORT || '3001', 10);
 
 // Import app after dotenv config

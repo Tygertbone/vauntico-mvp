@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { sendSlackAlert } from '../utils/slack-alerts';
 import { securityMonitor } from '../middleware/security';
+import { getEnvironmentStatus } from '../utils/env-validation';
 
 const router = Router();
 
@@ -57,6 +58,19 @@ router.get('/', async (req: Request, res: Response) => {
     };
   } catch (error) {
     health.security = { error: 'Failed to get security stats', details: (error as Error).message };
+  }
+
+  // Add environment validation status
+  try {
+    const envStatus = getEnvironmentStatus();
+    health.environmentStatus = {
+      requiredPresent: envStatus.requiredPresent,
+      recommendedPresent: envStatus.recommendedPresent,
+      warningsCount: envStatus.warningsCount,
+      status: envStatus.warningsCount > 0 ? 'warning' : 'healthy'
+    };
+  } catch (error) {
+    health.environmentStatus = { error: 'Failed to get environment status', details: (error as Error).message };
   }
 
   // Send alert if system is unhealthy
