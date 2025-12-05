@@ -11,6 +11,7 @@ A production-ready backend for creator trust scoring built with **100% FREE** ho
 | **Hosting** | Render.com | 750 hrs/month | $0 |
 | **Cron Jobs** | GitHub Actions | 2,000 min/month | $0 |
 | **Email** | Resend.com | 3,000/month | $0 |
+| **Error Tracking** | Sentry.io | 5K errors/month | $0 |
 | **AI** | Anthropic | $5 credit | $0 first month |
 
 **Monthly Cost: $0** (after Anthropic trial: ~$1-2/month)

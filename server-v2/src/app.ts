@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/node';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -7,6 +8,33 @@ import { sendSlackAlert } from './utils/slack-alerts';
 import logger from './utils/logger';
 import { securityLogger, suspiciousActivityDetector } from './middleware/security';
 import { authRateLimit, apiRateLimit } from './middleware/rateLimit';
+
+// Initialize Sentry
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  environment: process.env.NODE_ENV || 'development',
+  integrations: [
+    // HTTP integration for outgoing requests
+    Sentry.httpIntegration(),
+    // PostgreSQL integration for database calls
+    Sentry.postgresIntegration(),
+  ],
+  // Performance monitoring (sampled for free tier)
+  tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
+  beforeSend: (event: any) => {
+    // Don't capture health check errors
+    if (event.request?.url?.includes('/health')) {
+      return null;
+    }
+    // Add service identification
+    event.tags = {
+      ...event.tags,
+      service: 'vauntico-trust-score-backend',
+      version: process.env.npm_package_version || '2.0.0'
+    };
+    return event;
+  },
+});
 
 // Routes
 import healthRoutes from './routes/health';
@@ -97,6 +125,23 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
     error: err.message,
     stack: err.stack,
     status: err.status || 500
+  });
+
+  // Capture error with Sentry for monitoring and analytics
+  Sentry.captureException(err, {
+    tags: {
+      url: req.url,
+      method: req.method,
+      status: err.status || 500,
+      userAgent: req.get('User-Agent'),
+      ip: req.ip
+    },
+    extra: {
+      body: req.body,
+      query: req.query,
+      params: req.params,
+      headers: req.headers
+    }
   });
 
   // Alert only for server errors (5xx), not client errors (4xx)
