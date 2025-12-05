@@ -3,6 +3,7 @@ import { pool } from '../db/pool';
 import { logger } from '../utils/logger';
 import { authenticate } from '../middleware/authenticate';
 import { subscriptionManager } from '../utils/subscriptions';
+import { fraudDetectionService } from '../services/fraudDetectionService';
 import Stripe from 'stripe';
 
 const router = Router();
@@ -13,7 +14,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 
 // Create checkout session for subscription
-router.post('/checkout', authenticate, async (req: Request, res: Response) => {
+router.post('/checkout', authenticate, fraudDetectionService.createPaymentFraudMiddleware(), async (req: Request, res: Response) => {
   try {
     const userId = req.user?.userId;
     if (!userId) {
@@ -210,6 +211,18 @@ router.post('/start-trial', authenticate, async (req: Request, res: Response) =>
       error: error instanceof Error ? error.message : 'Unknown error'
     });
     res.status(500).json({ error: 'Failed to start trial' });
+  }
+});
+
+// Fraud monitoring endpoints (admin only)
+router.get('/fraud-risk/:userId', authenticate, async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const fraudScore = await fraudDetectionService.getUserFraudScore(userId);
+    res.json({ fraudScore });
+  } catch (error) {
+    logger.error('Failed to get fraud risk', { error: error instanceof Error ? error.message : 'Unknown error' });
+    res.status(500).json({ error: 'Failed to get fraud risk data' });
   }
 });
 
