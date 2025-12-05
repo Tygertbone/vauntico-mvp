@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { securityMonitor } from '../middleware/security';
 import { featureFlagManager, FeatureFlagType } from '../utils/featureFlags';
+import { ProofVault } from '../services/ProofVault';
 
 const router = Router();
 
@@ -380,6 +381,251 @@ router.get('/features/:key/check', requireAdmin, async (req: Request, res: Respo
     res.status(500).json({
       success: false,
       error: 'Failed to check feature flag status',
+      details: (error as Error).message
+    });
+  }
+});
+
+// GET /admin/proofs/:userId - Get subscription proofs for a user
+router.get('/proofs/:userId', requireAdmin, async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const proofs = await ProofVault.getProofs(userId);
+
+    res.json({
+      success: true,
+      data: {
+        proofs: proofs.rows,
+        count: proofs.rows.length,
+        userId,
+        timestamp: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch subscription proofs',
+      details: (error as Error).message
+    });
+  }
+});
+
+// POST /admin/mfa/send-unlock-code - Send MFA code for account unlock
+router.post('/mfa/send-unlock-code', requireAdmin, async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.body;
+
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        error: 'User ID is required'
+      });
+    }
+
+    // Get user email
+    const userResult = await pool.query(
+      'SELECT email FROM users WHERE id = $1',
+      [userId]
+    );
+
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'User not found'
+      });
+    }
+
+    const userEmail = userResult.rows[0].email;
+
+    // Send MFA code
+    const sent = await MFAService.sendMFAForUnlock(userId, userEmail);
+
+    if (!sent) {
+      return res.status(500).json({
+        success: false,
+        error: 'Failed to send MFA code'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'MFA code sent for account unlock',
+      data: {
+        userId,
+        email: userEmail,
+        expiresIn: '5 minutes'
+      }
+    });
+  } catch (error) {
+    logger.error('Failed to send MFA unlock code', {
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
+    res.status(500).json({
+      success: false,
+      error: 'Failed to send MFA unlock code',
+      details: (error as Error).message
+    });
+  }
+});
+
+// POST /admin/mfa/unlock-account - Unlock account with MFA verification
+router.post('/mfa/unlock-account', requireAdmin, async (req: Request, res: Response) => {
+  try {
+    const { userId, code } = req.body;
+
+    if (!userId || !code) {
+      return res.status(400).json({
+        success: false,
+        error: 'User ID and MFA code are required'
+      });
+    }
+
+    // Verify MFA code
+    const isValid = await MFAService.verifyCode(userId, code);
+
+    if (!isValid) {
+      return res.status(403).json({
+        success: false,
+        error: 'Invalid or expired MFA code'
+      });
+    }
+
+    // Unlock the account
+    await pool.query(
+      'UPDATE users SET locked_until = NULL WHERE id = $1',
+      [userId]
+    );
+
+    logger.info('Account unlocked via MFA verification', { userId });
+
+    res.json({
+      success: true,
+      message: 'Account unlocked successfully after MFA verification',
+      data: {
+        userId,
+        unlockedAt: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    logger.error('Failed to unlock account with MFA', {
+      userId: req.body?.userId,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
+    res.status(500).json({
+      success: false,
+      error: 'Failed to unlock account',
+      details: (error as Error).message
+    });
+  }
+});
+
+// GET /admin/mfa/status/:userId - Get MFA status for a user
+router.get('/mfa/status/:userId', requireAdmin, async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+
+    const result = await pool.query(
+      'SELECT mfa_enabled, mfa_secret FROM users WHERE id = $1',
+      [userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'User not found'
+      });
+    }
+
+    const user = result.rows[0];
+
+    res.json({
+      success: true,
+      data: {
+        userId,
+        mfaEnabled: user.mfa_enabled,
+        mfaConfigured: !!user.mfa_secret,
+        timestamp: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch MFA status',
+      details: (error as Error).message
+    });
+  }
+});
+
+// POST /admin/mfa/enable - Enable MFA for a user
+router.post('/mfa/enable', requireAdmin, async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.body;
+
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        error: 'User ID is required'
+      });
+    }
+
+    const secret = await MFAService.enableMFA(userId);
+
+    await pool.query(
+      'UPDATE users SET mfa_enabled = true, mfa_secret = $1 WHERE id = $2',
+      [secret, userId]
+    );
+
+    res.json({
+      success: true,
+      message: 'MFA enabled for user',
+      data: {
+        userId,
+        mfaEnabled: true,
+        secret: secret,
+        timestamp: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to enable MFA',
+      details: (error as Error).message
+    });
+  }
+});
+
+// POST /admin/mfa/disable - Disable MFA for a user
+router.post('/mfa/disable', requireAdmin, async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.body;
+
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        error: 'User ID is required'
+      });
+    }
+
+    await MFAService.disableMFA(userId);
+
+    await pool.query(
+      'UPDATE users SET mfa_enabled = false, mfa_secret = NULL WHERE id = $1',
+      [userId]
+    );
+
+    res.json({
+      success: true,
+      message: 'MFA disabled for user',
+      data: {
+        userId,
+        mfaEnabled: false,
+        timestamp: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: 'Failed to disable MFA',
       details: (error as Error).message
     });
   }

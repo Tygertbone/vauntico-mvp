@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { logger } from '../utils/logger';
 import { PaymentProvider } from '../utils/subscriptions';
+import { ProofVault } from './ProofVault';
+import { SlackService } from './SlackService';
 import crypto from 'crypto';
 
 export interface PaystackCustomer {
@@ -369,8 +371,44 @@ export class PaystackService {
   }
 
   private async handleSubscriptionCreate(data: any): Promise<void> {
-    // Implementation for handling subscription creation
-    logger.info('Handling subscription create', data);
+    // Implementation for handling subscription creation with Proof Vault and Slack alerts
+    try {
+      const { customer_code, plan, amount, subscription_code } = data;
+
+      // Extract user information from customer metadata or lookup by customer_code
+      // For now, using customer_code as a proxy for userId - in production you'd need proper mapping
+      const userId = customer_code; // This needs to be replaced with actual userId lookup
+
+      // Determine currency (Paystack defaults to NGN, but could be others)
+      const currency = 'NGN'; // Default to NGN for now
+
+      // Store proof in Proof Vault
+      await ProofVault.storeProof(userId, subscription_code, currency, amount);
+
+      // Send Slack alert
+      await SlackService.sendAlert(`New subscription: ${userId} → ${subscription_code} (${amount} ${currency})`);
+
+      logger.info('Subscription proof stored and alert sent', {
+        userId,
+        subscriptionCode: subscription_code,
+        amount,
+        currency
+      });
+    } catch (error) {
+      logger.error('Error handling subscription create', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+        data
+      });
+
+      // Send error alert to Slack
+      try {
+        await SlackService.sendAlert(`Payment failure: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      } catch (alertError) {
+        logger.error('Failed to send error alert to Slack', {
+          error: alertError instanceof Error ? alertError.message : 'Unknown error'
+        });
+      }
+    }
   }
 
   private async handleSubscriptionCancel(data: any): Promise<void> {
