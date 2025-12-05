@@ -318,6 +318,35 @@ class EmailCampaignWorker {
   }
 
   /**
+   * Queue a campaign email for sending (used by conversion triggers)
+   */
+  async queueCampaignEmail(userId: number, templateName: string, context: any = {}): Promise<void> {
+    try {
+      await this.jobQueue.add(`conversion-${templateName}`, {
+        userId,
+        triggerEvent: 'conversion_trigger',
+        context: {
+          template: templateName,
+          ...context
+        }
+      });
+
+      logger.info('Campaign email queued for conversion trigger', {
+        userId,
+        templateName,
+        context
+      });
+    } catch (error) {
+      logger.error('Failed to queue campaign email', {
+        userId,
+        templateName,
+        error: error instanceof Error ? error.message : 'Unknown error'
+      });
+      throw error;
+    }
+  }
+
+  /**
    * Get campaign by ID (for scheduled emails)
    */
   private async getCampaignById(campaignId: number): Promise<any> {
