@@ -45,6 +45,7 @@ import trustScoreRoutes from './routes/trust-score';
 import adminRoutes from './routes/admin';
 import stripeWebhookRoutes from './routes/stripe-webhooks';
 import subscriptionRoutes from './routes/subscriptions';
+import monitoringRoutes from './routes/monitoring';
 
 const app = express();
 
@@ -126,6 +127,7 @@ app.use('/trustscore', trustScoreRoutes);
 app.use('/admin', adminRoutes);
 app.use('/stripe', stripeWebhookRoutes);
 app.use('/subscriptions', subscriptionRoutes);
+app.use('/monitoring', monitoringRoutes);
 
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import { addRequestId } from './middleware/errorHandler';

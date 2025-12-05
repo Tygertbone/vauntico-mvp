@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import crypto from 'crypto';
-import { sendSlackAlert } from '../utils/slack-alerts';
+import { alertManager, AlertSeverity } from '../utils/slack-alerts';
 
 // Security event types for structured logging
 export enum SecurityEventType {
@@ -74,15 +74,16 @@ export class SecurityMonitor {
 
     // Alert on critical/high severity events
     if (event.severity === 'critical' || event.severity === 'high') {
-      sendSlackAlert(`🚨 ${event.severity.toUpperCase()} Security Event: ${event.type}`, {
+      alertManager.alertSecurityIncident({
         type: event.type,
-        severity: event.severity,
-        endpoint: event.endpoint,
-        ip: event.ip,
         userId: event.userId,
-        method: event.method,
-        timestamp: new Date().toISOString(),
-        details: event.details
+        ip: event.ip,
+        url: event.endpoint,
+        severity: event.severity === 'critical' ? AlertSeverity.CRITICAL : undefined,
+        extraDetails: event.details
+      }).catch(err => {
+        const { logger } = require('../utils/logger');
+        logger.error('Failed to send security alert', { error: err.message });
       });
     }
 
