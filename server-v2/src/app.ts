@@ -8,6 +8,7 @@ import { sendSlackAlert } from './utils/slack-alerts';
 import logger from './utils/logger';
 import { securityLogger, suspiciousActivityDetector } from './middleware/security';
 import { authRateLimit, apiRateLimit } from './middleware/rateLimit';
+import { correlationMiddleware } from './middleware/correlation';
 
 // Initialize Sentry
 Sentry.init({
@@ -47,6 +48,9 @@ const app = express();
 
 // Trust proxy for Vercel
 app.set('trust proxy', 1);
+
+// Request correlation middleware (must be first)
+app.use(correlationMiddleware);
 
 // Security middleware
 app.use(helmet({

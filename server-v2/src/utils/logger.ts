@@ -39,12 +39,13 @@ const logger = winston.createLogger({
 
 export { logger };
 
-// Convenience logging functions
+// Request logging middleware with correlation IDs
 export const logRequest = (req: any, res: any, next: any) => {
   const start = Date.now();
+  const requestLogger = (req as any).logger || logger;
 
   // Log only essential request info (minimal data for free tier)
-  logger.info('Request started', {
+  requestLogger.info('Request started', {
     method: req.method,
     url: req.url,
     ip: req.ip,
@@ -56,7 +57,9 @@ export const logRequest = (req: any, res: any, next: any) => {
   res.end = function(...args: any[]) {
     const duration = Date.now() - start;
 
-    logger.info('Request completed', {
+    const level = res.statusCode >= 500 ? 'error' : res.statusCode >= 400 ? 'warn' : 'info';
+
+    requestLogger.log(level, 'Request completed', {
       method: req.method,
       url: req.url,
       statusCode: res.statusCode,

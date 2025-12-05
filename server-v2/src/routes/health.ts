@@ -14,7 +14,8 @@ router.get('/', async (req: Request, res: Response) => {
     timestamp: now,
     uptime: process.uptime(),
     memory: process.memoryUsage(),
-    environment: process.env.NODE_ENV || 'development'
+    environment: process.env.NODE_ENV || 'development',
+    correlationId: req.correlationId // Include correlation ID for debugging
   };
 
   // Check database connection (basic ping)
