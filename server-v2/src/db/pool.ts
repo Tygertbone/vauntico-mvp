@@ -73,33 +73,17 @@ export async function checkDatabaseHealth(): Promise<{
   }
 }
 
-// Query helper with error handling
+// Query helper with error handling and performance monitoring
 export async function query<T = any>(
   text: string,
   params?: any[]
 ): Promise<{ rows: T[]; rowCount: number | null }> {
-  const start = Date.now();
-  try {
-    const result = await pool.query(text, params);
-    const duration = Date.now() - start;
-
-    logger.debug('Database query executed', {
-      query: text.slice(0, 100) + (text.length > 100 ? '...' : ''),
-      duration: `${duration}ms`,
-      rowCount: result.rowCount,
-    });
-
-    return result;
-  } catch (error) {
-    const duration = Date.now() - start;
-    logger.error('Database query failed', {
-      query: text.slice(0, 100) + (text.length > 100 ? '...' : ''),
-      duration: `${duration}ms`,
-      error: error instanceof Error ? error.message : 'Unknown error',
-      stack: error instanceof Error ? error.stack : undefined,
-    });
-    throw error;
-  }
+  const { monitoredQuery } = await import('../utils/database-monitoring');
+  return monitoredQuery(
+    () => pool.query(text, params),
+    text,
+    params
+  );
 }
 
 // Transaction helper

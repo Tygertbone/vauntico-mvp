@@ -73,6 +73,23 @@ router.get('/', async (req: Request, res: Response) => {
     health.environmentStatus = { error: 'Failed to get environment status', details: (error as Error).message };
   }
 
+  // Add database performance metrics
+  try {
+    const { dbMonitor } = await import('../utils/database-monitoring');
+    const perfStats = dbMonitor.getPerformanceStats(1); // Last hour
+    health.databasePerformance = {
+      totalQueries: perfStats.totalQueries,
+      averageResponseTime: Math.round(perfStats.averageResponseTime),
+      p95ResponseTime: Math.round(perfStats.p95ResponseTime),
+      errorRate: Math.round(perfStats.errorRate * 100) / 100,
+      slowQueryCount: perfStats.slowQueryCount,
+      queriesByType: perfStats.queriesByType,
+      status: perfStats.slowQueryCount > 5 || perfStats.errorRate > 0.1 ? 'warning' : 'healthy'
+    };
+  } catch (error) {
+    health.databasePerformance = { error: 'Failed to get database performance', details: (error as Error).message };
+  }
+
   // Send alert if system is unhealthy
   if (!health.ok) {
     sendSlackAlert('Health check failed', health);
