@@ -16,9 +16,31 @@ export enum SubscriptionStatus {
   INCOMPLETE = 'incomplete'
 }
 
+export enum PaymentProvider {
+  PAYSTACK = 'paystack',
+  STRIPE = 'stripe'
+}
+
+export interface FeatureUsage {
+  id: number;
+  user_id: string;
+  feature_key: string;
+  usage_count: number;
+  usage_limit: number;
+  period_start: Date;
+  period_end: Date;
+  created_at: Date;
+  updated_at: Date;
+}
+
 export interface Subscription {
   id: string;
   userId: string;
+  paymentProvider: PaymentProvider;
+  // Paystack-specific fields
+  paystackCustomerCode?: string;
+  paystackSubscriptionCode?: string;
+  // Stripe-specific fields (kept for future migration)
   stripeCustomerId?: string;
   stripeSubscriptionId?: string;
   tier: SubscriptionTier;
@@ -32,18 +54,6 @@ export interface Subscription {
   aiGenerationsLimit: number;
   storageLimitGb: number;
   teamMembersLimit: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface FeatureUsage {
-  id: string;
-  userId: string;
-  featureKey: string;
-  usageCount: number;
-  usageLimit?: number;
-  resetPeriod?: string;
-  lastReset: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -115,10 +125,10 @@ export class SubscriptionManager {
       const usage = await this.getFeatureUsage(userId, featureKey);
 
       // If no usage data or no limit set, allow access
-      if (!usage || !usage.usageLimit) return true;
+      if (!usage || !usage.usage_limit) return true;
 
       // Check usage against limits
-      return usage.usageCount < usage.usageLimit;
+      return usage.usage_count < usage.usage_limit;
     } catch (error) {
       logger.error('Error checking feature access', {
         userId,

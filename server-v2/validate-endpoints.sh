@@ -85,6 +85,58 @@ else
   ALL_CHECKS_PASSED=false
 fi
 
+# Test trust-score endpoint (critical route)
+result=$(run_test "4. Testing trust-score endpoint (/trust-score)" \
+  'curl -s -w "HTTP_STATUS:%{http_code}\nTIME_TOTAL:%{time_total}\n" "$DEPLOYMENT_URL/trust-score"')
+IFS='|' read -r http_status body time_total <<< "$result"
+
+if [ "$http_status" = "401" ]; then
+  echo "✅ Trust-score endpoint returns 401 (unauthorized) as expected" | tee -a "$LOG_FILE"
+elif [ "$http_status" = "200" ]; then
+  echo "✅ Trust-score endpoint accessible (may not require auth)" | tee -a "$LOG_FILE"
+else
+  echo "❌ Trust-score endpoint unexpected response: $http_status" | tee -a "$LOG_FILE"
+  ALL_CHECKS_PASSED=false
+fi
+
+# Test admin endpoint (critical route)
+result=$(run_test "5. Testing admin endpoint (/admin)" \
+  'curl -s -w "HTTP_STATUS:%{http_code}\nTIME_TOTAL:%{time_total}\n" "$DEPLOYMENT_URL/admin"')
+IFS='|' read -r http_status body time_total <<< "$result"
+
+if [ "$http_status" = "401" ] || [ "$http_status" = "403" ]; then
+  echo "✅ Admin endpoint properly protected: HTTP ${http_status}" | tee -a "$LOG_FILE"
+else
+  echo "❌ Admin endpoint security check failed: Expected 401/403, got $http_status" | tee -a "$LOG_FILE"
+  ALL_CHECKS_PASSED=false
+fi
+
+# Test subscriptions endpoint (critical route)
+result=$(run_test "6. Testing subscriptions endpoint (/subscriptions)" \
+  'curl -s -X GET -w "HTTP_STATUS:%{http_code}\nTIME_TOTAL:%{time_total}\n" "$DEPLOYMENT_URL/subscriptions"')
+IFS='|' read -r http_status body time_total <<< "$result"
+
+if [ "$http_status" = "401" ] || [ "$http_status" = "200" ]; then
+  echo "✅ Subscriptions endpoint responds: HTTP ${http_status}" | tee -a "$LOG_FILE"
+else
+  echo "❌ Subscriptions endpoint failed: HTTP $http_status" | tee -a "$LOG_FILE"
+  ALL_CHECKS_PASSED=false
+fi
+
+# Test monitoring endpoint (should be accessible)
+result=$(run_test "7. Testing monitoring endpoint (/monitoring)" \
+  'curl -s -w "HTTP_STATUS:%{http_code}\nTIME_TOTAL:%{time_total}\n" "$DEPLOYMENT_URL/monitoring"')
+IFS='|' read -r http_status body time_total <<< "$result"
+
+if [ "$http_status" = "200" ]; then
+  echo "✅ Monitoring endpoint accessible" | tee -a "$LOG_FILE"
+elif [ "$http_status" = "401" ]; then
+  echo "✅ Monitoring endpoint properly protected" | tee -a "$LOG_FILE"
+else
+  echo "❌ Monitoring endpoint unexpected response: $http_status" | tee -a "$LOG_FILE"
+  ALL_CHECKS_PASSED=false
+fi
+
 echo | tee -a "$LOG_FILE"
 echo "=== VALIDATION SUMMARY ===" | tee -a "$LOG_FILE"
 if [ "$ALL_CHECKS_PASSED" = true ]; then

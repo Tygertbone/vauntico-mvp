@@ -1,9 +1,13 @@
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), sentryVitePlugin({
+    org: "vaunticocom-di",
+    project: "javascript-react"
+  })],
   test: {
     environment: 'jsdom',
     globals: true,
@@ -17,7 +21,7 @@ export default defineConfig({
   },
       build: {
     outDir: 'dist',
-    sourcemap: false, // Disable sourcemaps in production for security
+    sourcemap: true, // Disable sourcemaps in production for security
     minify: 'esbuild', // Fast minification with esbuild
     chunkSizeWarningLimit: 600, // Increase warning threshold
     rollupOptions: {

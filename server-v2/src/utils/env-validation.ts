@@ -128,7 +128,6 @@ export function validateEnvironment(): EnvValidationResult {
     result.warnings.forEach(warning => console.warn(`  ${warning}`));
   } else {
     logger.info('Environment validation passed');
-    console.log('✅ Environment validation passed');
   }
 
   return result;

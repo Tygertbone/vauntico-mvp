@@ -1,7 +1,0 @@
-﻿name: Vauntico Invocation Manifest
-version: 0.1.0
-schema: v1
-
-packages:
-  - uses: continuedev/base-models
-  - uses: continuedev/base-context-vsc

@@ -8,7 +8,7 @@
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "*"
+          "value": "https://vauntico.com,https://www.vauntico.com"
         },
         {
           "key": "Access-Control-Allow-Methods",

@@ -77,3 +77,34 @@ docs/
 !vercel.json
 !components.json
 .vercel
+
+# Sentry Config File
+.env.sentry-build-plugin
+
+# Corrupted and temporary files
+*.tmp
+*git config user.*
+err.name*
+signal.txt
+signal.txtgit
+ χρήστης
+FIX_LOG.md
+JSX_FIX_SUMMARY.txt
+folderMap.txt
+gitignoldecho
+h origin main
+load-test-results-*.txt
+FINAL_FIX_REPORT.txt
+IMPLEMENTATION_SUMMARY.txt
+VAULT_SUCCESS_SUMMARY.md
+*_REPORT.md
+*_SUMMARY.*
+*_AUDIT_README.md
+*_FIX_REPORT.txt
+*_IMPLEMENTATION_SUMMARY.txt
+*_SUCCESS_SUMMARY.md
+
+# Git task files (if needed for future)
+AppData/
+localStorage/
+globalStorage/

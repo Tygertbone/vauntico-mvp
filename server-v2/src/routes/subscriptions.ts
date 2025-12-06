@@ -9,7 +9,7 @@ import Stripe from 'stripe';
 
 // Initialize Stripe with secret key (kept for future migration)
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_disabled', {
-  apiVersion: '2025-11-17.clover',
+  apiVersion: '2025-11-17.clover' as const,
 });
 
 // Paystack plan codes for different subscription tiers
@@ -47,10 +47,10 @@ router.post('/checkout', authenticate, fraudDetectionService.createPaymentFraudM
 
     if (stripeEnabled && useStripe) {
       // Use Stripe (scaffolded but disabled by default)
-      return handleStripeCheckout(userId, subscriptionTier, trialDays, res);
+      await handleStripeCheckout(userId, subscriptionTier, trialDays, res);
     } else {
       // Use Paystack (primary processor)
-      return handlePaystackCheckout(userId, subscriptionTier, trialDays, res);
+      await handlePaystackCheckout(userId, subscriptionTier, trialDays, res);
     }
 
   } catch (error) {

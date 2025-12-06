@@ -3,13 +3,16 @@ import dotenv from 'dotenv';
 // Load environment variables
 dotenv.config();
 
+// Import logger early for startup logging
+import { logger } from './utils/logger';
+
 // Validate environment before starting server
 import { validateEnvironment } from './utils/env-validation';
 const envValidation = validateEnvironment();
 
 // Exit if environment validation fails
 if (!envValidation.isValid) {
-  console.error('Server startup aborted due to environment configuration issues');
+  logger.error('Server startup aborted due to environment configuration issues');
   process.exit(1);
 }
 
@@ -19,22 +22,22 @@ const PORT = parseInt(process.env.PORT || '3001', 10);
 import app from './app';
 
 const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Vauntico Trust Score backend started on port ${PORT}`);
-  console.log(`Health check: http://localhost:${PORT}/health`);
+  logger.info(`Vauntico Trust Score backend started on port ${PORT}`);
+  logger.info(`Health check: http://localhost:${PORT}/health`);
 });
 
 // Graceful shutdown
 const gracefulShutdown = (signal: string) => {
-  console.log(`Received ${signal}, starting graceful shutdown...`);
+  logger.info(`Received ${signal}, starting graceful shutdown...`);
 
   server.close(() => {
-    console.log('HTTP server closed');
+    logger.info('HTTP server closed');
     process.exit(0);
   });
 
   // Force shutdown after 10 seconds
   setTimeout(() => {
-    console.error('Forced shutdown after timeout');
+    logger.error('Forced shutdown after timeout');
     process.exit(1);
   }, 10000);
 };
@@ -45,11 +48,11 @@ process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (error) => {
-  console.error('Uncaught exception:', error);
+  logger.error('Uncaught exception:', error);
   process.exit(1);
 });
 
 process.on('unhandledRejection', (reason, promise) => {
-  console.error('Unhandled rejection:', reason);
+  logger.error('Unhandled rejection:', { reason });
   process.exit(1);
 });

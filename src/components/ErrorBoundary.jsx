@@ -7,7 +7,7 @@ class ErrorBoundary extends Component {
     this.state = { hasError: false, error: null, errorInfo: null }
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     return { hasError: true }
   }
 
@@ -18,9 +18,9 @@ class ErrorBoundary extends Component {
     }
     
     // Send to error tracking service (Sentry, etc)
-    // if (window.Sentry) {
-    //   window.Sentry.captureException(error, { extra: errorInfo })
-    // }
+    if (window.Sentry) {
+      window.Sentry.captureException(error, { extra: errorInfo })
+    }
     
     this.setState({
       error,
