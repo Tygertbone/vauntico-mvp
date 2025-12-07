@@ -55,6 +55,17 @@ export const metadata: Metadata = {
       { rel: 'android-chrome-512x512', url: '/android-chrome-512x512.png' },
     ],
   },
+  other: {
+    'google-site-verification': 'your-google-verification-code',
+  },
+}
+
+// Extend Window interface for Google Analytics and Paystack
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+    PaystackPop?: any;
+  }
 }
 
 export default function RootLayout({
