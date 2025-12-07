@@ -18,6 +18,16 @@ import oauthRoutes from './routes/oauth';
 // Load environment variables
 dotenv.config();
 
+// Validate environment variables early
+import { validateEnvironment } from './utils/env-validation';
+const envValidation = validateEnvironment();
+if (!envValidation.isValid) {
+  console.error('❌ Environment validation failed - check your environment variables');
+  console.error('Missing:', envValidation.missing);
+  console.error('Invalid:', envValidation.invalid);
+  process.exit(1);
+}
+
 // Create Express app
 const app = express();
 
