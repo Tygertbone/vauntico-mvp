@@ -3,6 +3,14 @@
 import { useState } from 'react'
 import { Navigation } from './components/Navigation'
 import { Hero } from './components/Hero'
+import { ProblemSolution } from './components/ProblemSolution'
+import { HowItWorks } from './components/HowItWorks'
+import { Features } from './components/Features'
+import { InteractiveDemo } from './components/InteractiveDemo'
+import { Pricing } from './components/Pricing'
+import { TechnicalCredibility } from './components/TechnicalCredibility'
+import { FinalCTA } from './components/FinalCTA'
+import { Footer } from './components/Footer'
 
 export default function HomePage() {
   const [currentVariant, setCurrentVariant] = useState<'A' | 'B' | 'C'>('A')
@@ -18,16 +26,14 @@ export default function HomePage() {
         onVariantChange={handleVariantChange}
       />
       <Hero variant={currentVariant} />
-
-      {/* Placeholder for additional sections */}
-      <section className="py-20 bg-background-surface/50">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-4xl font-semibold mb-6">More sections coming soon...</h2>
-          <p className="text-text-secondary text-lg">
-            Problem/Solution • How It Works • Features • Pricing • Footer
-          </p>
-        </div>
-      </section>
+      <ProblemSolution />
+      <HowItWorks />
+      <Features />
+      <InteractiveDemo />
+      <Pricing />
+      <TechnicalCredibility />
+      <FinalCTA />
+      <Footer />
     </div>
   )
 }

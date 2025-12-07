@@ -6,10 +6,16 @@ import Stripe from 'stripe';
 
 const router = Router();
 
-// Initialize Stripe with secret key
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-11-17.clover',
-});
+// Initialize Stripe client only if STRIPE_SECRET_KEY is available
+let stripe: Stripe;
+if (process.env.STRIPE_SECRET_KEY) {
+  stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: '2025-11-17.clover',
+  });
+  logger.info('Stripe client initialized');
+} else {
+  logger.warn('Stripe client not initialized - STRIPE_SECRET_KEY not found. Stripe routes disabled.');
+}
 
 // Stripe webhook signature verification
 const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -26,6 +32,12 @@ const HANDLED_EVENTS = [
 
 // Webhook endpoint for Stripe events
 router.post('/stripe/webhooks', async (req: Request, res: Response) => {
+  // Check if Stripe is available
+  if (!stripe) {
+    logger.warn('Stripe webhook received but Stripe client not initialized');
+    return res.status(503).json({ error: 'Stripe service unavailable' });
+  }
+
   const sig = req.headers['stripe-signature'] as string;
   let event: Stripe.Event | null = null;
 
@@ -227,11 +239,11 @@ async function handlePaymentFailed(invoice: Stripe.Invoice): Promise<void> {
   logger.warn('Processing payment failed', { invoiceId: invoice.id });
 
   try {
-    // Mark subscription as past due or handle dunning process
-    if (invoice.subscription) {
-      const subscription = await stripe.subscriptions.retrieve(invoice.subscription as string) as Stripe.Subscription;
-      await handleSubscriptionChange(subscription);
-    }
+  // Mark subscription as past due or handle dunning process
+  if ((invoice as any).subscription) {
+    const subscription = await stripe.subscriptions.retrieve((invoice as any).subscription as string) as Stripe.Subscription;
+    await handleSubscriptionChange(subscription);
+  }
   } catch (error) {
     logger.error('Failed to handle payment failure', {
       invoiceId: invoice.id,
@@ -275,11 +287,11 @@ async function createOrUpdateSubscription(
       userId,
       customerId,
       subscriptionId,
-      getTierFromPriceId(subscription.items.data[0]?.price.id),
+      getTierFromPriceId((subscription as any).items.data[0]?.price.id),
       mapStripeStatusToInternal(subscription.status),
-      subscription.current_period_start ? new Date(subscription.current_period_start * 1000) : null,
-      subscription.current_period_end ? new Date(subscription.current_period_end * 1000) : null,
-      subscription.cancel_at_period_end || false
+      (subscription as any).current_period_start ? new Date((subscription as any).current_period_start * 1000) : null,
+      (subscription as any).current_period_end ? new Date((subscription as any).current_period_end * 1000) : null,
+      (subscription as any).cancel_at_period_end || false
     ]);
 
     logger.info('Subscription created/updated from checkout', { userId, subscriptionId });
@@ -322,12 +334,12 @@ function getTierFromPriceId(priceId?: string): string {
   }
 
   // Map price IDs to tiers (these would be configured in your Stripe dashboard)
-  const priceMappings: Record<string, string> = {
-    process.env.STRIPE_CREATOR_PASS_PRICE_ID!: 'creator_pass',
-    process.env.STRIPE_ENTERPRISE_PRICE_ID!: 'enterprise',
+  const priceMap: Record<string, string> = {
+    [process.env.STRIPE_CREATOR_PASS_PRICE_ID as string]: 'creator_pass',
+    [process.env.STRIPE_ENTERPRISE_PRICE_ID as string]: 'enterprise',
   };
 
-  return priceMappings[priceId] || 'free';
+  return priceMap[priceId] || 'free';
 }
 
 export default router;

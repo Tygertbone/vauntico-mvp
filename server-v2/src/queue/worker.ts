@@ -94,11 +94,11 @@ export class JobWorker {
 
     // TODO: Implement actual trust score calculation in Phase 2
     // - Fetch data from Neon PostgreSQL
-    // - Calculate UEI scores
-    // - Apply scoring algorithm
-    // - Store results
+    // - Calculate UEI scores using 5 component algorithm
+    // - Apply scoring algorithm: 20% Consistency + 30% Engagement + 15% Revenue + 20% Platform Health + 15% Legacy
+    // - Store results in trust_scores table
 
-    logger.info('Trust score calculation completed (stub)', {
+    logger.info('Trust score calculation completed (stub - Phase 2)', {
       userId: payload.userId,
     });
   }
@@ -109,12 +109,12 @@ export class JobWorker {
       platforms: payload.platforms,
     });
 
-    // TODO: Implement data fetching from platforms in Phase 2
-    // - Connect to Google Analytics, YouTube, Stripe APIs
-    // - Fetch metrics data
-    // - Store in database
+    // TODO: Implement data fetching from platforms in Phase 3
+    // - Connect to Google Analytics, YouTube, Stripe OAuth APIs
+    // - Fetch metrics data and store in content_metrics table
+    // - Trigger trust score calculation after sync
 
-    logger.info('Social data sync completed (stub)', {
+    logger.info('Social data sync completed (stub - Phase 3)', {
       userId: payload.userId,
     });
   }

@@ -34,8 +34,7 @@ export class PaystackService {
   private constructor() {
     this.secretKey = process.env.PAYSTACK_SECRET_KEY || '';
     if (!this.secretKey) {
-      logger.error('Paystack secret key not configured');
-      throw new Error('PAYSTACK_SECRET_KEY environment variable is required');
+      logger.warn('Paystack secret key not configured - Paystack services disabled');
     }
   }
 

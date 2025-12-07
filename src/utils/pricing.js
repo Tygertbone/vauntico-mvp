@@ -639,10 +639,9 @@ export const getUserCurrency = () => {
 /**
  * Get localized price for a product
  * @param {Object} product - Product object from PRICING
- * @param {string} productKey - Optional product key for nested plans
  * @returns {Object} Object with price, currency, and formatted string
  */
-export const getLocalizedPrice = (product, productKey = null) => {
+export const getLocalizedPrice = (product) => {
   const userCurrency = getUserCurrency()
   
   // Handle custom pricing
@@ -735,9 +734,10 @@ export const getApproximatePrice = (price, fromCurrency, toCurrency) => {
  */
 export const formatPrice = (price, currency = 'ZAR') => {
   if (price === 'custom') return 'Custom Pricing'
-  
+
   const symbol = getCurrencySymbol(currency)
-  return `${symbol}${price.toLocaleString()}`
+  // Use consistent formatting with commas instead of locale-dependent separators
+  return `${symbol}${price.toLocaleString('en-US')}`
 }
 
 /**

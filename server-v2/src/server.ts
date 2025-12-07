@@ -1,7 +1,21 @@
-import dotenv from 'dotenv';
+// Import dotenv FIRST, before ANY other imports
+import * as dotenv from 'dotenv';
+import path from 'path';
 
-// Load environment variables
-dotenv.config();
+// Load environment variables from server-v2/.env BEFORE ANYTHING ELSE
+const envPath = path.resolve(__dirname, '..', '.env');
+const result = dotenv.config({ path: envPath });
+
+// Add debug logs for environment variables
+console.log('=== ENVIRONMENT LOADING DEBUG ===');
+console.log('Dotenv config result:', result);
+console.log('Env file path:', envPath);
+console.log('DATABASE_URL defined:', !!process.env.DATABASE_URL, 'length:', process.env.DATABASE_URL?.length || 0);
+console.log('UPSTASH_REDIS_REST_URL defined:', !!process.env.UPSTASH_REDIS_REST_URL, 'length:', process.env.UPSTASH_REDIS_REST_URL?.length || 0);
+console.log('UPSTASH_REDIS_REST_TOKEN defined:', !!process.env.UPSTASH_REDIS_REST_TOKEN, 'length:', process.env.UPSTASH_REDIS_REST_TOKEN?.length || 0);
+console.log('PAYSTACK_SECRET_KEY defined:', !!process.env.PAYSTACK_SECRET_KEY, 'length:', process.env.PAYSTACK_SECRET_KEY?.length || 0);
+console.log('JWT_SECRET defined:', !!process.env.JWT_SECRET, 'length:', process.env.JWT_SECRET?.length || 0);
+console.log('=================================');
 
 // Import logger early for startup logging
 import { logger } from './utils/logger';
