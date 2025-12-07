@@ -47,6 +47,7 @@ import stripeWebhookRoutes from './routes/stripe-webhooks';
 import subscriptionRoutes from './routes/subscriptions';
 import plansRoutes from './routes/plans';
 import monitoringRoutes from './routes/monitoring';
+import productRoutes from './routes/products';
 
 const app = express();
 
@@ -129,6 +130,7 @@ app.use('/admin', adminRoutes);
 app.use('/stripe', stripeWebhookRoutes);
 app.use('/subscriptions', subscriptionRoutes);
 app.use('/api/plans', plansRoutes);
+app.use('/api/products', productRoutes);
 app.use('/monitoring', monitoringRoutes);
 
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';

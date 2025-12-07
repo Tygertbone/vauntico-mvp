@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node dist/server.js",
+    "start": "NODE_ENV=production node dist/server.js",
     "dev": "tsx -r dotenv/config src/server.ts dotenv_config_path=.env",
     "migrate": "psql \"$DATABASE_URL\" -f migrations/001_create_schema.sql"
   },
