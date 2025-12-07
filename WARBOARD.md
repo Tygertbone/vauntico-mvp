@@ -54,23 +54,29 @@
 
 ---
 
-## Sprint 7: Production Deployment & Monitoring
-- [ ] Merge homepage-redesign to main branch
-- [ ] Deploy to Vercel with custom domain configured
-- [ ] Run Lighthouse audit and confirm ≥ 90 scores across metrics
-- [ ] Set up production health monitoring (Slack/Sentry alerts)
-- [ ] Schedule weekly automated link validation
-- [ ] Update sitemap.xml with live production URLs
+## Sprint 7: Creator Pass Onboarding Flow
+- [x] Build onboarding page for Creator Pass
+- [x] Implement tier selection (Starter, Pro, Enterprise)
+- [x] Integrate payment flow with Paystack (Stripe scaffolded but disabled)
+- [x] Add trust score calculator (React Hook Form + Zod validation)
+- [x] Show real-time validation errors for inputs
+- [x] Confirmation screen with receipt + next steps
+- [x] Analytics events: tier selections, form completions, payment success/failure
+- [x] Accessibility: labels on all inputs, error messages screen-reader accessible
+- [x] Responsive design tested across mobile, tablet, desktop
+- [x] SEO metadata for Creator Pass page
 
 ---
 
-## Sprint 8: Creator Pass Onboarding Flow
-- [ ] Build Creator Pass landing page with tier selection
-- [ ] Implement multi-step onboarding wizard (3 steps minimum)
-- [ ] Add payment integration (Stripe/Paystack)
-- [ ] Create success confirmation and welcome flow
-- [ ] Set up email sequences for new subscribers
-- [ ] Add progress tracking and achievements system
+## Sprint 8: Production Deployment & Monitoring
+- [x] Deploy Creator Pass flow to production domain
+- [x] Configure environment variables in Vercel (Paystack keys, GA tracking ID, Sentry DSN)
+- [x] Run Lighthouse audit on live site (target ≥ 90 across metrics)
+- [x] Set up error monitoring dashboards in Sentry
+- [x] Configure Slack alerts for payment failures or trust score errors
+- [x] Monitor analytics events in GA (tier selections, payment conversions)
+- [x] Test mobile responsiveness on real devices (iOS + Android)
+- [x] Validate SSL, CDN caching, and security headers
 
 ---
 
