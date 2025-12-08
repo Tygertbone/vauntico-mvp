@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { cn } from '../../../lib/utils'
 
-type ButtonVariant = 'primary' | 'secondary' | 'ghost'
+type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'fancy'
 type ButtonSize = 'sm' | 'default' | 'lg' | 'xl'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -17,7 +17,29 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const variants = {
       primary: "bg-gradient-to-r from-accent-primary to-accent-primary hover:from-accent-primaryHover hover:to-accent-primaryHover text-text-primary shadow-lg shadow-accent-primary/25 hover:shadow-xl hover:shadow-accent-primary/40 hover:scale-105 disabled:hover:scale-100",
       secondary: "bg-transparent border border-border-default text-text-primary hover:bg-text-primary/5 hover:border-border-hover disabled:hover:bg-transparent",
-      ghost: "bg-transparent hover:bg-text-primary/5 text-text-secondary hover:text-text-primary"
+      ghost: "bg-transparent hover:bg-text-primary/5 text-text-secondary hover:text-text-primary",
+      fancy: `
+        group
+        relative
+        overflow-hidden
+        bg-gradient-to-r from-indigo-600 to-purple-600
+        text-white
+        font-semibold
+        transform transition-all duration-300
+        hover:scale-[1.02]
+        hover:shadow-[0_0_40px_rgba(102,126,234,0.6)]
+        active:scale-[0.98]
+        before:absolute
+        before:inset-0
+        before:-translate-x-full
+        before:bg-gradient-to-r
+        before:from-transparent
+        before:via-white/30
+        before:to-transparent
+        before:transition-transform
+        before:duration-1000
+        hover:before:translate-x-full
+      `
     }
 
     const sizes = {
