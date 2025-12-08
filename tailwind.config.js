@@ -47,6 +47,16 @@ export default {
           stardust: '#2d2d44',
           aurora: '#3d3d5c',
         },
+        // 🎨 Fancy SaaS Palette - Pure black backgrounds, multi-gradient accents
+        'vauntico-bg-primary': '#000000',        // Pure black (not #0A0A0A)
+        'vauntico-bg-elevated': '#0A0A0A',       // Subtle lift
+        'vauntico-bg-surface': '#111111',        // Cards
+        'vauntico-text-primary': '#FFFFFF',
+        'vauntico-text-secondary': '#A0A0A0',
+        'vauntico-text-muted': '#666666',
+        'vauntico-border-subtle': 'rgba(255, 255, 255, 0.06)',
+        'vauntico-border-medium': 'rgba(255, 255, 255, 0.12)',
+        'vauntico-border-strong': 'rgba(255, 255, 255, 0.24)',
         // ?? Spiritual awakening (chakra system)
         chakra: {
           crown: '#9d4edd',     // Purple (consciousness)
@@ -87,8 +97,6 @@ export default {
         'edge-glow': 'edgeGlow 2s ease-in-out infinite',
         'light-ray': 'lightRay 2s ease-out forwards',
         'pulse-ring': 'pulseRing 3s ease-out infinite',
-        'spin-slow': 'spin 20s linear infinite',
-        'glyph-breathe': 'glyphBreathe 3s ease-in-out infinite',
         'neural-pulse': 'neuralPulse 2s ease-in-out infinite',
       },
       keyframes: {
@@ -190,6 +198,42 @@ export default {
         neuralPulse: {
           '0%, 100%': { opacity: '0.6' },
           '50%': { opacity: '1' },
+        },
+        // 🎭 Fancy SaaS Keyframes
+        gradientX: {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'left center'
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center'
+          },
+        },
+        gradientY: {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'center top'
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'center bottom'
+          },
+        },
+        gradientXY: {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'left top'
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right bottom'
+          },
+        },
+        gradientShift: {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+          '33%': { transform: 'translate(30px, -30px) scale(1.1)' },
+          '66%': { transform: 'translate(-30px, 30px) scale(0.9)' },
         },
       },
     },
