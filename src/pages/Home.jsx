@@ -1,370 +1,277 @@
-﻿import { Link } from 'react-router-dom'
-import SEO from '../components/SEO'
-import StructuredData from '../components/StructuredData'
-import ScrollPreview from '../components/ScrollPreview'
-import ExitIntentCapture from '../components/ExitIntentCapture'
-import OldWayVsNewWay from '../components/OldWayVsNewWay'
-import ComparisonTable from '../components/ComparisonTable'
-import CLIShowcase from '../components/CLIShowcase'
+﻿'use client';
 
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
+export default function Home() {
+  const [terminalText, setTerminalText] = useState('');
+  const [showOutput, setShowOutput] = useState(false);
+  const [cursorVisible, setCursorVisible] = useState(true);
 
-function Home() {
-  // Sample scroll for preview
-  const sampleScroll = {
-    id: 'core-features',
-    title: 'The Core Features Scroll',
-    category: 'Platform Guide',
-    readTime: '8 min read',
-    icon: 'ðŸ“œ',
-    tier: 'FREE',
-    description: 'Philosophy: Speak your vision. Watch infrastructure materialize. The CLI is your command throne - generate complete landing pages, workshops, audits, and content with context-aware intelligence.',
-    features: [
-      'Narrative-first generation that explains WHY, not just WHAT',
-      'Full-stack ownership with no vendor lock-in',
-      'Context-aware intelligence that learns your style',
-      'Teaching while building with mini-tutorials'
-    ],
-    views: '3.2k',
-    rating: '4.9',
-    difficulty: 'Beginner',
-    unlockedBy: '2,400+'
-  }
+  const command = '$ vauntico generate landing-page --workshop "creator-monetization"';
 
-    return (
-    <>
-            <SEO 
-        title="Vauntico | The Creator OS That Actually Ships"
-        description="Ship 10x faster with the CLI that thinks like you. One command generates complete landing pages, workshops, and audits. Stop juggling 10 tools. Start creating freely."
-        canonical="/"
-      />
-      <StructuredData type="Organization" />
-      <StructuredData type="SoftwareApplication" />
-      <ExitIntentCapture />
-      
+  const outputs = [
+    { text: '✓ Analyzing workshop content...', delay: 0 },
+    { text: '✓ Generating trust score algorithm...', delay: 400 },
+    { text: '✓ Building payment integration...', delay: 800 },
+    { text: '✓ Creating email sequences...', delay: 1200 },
+  ];
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-20 relative z-10">
-      {/* Hero Section - Outcome Focused */}
-      
+  // Typewriter effect
+  useEffect(() => {
+    let i = 0;
+    const typingSpeed = 50;
 
-      <div className="text-center mb-20">
-        <h1 className="text-6xl font-bold mb-6">
-          Ship 10x Faster With the<br />
-          <span className="text-gradient">CLI That Thinks Like You</span>
-        </h1>
-                <p className="text-2xl text-gray-600 max-w-3xl mx-auto mb-4 leading-relaxed">
-          One command generates complete landing pages, workshops, and audits. Stop juggling 10 tools. Start creating freely with AI that learns your voice.
-        </p>
-                <div className="mb-8 p-6 bg-gradient-to-r from-purple-50 to-cyan-50 rounded-xl max-w-2xl mx-auto border-2 border-purple-300 shadow-lg">
-          <div className="flex items-center gap-4">
-            <img 
-              src="/images/brand/vauntico-unicorn-hero.png" 
-              alt="Vauntico Unicorn"
-              className="w-16 h-16 object-contain"
-            />
-            <div>
-              <p className="text-lg text-purple-600 font-semibold italic">
-                âœ¨ EA + ENKI = AI âœ¨
-              </p>
-              <p className="text-sm text-gray-600 mt-1">
-                Ancient wisdom meets modern creation
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center justify-center gap-4 mb-8">
-          <Link to="/pricing" className="btn-primary text-lg px-8 py-4">
-            Start Free Trial â†’
-          </Link>
-          <Link to="/about" className="btn-outline text-lg px-8 py-4">
-            The Story Behind It
-          </Link>
-        </div>
-        <p className="text-gray-500">
-          âœ“ No credit card required &nbsp;â€¢&nbsp; âœ“ 14-day free trial &nbsp;â€¢&nbsp; âœ“ Cancel anytime
-        </p>
+    const typingInterval = setInterval(() => {
+      if (i < command.length) {
+        setTerminalText(command.slice(0, i + 1));
+        i++;
+      } else {
+        clearInterval(typingInterval);
+        setTimeout(() => setShowOutput(true), 500);
+      }
+    }, typingSpeed);
+
+    return () => clearInterval(typingInterval);
+  }, []);
+
+  // Cursor blink
+  useEffect(() => {
+    const cursorInterval = setInterval(() => {
+      setCursorVisible(v => !v);
+    }, 500);
+
+    return () => clearInterval(cursorInterval);
+  }, []);
+
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black pt-20">
+
+      {/* Animated Background Gradient */}
+      <div className="absolute inset-0">
+        <div className="
+          absolute inset-0
+          bg-gradient-to-br from-indigo-600/10 via-purple-600/10 to-pink-600/10
+          animate-gradient-shift
+          blur-3xl
+        "/>
+
+        {/* Grid overlay */}
+        <div className="
+          absolute inset-0
+          bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)]
+          bg-[size:50px_50px]
+          [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]
+        "/>
       </div>
 
-      {/* CLI Showcase - Show Don't Tell */}
-      <CLIShowcase />
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center w-full">
 
-      {/* Founder Story Teaser */}
-      <div className="mb-20 card bg-gradient-to-r from-vault-purple/10 to-vault-blue/10 border-2 border-vault-purple/20">
-        <div className="grid md:grid-cols-2 gap-8 items-center">
-          <div>
-            <div className="w-full h-64 vault-gradient rounded-xl flex items-center justify-center">
-              <span className="text-white text-7xl">ðŸ‘¨â€ðŸ’»</span>
-            </div>
+        {/* Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2 mb-8"
+        >
+          <div className="
+            px-4 py-2
+            glass
+            rounded-full
+            text-sm text-gray-300
+            flex items-center gap-2
+          ">
+            <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"/>
+            Used by 500+ creators
           </div>
-          <div>
-            <h2 className="text-3xl font-bold mb-4">Built by a Creator, For Creators</h2>
-            <p className="text-gray-700 mb-4 leading-relaxed">
-              "After years of juggling multiple platforms, losing content in scattered folders, and watching 
-              creative ideas slip away because the tools got in the way, I knew something had to change."
-            </p>
-            <p className="text-gray-700 mb-6 leading-relaxed">
-              Vauntico isn't just another SaaS productâ€”it's the system I wish I had when I started.
-            </p>
-            <Link to="/about" className="btn-secondary">
-              Read the Full Story â†’
-            </Link>
-          </div>
-        </div>
-      </div>
-      </div>
+        </motion.div>
 
-      {/* Old Way vs New Way - Enemy Positioning */}
-      <OldWayVsNewWay />
+        {/* Headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="
+            text-6xl md:text-8xl lg:text-9xl
+            font-bold
+            tracking-tighter
+            leading-[0.95]
+            mb-6
+          "
+        >
+          <span className="text-white">Build Your</span>
+          <br/>
+          <span className="gradient-text-multi animate-gradient-x">
+            Creator Business
+          </span>
+          <br/>
+          <span className="text-white/60 text-5xl md:text-7xl">
+            in Minutes, Not Months
+          </span>
+        </motion.h1>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      {/* The Problem (Agitate) */}
-      <div className="mb-20">
-        <h2 className="text-4xl font-bold text-center mb-12">
-          Sound Familiar?
-        </h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="card bg-red-50 border-red-200">
-            <div className="text-4xl mb-4">ðŸ˜¤</div>
-            <h3 className="text-xl font-bold mb-3">Tool Fatigue</h3>
-            <p className="text-gray-700">
-              Paying for 10 subscriptions just to create, store, and ship content. Your workflow is a maze.
-            </p>
-          </div>
-          <div className="card bg-red-50 border-red-200">
-            <div className="text-4xl mb-4">â°</div>
-            <h3 className="text-xl font-bold mb-3">Time Drain</h3>
-            <p className="text-gray-700">
-              Spending more time setting up tools than actually creating. The meta-work is killing your momentum.
-            </p>
-          </div>
-          <div className="card bg-red-50 border-red-200">
-            <div className="text-4xl mb-4">ðŸ“</div>
-            <h3 className="text-xl font-bold mb-3">Content Chaos</h3>
-            <p className="text-gray-700">
-              Files scattered across drives, platforms, and dead links. You've lost track of what you even have.
-            </p>
-          </div>
-        </div>
-      </div>
+        {/* Subheadline */}
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="
+            text-xl md:text-2xl
+            text-gray-400
+            leading-relaxed
+            max-w-3xl
+            mx-auto
+            mb-12
+            text-balance
+          "
+        >
+          CLI automation meets trust scoring. Ship landing pages, workshops,
+          and payment flows—AI handles the code, you handle the vision.
+        </motion.p>
 
-      {/* The Solution (Outcomes) */}
-      <div className="mb-20">
-        <h2 className="text-4xl font-bold text-center mb-4">
-          What If You Could...
-        </h2>
-        <p className="text-center text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-          Generate complete landing pages, write scroll-style content, run audits, and manage everything from one command line? No switching. No friction.
-        </p>
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="card hover:shadow-2xl transition-all">
-            <div className="text-5xl mb-4">âš¡</div>
-            <h3 className="text-2xl font-bold mb-3">Ship 10x Faster</h3>
-            <p className="text-gray-700 mb-4 leading-relaxed">
-              One command generates production-ready landing pages, workshop outlines, or full audits. 
-              What used to take hours now takes seconds.
-            </p>
-            <ul className="space-y-2 text-gray-600">
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2">âœ“</span>
-                <span>Generate complete landing pages in 30 seconds</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2">âœ“</span>
-                <span>Create workshop curricula with marketing copy</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2">âœ“</span>
-                <span>Run comprehensive audits in minutes</span>
-              </li>
-            </ul>
-          </div>
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+        >
+          <a href="/pricing" className="
+            group relative px-8 py-4
+            bg-gradient-to-r from-indigo-600 to-purple-600
+            rounded-xl overflow-hidden
+            font-semibold text-lg
+            transform transition-all duration-300
+            hover:scale-[1.02]
+            hover:shadow-[0_0_40px_rgba(102,126,234,0.4)]
+            active:scale-[0.98]
+          ">
+            <div className="
+              absolute inset-0
+              bg-gradient-to-r from-transparent via-white/20 to-transparent
+              -translate-x-full
+              group-hover:translate-x-full
+              transition-transform duration-1000
+            "/>
+            <span className="relative z-10 flex items-center gap-2">
+              Start Building Free
+              <ArrowRight className="w-5 h-5" />
+            </span>
+          </a>
 
-          <div className="card hover:shadow-2xl transition-all">
-            <div className="text-5xl mb-4">ðŸŽ¯</div>
-            <h3 className="text-2xl font-bold mb-3">Focus on Creation</h3>
-            <p className="text-gray-700 mb-4 leading-relaxed">
-              AI that enhances your voice, not replaces it. Context-aware generation that learns your style and keeps consistency across projects.
-            </p>
-            <ul className="space-y-2 text-gray-600">
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2">âœ“</span>
-                <span>Narrative-first outputs that explain WHY</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2">âœ“</span>
-                <span>CLI learns your preferences over time</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2">âœ“</span>
-                <span>Export everything - no vendor lock-in</span>
-              </li>
-            </ul>
-          </div>
+          <a href="/about" className="
+            px-8 py-4
+            glass
+            rounded-xl
+            font-semibold text-lg
+            hover:bg-white/10
+            hover:border-white/20
+            transition-all duration-300
+          ">
+            Watch Demo (2 min)
+          </a>
+        </motion.div>
 
-          <div className="card hover:shadow-2xl transition-all">
-            <div className="text-5xl mb-4">ðŸ—„ï¸</div>
-            <h3 className="text-2xl font-bold mb-3">Organize Everything</h3>
-            <p className="text-gray-700 mb-4 leading-relaxed">
-              Intelligent vaults keep your content, code, and assets organized. Collaborate with teams without the chaos.
-            </p>
-            <ul className="space-y-2 text-gray-600">
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2">âœ“</span>
-                <span>Unlimited vaults (Creator Pass)</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2">âœ“</span>
-                <span>Team collaboration built-in</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2">âœ“</span>
-                <span>Advanced analytics and tracking</span>
-              </li>
-            </ul>
-          </div>
+        {/* Trust Indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="text-sm text-gray-500 mb-16"
+        >
+          Trusted by agencies · Open source components
+        </motion.div>
 
-          <div className="card hover:shadow-2xl transition-all">
-            <div className="text-5xl mb-4">ðŸ’°</div>
-            <h3 className="text-2xl font-bold mb-3">Fair Pricing</h3>
-            <p className="text-gray-700 mb-4 leading-relaxed">
-              Pay for what you use with transparent credit pricing. No hidden fees, no surprises. Cancel anytime.
-            </p>
-            <ul className="space-y-2 text-gray-600">
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2">âœ“</span>
-                <span>Free tier with 3 vaults & 50 generations</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2">âœ“</span>
-                <span>Unlimited everything with Creator Pass</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-green-500 mr-2">âœ“</span>
-                <span>Credits rollover (Pro/Legacy tiers)</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      </div>
-
-      {/* Comparison Table - How Vauntico Compares */}
-      <ComparisonTable />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      {/* Free Scroll Preview */}
-      <div className="mb-20">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">
-            See It In Action
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Here's a free scroll showing exactly what Vauntico can do. No login required.
-          </p>
-        </div>
-        <ScrollPreview scroll={sampleScroll} hasAccess={true} />
-      </div>
-
-      {/* Social Proof */}
-      <div className="mb-20">
-        <h2 className="text-4xl font-bold text-center mb-12">
-          Trusted by Creators Worldwide
-        </h2>
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          <div className="card bg-gradient-to-br from-vault-purple/10 to-transparent">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 vault-gradient rounded-full flex items-center justify-center text-white font-bold">
-                JD
+        {/* Terminal Demo */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="max-w-5xl mx-auto"
+        >
+          <div className="
+            relative
+            bg-black
+            border border-white/10
+            rounded-2xl
+            overflow-hidden
+            shadow-[0_0_50px_rgba(102,126,234,0.3)]
+            hover:shadow-[0_0_80px_rgba(102,126,234,0.4)]
+            transition-shadow duration-500
+          ">
+            {/* Terminal Header */}
+            <div className="flex items-center gap-2 px-6 py-4 border-b border-white/10 bg-white/5">
+              <div className="flex gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500/80"/>
+                <div className="w-3 h-3 rounded-full bg-yellow-500/80"/>
+                <div className="w-3 h-3 rounded-full bg-green-500/80"/>
               </div>
-              <div>
-                <p className="font-semibold">Jessica Davis</p>
-                <p className="text-sm text-gray-600">Solo Creator</p>
-              </div>
+              <span className="text-xs text-gray-500 ml-2">terminal — vauntico</span>
             </div>
-            <p className="text-gray-700 italic">
-              "I went from juggling 12 tools to just Vauntico. My workflow is 5x faster and I actually enjoy creating again."
-            </p>
-            <div className="mt-4 text-yellow-500">â˜…â˜…â˜…â˜…â˜…</div>
-          </div>
 
-          <div className="card bg-gradient-to-br from-vault-blue/10 to-transparent">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 vault-gradient rounded-full flex items-center justify-center text-white font-bold">
-                MR
+            {/* Terminal Content */}
+            <div className="p-8 font-mono text-sm md:text-base">
+              {/* Animated command */}
+              <div className="mb-6">
+                <span className="text-cyan-400">{terminalText}</span>
+                <span className={`${cursorVisible ? 'opacity-100' : 'opacity-0'} transition-opacity`}>_</span>
               </div>
-              <div>
-                <p className="font-semibold">Marcus Reynolds</p>
-                <p className="text-sm text-gray-600">Agency Owner</p>
-              </div>
-            </div>
-            <p className="text-gray-700 italic">
-              "The CLI alone saves our team 20 hours a week. The Workshop Kit paid for itself on the first client."
-            </p>
-            <div className="mt-4 text-yellow-500">â˜…â˜…â˜…â˜…â˜…</div>
-          </div>
 
-          <div className="card bg-gradient-to-br from-vault-cyan/10 to-transparent">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 vault-gradient rounded-full flex items-center justify-center text-white font-bold">
-                SK
-              </div>
-              <div>
-                <p className="font-semibold">Sarah Kim</p>
-                <p className="text-sm text-gray-600">Course Creator</p>
-              </div>
-            </div>
-            <p className="text-gray-700 italic">
-              "Generated my entire course landing page and curriculum outline in under 10 minutes. This is magic."
-            </p>
-            <div className="mt-4 text-yellow-500">â˜…â˜…â˜…â˜…â˜…</div>
-          </div>
-        </div>
+              {/* Animated output */}
+              {showOutput && (
+                <div className="space-y-2">
+                  {outputs.map((output, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: output.delay / 1000 }}
+                      className="text-gray-400 flex items-center gap-2"
+                    >
+                      <span className="text-green-400">✓</span>
+                      {output.text}
+                    </motion.div>
+                  ))}
 
-        <div className="vault-gradient rounded-2xl p-12 text-white text-center">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="text-5xl font-bold mb-2">2,500+</div>
-              <div className="text-lg opacity-90">Active Creators</div>
-            </div>
-            <div>
-              <div className="text-5xl font-bold mb-2">50K+</div>
-              <div className="text-lg opacity-90">Vaults Created</div>
-            </div>
-            <div>
-              <div className="text-5xl font-bold mb-2">1M+</div>
-              <div className="text-lg opacity-90">AI Generations</div>
-            </div>
-            <div>
-              <div className="text-5xl font-bold mb-2">98%</div>
-              <div className="text-lg opacity-90">Satisfaction</div>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.6 }}
+                    className="mt-6 pt-4 border-t border-white/10"
+                  >
+                    <span className="text-green-400">🚀 </span>
+                    <span className="text-gray-300">Landing page deployed: </span>
+                    <span className="text-cyan-400 underline">yoursite.vercel.app</span>
+                  </motion.div>
+                </div>
+              )}
             </div>
           </div>
-        </div>
+        </motion.div>
+
       </div>
 
-      {/* Final CTA */}
-      <div className="text-center mb-12">
-        <h2 className="text-5xl font-bold mb-6">
-          Ready to Create <span className="text-gradient">Without Limits?</span>
-        </h2>
-        <p className="text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
-          Join thousands of creators who've stopped fighting their tools and started shipping faster.
-        </p>
-        <div className="flex items-center justify-center gap-4 mb-6">
-          <Link to="/pricing" className="btn-primary text-xl px-10 py-5">
-            Start Free Trial â†’
-          </Link>
-          <Link to="/lore" className="btn-outline text-xl px-10 py-5">
-            Browse Scrolls
-          </Link>
+      {/* Scroll Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 1 }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2"
+      >
+        <div className="flex flex-col items-center gap-2 text-gray-500">
+          <span className="text-xs">Scroll to explore</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="w-6 h-10 border-2 border-white/20 rounded-full p-1"
+          >
+            <div className="w-1 h-2 bg-white/40 rounded-full mx-auto"/>
+          </motion.div>
         </div>
-        <p className="text-gray-500 text-lg">
-          14-day free trial â€¢ No credit card required â€¢ Full access to Creator Pass
-        </p>
-      </div>
-    </div>
-    </>
-  )
+      </motion.div>
+
+    </section>
+  );
 }
-
-export default Home
