@@ -1,8 +1,4 @@
-﻿'use client';
-
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+﻿import { useState, useEffect } from 'react';
 
 export default function Home() {
   const [terminalText, setTerminalText] = useState('');
@@ -70,15 +66,12 @@ export default function Home() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center w-full">
 
         {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 mb-8"
-        >
+        <div className="inline-flex items-center gap-2 mb-8">
           <div className="
             px-4 py-2
-            glass
+            bg-white/10
+            backdrop-blur-sm
+            border border-white/20
             rounded-full
             text-sm text-gray-300
             flex items-center gap-2
@@ -86,120 +79,84 @@ export default function Home() {
             <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"/>
             Used by 500+ creators
           </div>
-        </motion.div>
+        </div>
 
         {/* Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="
-            text-6xl md:text-8xl lg:text-9xl
-            font-bold
-            tracking-tighter
-            leading-[0.95]
-            mb-6
-          "
-        >
+        <h1 className="
+          text-4xl md:text-6xl lg:text-7xl
+          font-bold
+          tracking-tighter
+          leading-[0.95]
+          mb-6
+        ">
           <span className="text-white">Build Your</span>
           <br/>
-          <span className="gradient-text-multi animate-gradient-x">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
             Creator Business
           </span>
           <br/>
-          <span className="text-white/60 text-5xl md:text-7xl">
+          <span className="text-white/60 text-3xl md:text-4xl">
             in Minutes, Not Months
           </span>
-        </motion.h1>
+        </h1>
 
         {/* Subheadline */}
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="
-            text-xl md:text-2xl
-            text-gray-400
-            leading-relaxed
-            max-w-3xl
-            mx-auto
-            mb-12
-            text-balance
-          "
-        >
+        <p className="
+          text-xl md:text-2xl
+          text-gray-400
+          leading-relaxed
+          max-w-3xl
+          mx-auto
+          mb-12
+        ">
           CLI automation meets trust scoring. Ship landing pages, workshops,
           and payment flows—AI handles the code, you handle the vision.
-        </motion.p>
+        </p>
 
         {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
-        >
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
           <a href="/pricing" className="
-            group relative px-8 py-4
+            inline-block px-8 py-4
             bg-gradient-to-r from-indigo-600 to-purple-600
-            rounded-xl overflow-hidden
+            rounded-xl
             font-semibold text-lg
-            transform transition-all duration-300
-            hover:scale-[1.02]
-            hover:shadow-[0_0_40px_rgba(102,126,234,0.4)]
-            active:scale-[0.98]
+            hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-500
+            transition-all duration-300
+            hover:shadow-lg
+            transform hover:scale-105
           ">
-            <div className="
-              absolute inset-0
-              bg-gradient-to-r from-transparent via-white/20 to-transparent
-              -translate-x-full
-              group-hover:translate-x-full
-              transition-transform duration-1000
-            "/>
-            <span className="relative z-10 flex items-center gap-2">
-              Start Building Free
-              <ArrowRight className="w-5 h-5" />
-            </span>
+            Start Building Free →
           </a>
 
           <a href="/about" className="
-            px-8 py-4
-            glass
+            inline-block px-8 py-4
+            bg-white/10
+            backdrop-blur-sm
+            border border-white/20
             rounded-xl
             font-semibold text-lg
-            hover:bg-white/10
-            hover:border-white/20
+            hover:bg-white/20
             transition-all duration-300
           ">
             Watch Demo (2 min)
           </a>
-        </motion.div>
+        </div>
 
         {/* Trust Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="text-sm text-gray-500 mb-16"
-        >
+        <div className="text-sm text-gray-500 mb-16">
           Trusted by agencies · Open source components
-        </motion.div>
+        </div>
 
         {/* Terminal Demo */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="max-w-5xl mx-auto"
-        >
+        <div className="max-w-5xl mx-auto">
           <div className="
             relative
             bg-black
             border border-white/10
             rounded-2xl
             overflow-hidden
-            shadow-[0_0_50px_rgba(102,126,234,0.3)]
-            hover:shadow-[0_0_80px_rgba(102,126,234,0.4)]
-            transition-shadow duration-500
+            hover:shadow-[0_10px_30px_rgba(102,126,234,0.15)]
+            transition-shadow duration-300
           ">
             {/* Terminal Header */}
             <div className="flex items-center gap-2 px-6 py-4 border-b border-white/10 bg-white/5">
@@ -223,54 +180,38 @@ export default function Home() {
               {showOutput && (
                 <div className="space-y-2">
                   {outputs.map((output, idx) => (
-                    <motion.div
+                    <div
                       key={idx}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: output.delay / 1000 }}
-                      className="text-gray-400 flex items-center gap-2"
+                      className="text-gray-400 flex items-center gap-2 animate-fade-in"
+                      style={{ animationDelay: `${output.delay}ms` }}
                     >
                       <span className="text-green-400">✓</span>
                       {output.text}
-                    </motion.div>
+                    </div>
                   ))}
 
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.6 }}
-                    className="mt-6 pt-4 border-t border-white/10"
-                  >
+                  <div className="mt-6 pt-4 border-t border-white/10 animate-fade-in">
                     <span className="text-green-400">🚀 </span>
                     <span className="text-gray-300">Landing page deployed: </span>
                     <span className="text-cyan-400 underline">yoursite.vercel.app</span>
-                  </motion.div>
+                  </div>
                 </div>
               )}
             </div>
           </div>
-        </motion.div>
+        </div>
 
       </div>
 
       {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2"
-      >
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2">
         <div className="flex flex-col items-center gap-2 text-gray-500">
           <span className="text-xs">Scroll to explore</span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-6 h-10 border-2 border-white/20 rounded-full p-1"
-          >
+          <div className="w-6 h-10 border-2 border-white/20 rounded-full p-1 animate-bounce">
             <div className="w-1 h-2 bg-white/40 rounded-full mx-auto"/>
-          </motion.div>
+          </div>
         </div>
-      </motion.div>
+      </div>
 
     </section>
   );
