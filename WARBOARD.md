@@ -215,6 +215,39 @@ cd server-v2 && npm run smoke-test:stripe-webhooks --domain=your-vercel-domain.v
   - [] Check Vercel build logs for serverless function errors
 - [ ] **Post-Deployment**: Smoke test live site immediately after deployment
 
+---
+
+## Sprint 14: Resolved Incident – Mixed Build Config
+
+**✅ RESOLVED**: Mixed Build Configuration Incident Closed
+
+### Root Cause Analysis
+The primary root cause was **Next.js compiling Vite files**, creating incompatible build configurations where:
+- Next.js expected `process.env` syntax
+- Vite builds included `import.meta.env` calls
+- Webpack configuration conflicted between frameworks
+- Dual-framework dependencies caused bundling failures
+
+### Fixes Applied
+1. **Environment Variable Migration**: Migrated all Vite-specific `import.meta.env` calls to Next.js compatible `process.env`
+2. **Webpack Exclusions**: Added proper webpack configuration to exclude Vite-specific files from Next.js compilation
+3. **Dependency Installs**: Verified and installed required dependencies (`stripe`, `react-chartjs-2`, `chart.js`) in appropriate project packages
+4. **Build Script Validation**: Updated build scripts to run clean builds without conflicting frameworks
+
+### Results
+- ✅ Build completed successfully (6s)
+- ✅ No `import.meta.env` errors in production
+- ✅ TailwindCSS/globals.css bundled successfully
+- ✅ Dependencies resolved across all projects
+- ✅ API route `/api/stripe/webhooks` built and returns 401 as expected
+
+### Contributor Build Safety Checklist
+- [ ] **Verify env syntax**: Ensure no `import.meta.env` usage in Next.js code (use `process.env` instead)
+- [ ] **Run local build before push**: Execute `npm run build` locally to catch errors early
+- [ ] **Check Vercel logs for CSS bundling**: Monitor deployment logs for TailwindCSS and styling issues
+- [ ] **Test API routes post-deployment**: Verify webhook endpoints return expected status codes
+- [ ] **Dependency verification**: Confirm required packages are installed in correct project scopes
+
 ### Common Issues & Quick Fixes
 - **CSS Missing**: Check build didn't fail due to mixed `import.meta.env`/`process.env`
 - **API 404**: Verify API routes are in correct Next.js `app/api/` directory
