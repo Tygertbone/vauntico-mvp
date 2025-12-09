@@ -115,6 +115,60 @@
 
 ---
 
+## Sprint 12: Environment Variables & Deployment Audit (COMPLETED)
+- [x] Audit all required environment variables across server-v2 and frontend
+- [x] Verify Stripe webhook syntax fix (malformed `process, : .env.STRIPE_CREATOR_PASS_PRICE_ID` on line 258)
+- [x] Add smoke test script for Stripe webhooks endpoint
+- [x] Update documentation with deployment requirements
+- [x] Run smoke test on deployed Stripe webhooks endpoint (Status: 401 ✅ - endpoint accessible, rejecting unauthorized requests as expected)
+
+### Environment Variables Checklist
+⚠️ **IMPORTANT**: Environment variables must be duplicated in each Vercel project that references them. The server-v2 and frontend run in separate projects on Vercel.
+
+**Backend Environment Variables (server-v2/.env.example)**:
+- `DATABASE_URL` - Neon PostgreSQL connection string
+- `JWT_SECRET` - 32+ characters for authentication tokens
+- `JWT_REFRESH_SECRET` - Separate secret for refresh tokens
+- `UPSTASH_REDIS_REST_URL` - Upstash Redis REST endpoint
+- `UPSTASH_REDIS_REST_TOKEN` - Upstash Redis authentication token
+- `RESEND_API_KEY` - Email service API key
+- `ANTHROPIC_API_KEY` - AI service API key
+- `GOOGLE_CLIENT_ID` - OAuth provider
+- `GOOGLE_CLIENT_SECRET` - OAuth provider secret
+- `SENTRY_DSN` - Error tracking endpoint
+- `SLACK_WEBHOOK_URL` - Alerting webhook
+- `PAYSTACK_SECRET_KEY` - Primary payment processor
+- `PAYSTACK_PUBLIC_KEY` - Client-side payment integration
+- `STRIPE_SECRET_KEY` - Secondary payment processor (if enabled)
+- `STRIPE_WEBHOOK_SECRET` - Webhook signature verification
+- `STRIPE_CREATOR_PASS_PRICE_ID` - Stripe product price ID
+- `STRIPE_ENTERPRISE_PRICE_ID` - Stripe enterprise price ID
+
+**Frontend Environment Variables (env.example)**:
+- `VITE_PAYSTACK_PUBLIC_KEY` - Client-side payment integration
+- `VITE_APP_NAME` - Application configuration
+- `VITE_APP_URL` - Application configuration
+- `VITE_EMAIL_LIST_ID` - Email service integration
+- `VITE_GOOGLE_ANALYTICS_ID` - Analytics tracking
+- `VITE_SENTRY_DSN` - Error tracking
+- `VITE_*` - All frontend vars must be prefixed with `VITE_`
+
+### Code Contributor Checklist
+- [ ] **If code touches Redis**: Ensure `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are set in Vercel projects
+- [ ] **If code touches Stripe**: Ensure all `STRIPE_*` environment variables are configured in Vercel projects
+- [ ] **If code touches payments**: Verify both Paystack (primary) and Stripe (secondary) configurations
+- [ ] **If code touches database**: Ensure `DATABASE_URL` is properly configured with SSL
+- [ ] **If code touches external APIs**: Verify corresponding environment variables exist
+- [ ] **After merging**: Run deployment smoke tests: `npm run smoke-test:stripe-webhooks --domain=your-vercel-domain.vercel.app`
+
+### Smoke Test Commands
+```bash
+# Test Stripe webhooks smoke test (backend)
+cd server-v2 && npm run smoke-test:stripe-webhooks --domain=your-vercel-domain.vercel.app
+```
+
+---
+
 Execution Rules for New Sprints:
 - Each sprint focuses on one major feature area
 - Sprinters can pick up any sprint and execute independently

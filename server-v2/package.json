@@ -7,7 +7,8 @@
     "build": "tsc -p tsconfig.json",
     "start": "NODE_ENV=production node dist/server.js",
     "dev": "tsx -r dotenv/config src/server.ts dotenv_config_path=.env",
-    "migrate": "psql \"$DATABASE_URL\" -f migrations/001_create_schema.sql"
+    "migrate": "psql \"$DATABASE_URL\" -f migrations/001_create_schema.sql",
+    "smoke-test:stripe-webhooks": "curl -X POST \"https://$DOMAIN/api/stripe/webhooks\" -H \"Content-Type: application/json\" -d '{}' --write-out \"Status: %{http_code}\n\" --silent --output /dev/null"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.9.1",
