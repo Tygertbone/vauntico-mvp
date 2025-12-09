@@ -125,6 +125,9 @@
 - [x] Confirm both server-v2 redeployment and smoke tests post-migration (All endpoints responding correctly)
 - [x] Build completed successfully (6s) - Latest deployment at https://vauntico-h9x6xuwsi-tyrones-projects-6eab466c.vercel.app
 - [x] Final smoke test passed (HTTP 401 - secure endpoint responding correctly)
+- [x] Fixed 404 NOT_FOUND error by creating Next.js API route at `homepage-redesign/app/api/stripe/webhooks/route.ts`
+- [x] Stripe webhooks now properly accessible at `/api/stripe/webhooks`
+- [x] Added Stripe dependency to homepage-redesign package.json
 
 ### Environment Variables Checklist
 ⚠️ **IMPORTANT**: Environment variables must be duplicated in each Vercel project that references them. The server-v2 and frontend run in separate projects on Vercel.
