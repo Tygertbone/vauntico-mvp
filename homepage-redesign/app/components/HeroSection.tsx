@@ -268,8 +268,7 @@ export function HeroSection() {
             className="w-6 h-10 border-2 border-white/20 rounded-full p-1"
           >
             <div className="w-1 h-2 bg-white/40 rounded-full mx-auto"/>
-          </motion.div>
-        </div>
+          </div>
       </motion.div>
 
     </section>
