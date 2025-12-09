@@ -334,19 +334,18 @@ function getTierFromPriceId(priceId?: string): string {
   }
 
   // Map price IDs to tiers (these would be configured in your Stripe dashboard)
-  const priceMap: Record<string, string> = {};
+  const prices = {
+    creator_pass: process.env.STRIPE_CREATOR_PASS_PRICE_ID,
+    enterprise: process.env.STRIPE_ENTERPRISE_PRICE_ID
+  };
 
-  const creatorPassPriceId = process.env.STRIPE_CREATOR_PASS_PRICE_ID;
-  const enterprisePriceId = process.env.STRIPE_ENTERPRISE_PRICE_ID;
-
-  if (creatorPassPriceId) {
-    priceMap[creatorPassPriceId] = 'creator_pass';
+  // Find the tier by looking for the priceId in the prices object
+  for (const [tier, priceIdInMap] of Object.entries(prices)) {
+    if (priceIdInMap === priceId) {
+      return tier;
+    }
   }
-  if (enterprisePriceId) {
-    priceMap[enterprisePriceId] = 'enterprise';
-  }
-
-  return priceMap[priceId] || 'free';
+  return 'free';
 }
 
 export default router;
