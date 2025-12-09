@@ -1,9 +1,7 @@
+const path = require('path')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-    serverComponentsExternalPackages: [],
-  },
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -13,13 +11,11 @@ const nextConfig = {
   images: {
     domains: ['api.placeholder.com'],
   },
-  // Completely ignore root src directory (Vite React app)
-  transpilePackages: [],
   webpack: (config) => {
-    // Exclude root src directory from Next.js build
+    // Exclude root src directory from Next.js build to prevent Vite file conflicts
     config.module.rules.push({
       test: /\.(js|jsx|ts|tsx)$/,
-      include: (resourcePath) => !resourcePath.includes('/src/'),
+      exclude: [path.resolve(__dirname, 'src')],
     });
     return config;
   },

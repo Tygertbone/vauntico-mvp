@@ -256,6 +256,96 @@ The primary root cause was **Next.js compiling Vite files**, creating incompatib
 
 ---
 
+## Sprint 15: Resolved Incident – Next.js Config & Env Handling
+
+**✅ RESOLVED**: Next.js Configuration and Environment Handling Incident Closed
+
+### Root Cause Analysis
+Two critical issues caused build failures and runtime errors:
+1. **Deprecated Next.js Config Keys**: `experimental.appDir` has been enabled by default since Next.js 13.4
+2. **Runtime Environment Access in Client Components**: `process.env` access in browser causes "process is not defined" errors
+
+### Fixes Applied
+1. **Next.js Config Cleanup**: Removed deprecated `experimental.appDir` and unsupported keys
+2. **Webpack Rule Fix**: Changed from `include` function to `exclude` pattern for better exclusion of Vite files
+3. **Environment Injection Pattern**: Moved env variable access to parent components for build-time injection
+4. **PaystackButton Refactor**: Updated to accept `amount` as prop instead of direct env access
+
+### Technical Details
+**Before (Problematic)**:
+```javascript
+// next.config.js
+experimental: { appDir: true } // Deprecated
+
+webpack: (config) => {
+  include: (resourcePath) => !resourcePath.includes('/src/') // Complex function
+}
+
+// PaystackButton.jsx
+amount = parseInt(process.env.NEXT_PUBLIC_PRODUCT_PRICE) || 97 // Runtime error
+```
+
+**After (Fixed)**:
+```javascript
+// next.config.js - Clean and minimal
+const path = require('path')
+
+webpack: (config) => {
+  exclude: [path.resolve(__dirname, 'src')] // Proper Node.js path resolution
+}
+
+// PaystackButton.jsx - Props-based
+const PaystackButton = ({ amount }) => { // Requires parent injection
+```
+
+### Results
+- ✅ Build completed without deprecated config errors
+- ✅ No "process is not defined" runtime errors
+- ✅ Webpack exclusions working correctly (Vite files ignored)
+- ✅ Environment variables properly injected from server components
+
+### Contributor Build Safety Checklist
+- [ ] **Verify env usage pattern**: Only use `process.env` in server components/pages, pass as props to client components
+- [ ] **Keep next.config.js clean**: Remove any deprecated `experimental.*` keys
+- [ ] **Test client components**: Ensure no runtime env access causing browser errors
+- [ ] **Webpack exclusions**: Use simple patterns over complex functions for better performance
+
+---
+
+## Sprint 16: Resolved Incident – Vercel Project Duplication
+
+**✅ RESOLVED**: Vercel Project Duplication Incident Closed
+
+### Root Cause Analysis
+Duplicate Vercel project `vauntico-mvp-2ozt` was auto-generated (indicated by suffix `-2ozt`) and connected to the same `Tygertbone/vauntico-mvp` repository as the canonical `vauntico-mvp` project, but with no production deployment. This created confusion around domain mappings and resource allocation.
+
+### Fixes Applied
+1. **Duplicate Project Deletion**: Removed the shadow project `vauntico-mvp-2ozt` from Vercel workspace
+2. **Domain Alignment**: Confirmed `vauntico-mvp` remains mapped to `fulfillment.vauntico.com` for production
+3. **Repo Connection Verification**: Verified `vauntico-frontend` is mapped to `www.vauntico.com` but requires GitHub repo connection
+4. **Resource Cleanup**: Eliminated unnecessary resource consumption from duplicate project
+
+### Results
+- ✅ Duplicate project `vauntico-mvp-2ozt` deleted from Vercel workspace
+- ✅ Production deployment at `fulfillment.vauntico.com` remains unaffected
+- ✅ Domain mappings clarified and documented
+- ✅ Workspace streamlined to 2 active projects
+
+### Contributor Deployment Checklist
+- [ ] **Confirm project mappings**: Always verify which Vercel project is connected to which GitHub repo before deployments
+- [ ] **Avoid duplicate projects**: Do not create shadow projects unless intentionally testing (use branches instead)
+- [ ] **Domain verification**: Ensure domains (`fulfillment.vauntico.com`, `www.vauntico.com`) are mapped to correct repos and branches
+- [ ] **Workspace audit**: Periodically review Vercel projects to identify and remove abandoned duplicates
+
+### Project Summary Table
+| Project Name        | Repo                        | Domain                  | Status                  |
+|---------------------|-----------------------------|-------------------------|-------------------------|
+| vauntico-mvp-2ozt   | Tygertbone/vauntico-mvp     | none                    | Duplicate (deleted)     |
+| vauntico-mvp        | Tygertbone/vauntico-mvp     | fulfillment.vauntico.com| Active production       |
+| vauntico-frontend   | (not connected)             | www.vauntico.com        | Needs repo connection   |
+
+---
+
 Execution Rules for New Sprints:
 - Each sprint focuses on one major feature area
 - Sprinters can pick up any sprint and execute independently

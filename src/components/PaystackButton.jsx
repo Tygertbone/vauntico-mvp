@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { initializePaystackPayment, redirectToSuccess, verifyPayment } from '../utils/paystack'
 import ErrorAlert from './ui/error-alert'
 
-const PaystackButton = ({ 
-  amount = parseInt(process.env.NEXT_PUBLIC_PRODUCT_PRICE) || 97, // Default price from env
+const PaystackButton = ({
+  amount,
   email = '',
   className = 'vauntico-btn',
   children = 'Buy with Apple Pay'
