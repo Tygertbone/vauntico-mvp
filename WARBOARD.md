@@ -178,6 +178,50 @@ cd server-v2 && npm run smoke-test:stripe-webhooks --domain=your-vercel-domain.v
 ```
 
 ---
+## Sprint 13: Architecture Separation & Deployment Hygiene (RECOMMENDED)
+
+### Planned Repo Separation for Cleaner Builds
+**Goal**: Eliminate mixed-framework conflicts that cause build failures and deployment issues.
+
+**Current Architecture** (Problematic):
+- ❌ **Root `src/`**: Vite React app (`import.meta.env`)
+- ❌ **homepage-redesign/**: Next.js app (`process.env`)
+- ❌ **server-v2/**: Express backend
+
+**Recommended Architecture**:
+- ✅ **vauntico-frontend-vite**: React UI with Vite (handles user interface)
+- ✅ **vauntico-frontend-next**: Next.js API routes + SSR pages (handles routing/SSR)
+- ✅ **vauntico-server-v2**: Express backend (handles business logic/data)
+
+**Migration Steps**:
+1. Migrate Next.js API routes from `homepage-redesign/app/api/` to new `vauntico-frontend-next` repo
+2. Move Vite React components from root `src/` to `vauntico-frontend-vite` repo
+3. Update Vercel deployments to point to appropriate repos
+4. Update documentation with new repo structure
+
+### Contributor Deployment Checklist
+- [ ] **Environment Variables**: Always verify proper syntax before deployment
+  - `NEXT_PUBLIC_*` for Next.js (runtime client-side)
+  - `VITE_*` for Vite (runtime client-side)
+  - Server-side: Use `process.env.*` without prefixes
+- [ ] **Local Build**: Always run `npm run build && npm start` before pushing
+  - Confirm CSS/styling renders locally
+  - Verify no console errors
+  - Test API routes respond correctly
+- [ ] **Repo Separation**: If working on code that mixes frameworks, log conflicts in WARBOARD
+- [ ] **Pre-Deployment Checklist**:
+  - [] Clean build artifacts: `rm -rf .next/ node_modules/.cache/ dist/`
+  - [] Test critical API routes: stripe webhooks, auth endpoints
+  - [] Check Vercel build logs for serverless function errors
+- [ ] **Post-Deployment**: Smoke test live site immediately after deployment
+
+### Common Issues & Quick Fixes
+- **CSS Missing**: Check build didn't fail due to mixed `import.meta.env`/`process.env`
+- **API 404**: Verify API routes are in correct Next.js `app/api/` directory
+- **Env Not Working**: Ensure variables are prefixed correctly for the framework
+- **Build Conflicts**: If Next.js complains about Vite files, check webpack exclusions
+
+---
 
 Execution Rules for New Sprints:
 - Each sprint focuses on one major feature area
