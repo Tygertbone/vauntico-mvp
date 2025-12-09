@@ -20,8 +20,8 @@ export interface PlansData {
   enterprise: PlanData;
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
-const CURRENCY_ABSTRACTION_ENABLED = import.meta.env.VITE_CURRENCY_ABSTRACTION_ENABLED === 'true';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001';
+const CURRENCY_ABSTRACTION_ENABLED = process.env.NEXT_PUBLIC_CURRENCY_ABSTRACTION_ENABLED === 'true';
 
 export function usePlans(): PlansData | null {
   const [plans, setPlans] = useState<PlansData | null>(null);

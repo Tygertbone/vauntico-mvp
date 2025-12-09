@@ -3,7 +3,7 @@ import { initializePaystackPayment, redirectToSuccess, verifyPayment } from '../
 import ErrorAlert from './ui/error-alert'
 
 const PaystackButton = ({ 
-  amount = parseInt(import.meta.env.VITE_PRODUCT_PRICE) || 97, // Default price from env
+  amount = parseInt(process.env.NEXT_PUBLIC_PRODUCT_PRICE) || 97, // Default price from env
   email = '',
   className = 'vauntico-btn',
   children = 'Buy with Apple Pay'
@@ -129,4 +129,3 @@ const PaystackButton = ({
 }
 
 export default PaystackButton
-

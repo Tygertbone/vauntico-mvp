@@ -128,6 +128,9 @@
 - [x] Fixed 404 NOT_FOUND error by creating Next.js API route at `homepage-redesign/app/api/stripe/webhooks/route.ts`
 - [x] Stripe webhooks now properly accessible at `/api/stripe/webhooks`
 - [x] Added Stripe dependency to homepage-redesign package.json
+- [x] Pushed all changes and triggered redeploy for both homepage-redesign and server-v2 projects
+- [x] Latest server-v2 deployment: https://vauntico-qtqmhfufp-tyrones-projects-6eab466c.vercel.app
+- [x] Final deployment verification: HTTP 401 ✅ (secure endpoint responding correctly)
 
 ### Environment Variables Checklist
 ⚠️ **IMPORTANT**: Environment variables must be duplicated in each Vercel project that references them. The server-v2 and frontend run in separate projects on Vercel.

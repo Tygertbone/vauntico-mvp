@@ -56,7 +56,7 @@ export default function AdminDashboard() {
   const [mfaCode, setMfaCode] = useState('');
   const [unlockStatus, setUnlockStatus] = useState('');
 
-  const adminKey = import.meta.env.VITE_ADMIN_ACCESS_KEY;
+  const adminKey = process.env.NEXT_PUBLIC_ADMIN_ACCESS_KEY || 'default-admin-key';
 
   useEffect(() => {
     if (!adminKey) {
