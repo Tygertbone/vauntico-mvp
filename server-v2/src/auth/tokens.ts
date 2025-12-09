@@ -210,7 +210,7 @@ export function decodeToken(token: string): JWTPayload | null {
 }
 
 // Password hashing utilities using bcrypt
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const SALT_ROUNDS = 12; // Strong enough for production, fast enough for free tier
 
