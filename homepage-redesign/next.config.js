@@ -1,4 +1,4 @@
-const path = require('path')
+import path from 'path'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -11,14 +11,16 @@ const nextConfig = {
   images: {
     domains: ['api.placeholder.com'],
   },
+  pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
   webpack: (config) => {
-    // Exclude root src directory from Next.js build to prevent Vite file conflicts
-    config.module.rules.push({
-      test: /\.(js|jsx|ts|tsx)$/,
-      exclude: [path.resolve(__dirname, 'src')],
-    });
+    // Override any @ alias to point to the local directory only
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      // Override any @ alias to point to the local directory only
+      '@': path.resolve(process.cwd()),
+    };
     return config;
   },
 }
 
-module.exports = nextConfig
+export default nextConfig
