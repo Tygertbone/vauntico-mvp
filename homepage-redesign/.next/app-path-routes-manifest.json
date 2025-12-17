@@ -1,0 +1,17 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/about/page": "/about",
+  "/api/health/route": "/api/health",
+  "/api/stripe/webhooks/route": "/api/stripe/webhooks",
+  "/creator-pass/page": "/creator-pass",
+  "/dashboard/page": "/dashboard",
+  "/lore/page": "/lore",
+  "/marketplace/page": "/marketplace",
+  "/page": "/",
+  "/philosophy/page": "/philosophy",
+  "/pricing/page": "/pricing",
+  "/services/page": "/services",
+  "/trust-score-calculator/page": "/trust-score-calculator",
+  "/vaults/page": "/vaults"
+}

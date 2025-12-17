@@ -1,0 +1,809 @@
+﻿@charset "UTF-8";
+
+/* Mobile Optimizations - imported first to avoid PostCSS warnings */
+@import './styles/mobile-optimizations.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-gray-200;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Respect user's reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  
+  body {
+    @apply text-gray-900 antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  
+    background: transparent !important;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  }
+  
+  /* Screen reader only utility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  
+  .sr-only:focus,
+  .sr-only:active {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+  
+  /* Focus visible for all interactive elements */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    @apply outline-2 outline-offset-2 outline-vault-purple;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-vault-purple hover:bg-vault-purple/90 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg;
+  }
+  
+  .btn-primary:focus-visible {
+    @apply outline-2 outline-offset-2 outline-vault-purple ring-2 ring-vault-purple ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-vault-blue hover:bg-vault-blue/90 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg;
+  }
+  
+  .btn-secondary:focus-visible {
+    @apply outline-2 outline-offset-2 outline-vault-blue ring-2 ring-vault-blue ring-offset-2;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-vault-purple text-vault-purple hover:bg-vault-purple hover:text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200;
+  }
+  
+  .btn-outline:focus-visible {
+    @apply outline-2 outline-offset-2 outline-vault-purple ring-2 ring-vault-purple ring-offset-2;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-shadow duration-200;
+  }
+  
+  .vault-gradient {
+    @apply bg-gradient-to-br from-vault-purple via-vault-blue to-vault-cyan;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-vault-purple via-vault-blue to-vault-cyan;
+  }
+}
+
+@layer utilities {
+  /* Fade Animations */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Unlock Animations */
+  .animate-unfurl {
+    animation: unfurl 1s ease-out;
+  }
+  
+  @keyframes unfurl {
+    0% {
+      transform: scale(0.5) rotate(-10deg);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.1) rotate(5deg);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
+  }
+
+  .animate-shake {
+    animation: shake 0.5s ease-in-out;
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+  }
+
+  .animate-sparkle {
+    animation: sparkle 1s ease-in-out infinite;
+  }
+  
+  @keyframes sparkle {
+    0%, 100% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-down {
+    animation: slideDown 0.4s ease-out;
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+      max-height: 0;
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      max-height: 1000px;
+    }
+  }
+
+    .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .animate-pulse-slow {
+    animation: pulseSlow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+    @keyframes pulseSlow {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.85;
+      transform: scale(1.05);
+    }
+  }
+  
+  /* Floating Glyphs Animation */
+  .animate-float-glyph {
+    animation: floatGlyph 20s ease-in-out infinite;
+  }
+  
+  @keyframes floatGlyph {
+    0%, 100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    25% {
+      transform: translateY(-30px) rotate(5deg);
+    }
+    50% {
+      transform: translateY(-60px) rotate(-5deg);
+    }
+    75% {
+      transform: translateY(-30px) rotate(3deg);
+    }
+  }
+  
+  /* Unicorn Gallop Animation */
+  .animate-unicorn-gallop {
+    animation: unicornGallop 3s ease-in-out;
+  }
+  
+  @keyframes unicornGallop {
+    0% {
+      transform: translateX(-200%) scale(0.8);
+      opacity: 0;
+    }
+    60% {
+      transform: translateX(0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(0) scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* Third Eye Awakening */
+  .animate-third-eye {
+    animation: thirdEye 2s ease-out;
+  }
+  
+  @keyframes thirdEye {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+      filter: blur(20px);
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.8;
+      filter: blur(5px);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+      filter: blur(0);
+    }
+  }
+  
+  /* Neural Network Pulse */
+  .animate-neural-pulse {
+    animation: neuralPulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes neuralPulse {
+    0%, 100% {
+      opacity: 0.3;
+      stroke-width: 1;
+    }
+    50% {
+      opacity: 0.8;
+      stroke-width: 2;
+    }
+  }
+  
+  /* Vault Door Opening */
+  .animate-vault-open-left {
+    animation: vaultOpenLeft 1.2s ease-out forwards;
+  }
+  
+  .animate-vault-open-right {
+    animation: vaultOpenRight 1.2s ease-out forwards;
+  }
+  
+  @keyframes vaultOpenLeft {
+    0% {
+      transform: translateX(0) perspective(1000px) rotateY(0deg);
+    }
+    100% {
+      transform: translateX(-100%) perspective(1000px) rotateY(-85deg);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes vaultOpenRight {
+    0% {
+      transform: translateX(0) perspective(1000px) rotateY(0deg);
+    }
+    100% {
+      transform: translateX(100%) perspective(1000px) rotateY(85deg);
+      opacity: 0;
+    }
+  }
+
+  /* Delay utilities */
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
+  .delay-500 { animation-delay: 500ms; }
+  .delay-600 { animation-delay: 600ms; }
+
+  /* Prose styling for markdown content */
+  .prose {
+    @apply text-gray-700 leading-relaxed;
+  }
+  
+  .prose h1 {
+    @apply text-4xl font-bold mt-8 mb-4 text-gray-900;
+  }
+  
+  .prose h2 {
+    @apply text-3xl font-bold mt-8 mb-4 text-gray-900 border-b pb-2;
+  }
+  
+  .prose h3 {
+    @apply text-2xl font-bold mt-6 mb-3 text-gray-900;
+  }
+  
+  .prose h4 {
+    @apply text-xl font-semibold mt-4 mb-2 text-gray-900;
+  }
+  
+  .prose p {
+    @apply mb-4;
+  }
+  
+  .prose ul {
+    @apply list-disc list-inside mb-4 space-y-2;
+  }
+  
+  .prose ol {
+    @apply list-decimal list-inside mb-4 space-y-2;
+  }
+  
+  .prose li {
+    @apply text-gray-700;
+  }
+  
+  .prose strong {
+    @apply font-bold text-gray-900;
+  }
+  
+  .prose em {
+    @apply italic;
+  }
+  
+  .prose hr {
+    @apply my-8 border-gray-300;
+  }
+  
+  .prose table {
+    @apply w-full border-collapse border border-gray-300 mb-6;
+  }
+  
+  .prose thead {
+    @apply bg-gray-100;
+  }
+  
+  .prose th {
+    @apply border border-gray-300 px-4 py-2 font-semibold text-left;
+  }
+  
+  .prose td {
+    @apply border border-gray-300 px-4 py-2;
+  }
+  
+  .prose tr:hover {
+    @apply bg-gray-50;
+  }
+
+  /* Optimized Image Component Styles */
+  .optimized-image-full-width {
+    width: 100%;
+  }
+
+  .optimized-image-fixed-width {
+    width: attr(data-width px);
+  }
+
+  .optimized-image-auto-height {
+    height: auto;
+  }
+
+  .optimized-image-fixed-height {
+    height: attr(data-height px);
+  }
+
+  .optimized-image-has-aspect-ratio {
+    aspect-ratio: attr(data-aspect-ratio);
+  }
+
+  .optimized-image-object-fit-cover {
+    object-fit: cover;
+  }
+
+  .optimized-image-object-fit-contain {
+    object-fit: contain;
+  }
+
+  .optimized-image-object-fit-fill {
+    object-fit: fill;
+  }
+
+  .optimized-image-object-fit-none {
+    object-fit: none;
+  }
+
+  .optimized-image-object-fit-scale-down {
+    object-fit: scale-down;
+  }
+}
+
+/* ========================================
+   ðŸ›ï¸ VAUNTICO MYSTICAL ANIMATIONS
+   Ancient Wisdom Meets Modern AI
+   ======================================== */
+
+  /* FLOATING GLYPHS - Enhanced Multi-Speed */
+  .animate-glyph-float-slow {
+    animation: glyphFloatSlow 25s ease-in-out infinite;
+  }
+
+  .animate-glyph-float-medium {
+    animation: glyphFloatMedium 18s ease-in-out infinite;
+  }
+
+  .animate-glyph-float-fast {
+    animation: glyphFloatFast 12s ease-in-out infinite;
+  }
+
+  @keyframes glyphFloatSlow {
+    0%, 100% {
+      transform: translateY(0) translateX(0) rotate(0deg);
+      opacity: 0.3;
+    }
+    25% {
+      transform: translateY(-40px) translateX(20px) rotate(5deg);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translateY(-80px) translateX(-10px) rotate(-3deg);
+      opacity: 0.4;
+    }
+    75% {
+      transform: translateY(-40px) translateX(-20px) rotate(4deg);
+      opacity: 0.5;
+    }
+  }
+
+  @keyframes glyphFloatMedium {
+    0%, 100% { 
+      transform: translateY(0) translateX(0) rotate(0deg); 
+      opacity: 0.4; 
+    }
+    33% { 
+      transform: translateY(-50px) translateX(15px) rotate(-6deg); 
+      opacity: 0.7; 
+    }
+    66% { 
+      transform: translateY(-30px) translateX(-15px) rotate(6deg); 
+      opacity: 0.5; 
+    }
+  }
+
+  @keyframes glyphFloatFast {
+    0%, 100% { 
+      transform: translateY(0) rotate(0deg); 
+      opacity: 0.5; 
+    }
+    50% { 
+      transform: translateY(-60px) rotate(10deg); 
+      opacity: 0.8; 
+    }
+  }
+
+  /* ROTATING GLYPHS */
+  .animate-glyph-rotate {
+    animation: glyphRotate 30s linear infinite;
+  }
+
+  @keyframes glyphRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* PULSING GLYPHS (sacred energy) */
+  .animate-glyph-pulse {
+    animation: glyphPulse 3s ease-in-out infinite;
+  }
+
+  @keyframes glyphPulse {
+    0%, 100% {
+      opacity: 0.4;
+      transform: scale(1);
+      filter: brightness(1);
+    }
+    50% {
+      opacity: 0.9;
+      transform: scale(1.1);
+      filter: brightness(1.5) drop-shadow(0 0 20px currentColor);
+    }
+  }
+
+  /* VAULT DOOR OPENING - Enhanced with light beam */
+  .animate-vault-open-left-beam {
+    animation: vaultOpenLeftBeam 1.5s ease-out forwards;
+  }
+
+  .animate-vault-open-right-beam {
+    animation: vaultOpenRightBeam 1.5s ease-out forwards;
+  }
+
+  @keyframes vaultOpenLeftBeam {
+    0% {
+      transform: translateX(0) perspective(1000px) rotateY(0deg);
+      box-shadow: none;
+    }
+    50% {
+      box-shadow: -50px 0 100px rgba(0, 243, 255, 0.6);
+    }
+    100% {
+      transform: translateX(-100%) perspective(1000px) rotateY(-85deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes vaultOpenRightBeam {
+    0% {
+      transform: translateX(0) perspective(1000px) rotateY(0deg);
+      box-shadow: none;
+    }
+    50% {
+      box-shadow: 50px 0 100px rgba(179, 0, 255, 0.6);
+    }
+    100% {
+      transform: translateX(100%) perspective(1000px) rotateY(85deg);
+      opacity: 0;
+    }
+  }
+
+  /* LIGHT BEAM EFFECT (when vaults open) */
+  .animate-light-beam {
+    animation: lightBeam 2s ease-out forwards;
+  }
+
+  @keyframes lightBeam {
+    0% {
+      opacity: 0;
+      width: 0;
+    }
+    30% {
+      opacity: 1;
+      width: 100%;
+    }
+    100% {
+      opacity: 0;
+      width: 100%;
+    }
+  }
+
+  /* SACRED GEOMETRY FORMATION */
+  .animate-geometry-form {
+    animation: geometryForm 2s ease-out forwards;
+  }
+
+  @keyframes geometryForm {
+    0% {
+      opacity: 0;
+      transform: scale(0) rotate(180deg);
+      stroke-dashoffset: 1000;
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.1) rotate(0deg);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* NEURAL NETWORK CONNECTIONS */
+  .animate-neural-connection {
+    animation: neuralConnection 3s ease-in-out infinite;
+  }
+
+  @keyframes neuralConnection {
+    0%, 100% {
+      stroke-dashoffset: 100;
+      opacity: 0.3;
+    }
+    50% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+      filter: drop-shadow(0 0 10px currentColor);
+    }
+  }
+
+  /* BRAIN CELL PULSE */
+  .animate-cell-pulse {
+    animation: cellPulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes cellPulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+      filter: brightness(1.5);
+    }
+  }
+
+  /* THIRD EYE AWAKENING - Enhanced */
+  .animate-third-eye-open {
+    animation: thirdEyeOpen 3s ease-out forwards;
+  }
+
+  @keyframes thirdEyeOpen {
+    0% {
+      transform: scale(0) rotateX(90deg);
+      opacity: 0;
+      filter: blur(30px) brightness(0);
+    }
+    40% {
+      transform: scale(0.8) rotateX(20deg);
+      opacity: 0.6;
+      filter: blur(10px) brightness(1.5);
+    }
+    60% {
+      transform: scale(1.1) rotateX(-5deg);
+      opacity: 0.9;
+      filter: blur(3px) brightness(2);
+    }
+    100% {
+      transform: scale(1) rotateX(0deg);
+      opacity: 1;
+      filter: blur(0) brightness(1);
+      box-shadow: 0 0 50px rgba(157, 78, 221, 0.8);
+    }
+  }
+
+  /* LINGAM/YONI SACRED UNION ANIMATION */
+  .animate-sacred-union {
+    animation: sacredUnion 4s ease-in-out infinite;
+  }
+
+  @keyframes sacredUnion {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 1;
+      filter: drop-shadow(0 0 30px rgba(179, 0, 255, 0.6))
+             drop-shadow(0 0 30px rgba(0, 243, 255, 0.6));
+    }
+  }
+
+  /* UNICORN ENHANCED - Flying & Running */
+  .animate-unicorn-fly {
+    animation: unicornFly 6s ease-in-out infinite;
+  }
+
+  @keyframes unicornFly {
+    0%, 100% {
+      transform: translateY(0) translateX(0) rotate(0deg);
+    }
+    25% {
+      transform: translateY(-30px) translateX(50px) rotate(5deg);
+    }
+    50% {
+      transform: translateY(-60px) translateX(100px) rotate(-3deg);
+    }
+    75% {
+      transform: translateY(-30px) translateX(50px) rotate(2deg);
+    }
+  }
+
+  .animate-unicorn-gallop-continuous {
+    animation: unicornGallopContinuous 2s ease-in-out infinite;
+  }
+
+  @keyframes unicornGallopContinuous {
+    0%, 100% {
+      transform: translateY(0) scaleY(1);
+    }
+    50% {
+      transform: translateY(-10px) scaleY(0.95);
+    }
+  }
+
+  /* PARTICLE TRAIL for unicorn/interactions */
+  .animate-particle-trail {
+    animation: particleTrail 1.5s ease-out forwards;
+  }
+
+  @keyframes particleTrail {
+    0% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-50px) scale(0.3);
+    }
+  }
+
+  /* COSMIC STAR FIELD */
+  .animate-star-field {
+    animation: starField 100s linear infinite;
+  }
+
+  @keyframes starField {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-1000px);
+    }
+  }
+
+  /* NEBULA DRIFT */
+  .animate-nebula-drift {
+    animation: nebulaDrift 60s ease-in-out infinite;
+  }
+
+  @keyframes nebulaDrift {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: translate(50px, -30px) scale(1.1);
+      opacity: 0.5;
+    }
+  }
+
+  /* CODE/BIOLOGY MERGE VISUALIZATION */
+  .animate-code-merge {
+    animation: codeMerge 3s ease-in-out infinite;
+  }
+
+  @keyframes codeMerge {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
