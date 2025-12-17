@@ -1,7 +1,6 @@
 {
   "name": "vauntico-trust-score-backend",
   "version": "2.0.0",
-  "packageManager": "npm@10.0.0",
   "description": "Vauntico Trust Score backend - FREE stack (Neon + Upstash + Render)",
   "main": "dist/index.js",
   "scripts": {
@@ -14,7 +13,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.9.1",
     "@sentry/node": "^8.24.0",
-    "@upstash/redis": "^1.22.1",
+    "@upstash/redis": "^1.35.8",
     "axios": "^1.13.2",
     "bcryptjs": "^2.4.3",
     "bullmq": "^4.13.2",
@@ -34,7 +33,6 @@
     "winston": "^3.11.0"
   },
   "devDependencies": {
-
     "@types/compression": "^1.7.5",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",

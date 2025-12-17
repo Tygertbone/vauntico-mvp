@@ -9,7 +9,7 @@ import Stripe from 'stripe';
 
 // Initialize Stripe with secret key (kept for future migration)
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_disabled', {
-  apiVersion: '2025-11-17.clover' as const,
+  apiVersion: '2025-12-15.clover' as const,
 });
 
 // Paystack plan codes for different subscription tiers

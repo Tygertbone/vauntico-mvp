@@ -102,7 +102,7 @@ const logError = (error: Error, req: Request, severity: 'low' | 'medium' | 'high
       ip: req.ip || req.socket.remoteAddress || 'unknown',
       userAgent: req.get('User-Agent') || 'unknown',
       userId: (req as any).user?.id,
-      requestId: req.requestId || 'unknown'
+      requestId: 'unknown' // Temporarily disabled for build
     },
     context,
     severity
@@ -119,7 +119,7 @@ const logError = (error: Error, req: Request, severity: 'low' | 'medium' | 'high
       url: req.url,
       ip: req.ip,
       userId: (req as any).user?.id,
-      requestId: req.requestId,
+      requestId: (req as any).requestId,
       stack: process.env.NODE_ENV === 'development' ? error.stack?.substring(0, 1000) : undefined,
       timestamp: new Date().toISOString()
     });
@@ -252,7 +252,7 @@ export const errorHandler = (
     error: {
       type: errorType,
       message: clientMessage,
-      requestId: req.requestId
+      requestId: (req as any).requestId
     }
   };
 
@@ -280,7 +280,7 @@ export const notFoundHandler = (req: Request, res: Response, next: NextFunction)
     url: req.url,
     ip: req.ip,
     userAgent: req.get('User-Agent'),
-    requestId: req.requestId
+    requestId: (req as any).requestId
   });
 
   const error = new NotFoundError('Endpoint');

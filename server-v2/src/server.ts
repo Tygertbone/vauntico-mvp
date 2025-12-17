@@ -1,4 +1,4 @@
-y// Import dotenv FIRST, before ANY other imports
+// Import dotenv FIRST, before ANY other imports
 import * as dotenv from 'dotenv';
 import path from 'path';
 
