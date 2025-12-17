@@ -80,7 +80,7 @@ export const generateRequestId = (): string => {
 // Add request ID to response for client-side debugging
 export const addRequestId = (req: Request, res: Response, next: NextFunction) => {
   const requestId = req.headers['x-request-id'] as string || generateRequestId();
-  req.requestId = requestId;
+  (req as any).requestId = requestId;
   res.setHeader('x-request-id', requestId);
   next();
 };
@@ -102,7 +102,7 @@ const logError = (error: Error, req: Request, severity: 'low' | 'medium' | 'high
       ip: req.ip || req.socket.remoteAddress || 'unknown',
       userAgent: req.get('User-Agent') || 'unknown',
       userId: (req as any).user?.id,
-      requestId: 'unknown' // Temporarily disabled for build
+      requestId: req.requestId || 'unknown'
     },
     context,
     severity
@@ -119,7 +119,7 @@ const logError = (error: Error, req: Request, severity: 'low' | 'medium' | 'high
       url: req.url,
       ip: req.ip,
       userId: (req as any).user?.id,
-      requestId: (req as any).requestId,
+      requestId: (req as any).requestId || 'unknown',
       stack: process.env.NODE_ENV === 'development' ? error.stack?.substring(0, 1000) : undefined,
       timestamp: new Date().toISOString()
     });
