@@ -1,55 +1,47 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const DreamMover = () => {
   const [videoUrl, setVideoUrl] = useState('')
+  const [analysisResults, setAnalysisResults] = useState(null)
 
   const handleVideoUpload = (e) => {
     const file = e.target.files[0]
     if (file) {
       const reader = new FileReader()
       reader.onload = () => {
-        const video = document.createElement('video')
-        video.src = URL.createObjectURL(file)
-        video.controls = true
-        video.loop = true
-        video.muted = true
-        video.className = 'w-full h-64 rounded-lg'
-        video.style.display = 'none'
-        document.body.appendChild(video)
-        reader.readAsDataURL(file)
-      }
-      reader.readAsText(file)
-      
-      // Simulate video processing
-      setTimeout(() => {
         const dataUrl = reader.result
         setVideoUrl(dataUrl)
         
         // Simulate AI analysis
         setTimeout(() => {
-          // Mock AI analysis results
           const analysis = {
             videoQuality: Math.floor(Math.random() * 100),
             engagement: Math.floor(Math.random() * 100),
             performance: Math.floor(Math.random() * 100),
-            optimization: Math.floor(Math.random() * 100)
+            optimization: Math.floor(Math.random() * 100),
             score: Math.floor(Math.random() * 100)
           }
-          
           setAnalysisResults(analysis)
         }, 2000)
-      }, 3000)
+      }
+      reader.readAsDataURL(file)
     }
   }
 
-  const runAIAnalysis = (analysis) => {
-    setVideoUrl(videoUrl)
-    console.log('🧠 AI Analysis started:', analysis)
-  }
-
-  const setAnalysisResults = (results) => {
-    setAnalysisResults(results)
+  const runAIAnalysis = () => {
+    console.log('🧠 AI Analysis started')
+    // Simulate analysis
+    setTimeout(() => {
+      const analysis = {
+        videoQuality: Math.floor(Math.random() * 100),
+        engagement: Math.floor(Math.random() * 100),
+        performance: Math.floor(Math.random() * 100),
+        optimization: Math.floor(Math.random() * 100),
+        score: Math.floor(Math.random() * 100)
+      }
+      setAnalysisResults(analysis)
+    }, 1000)
   }
 
   return (
@@ -98,107 +90,63 @@ const DreamMover = () => {
                 />
               </div>
               <button 
-                onClick={() => runAIAnalysis(mockAnalysis)}
+                onClick={runAIAnalysis}
                 className="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold"
               >
                 Run AI Analysis
               </button>
             </div>
-          </div>
-        ) : (
+          ) : (
             <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-8 border border-white/10 text-center">
               <div className="mb-6">
-                <label className="block text-left text-gray-700 mb-2">
+                <label className="block text-left text-gray-300 mb-2">
                   Upload Video File
                 </label>
                 <input 
                   type="file" 
                   accept="video/*" 
                   onChange={handleVideoUpload}
-                  className="w-full px-4 py-3 bg-gray-100 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:border-purple-500 focus:outline-none"
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none"
                 />
               </div>
-              <button 
-                onClick={() => {
-                  const fileInput = document.querySelector('input[type="file"]')
-                  const file = fileInput?.files[0]
-                  if (file) {
-                    const reader = new FileReader()
-                    reader.onload = () => {
-                      const video = document.createElement('video')
-                      video.src = URL.createObjectURL(file)
-                      video.controls = true
-                      video.loop = true
-                      video.muted = true
-                      video.className = 'w-full h-64 rounded-lg'
-                      video.style.display = 'none'
-                      document.body.appendChild(video)
-                      reader.readAsDataURL(file)
-                    }
-                    reader.readAsText(file)
-                    
-                    // Simulate video processing
-                    setTimeout(() => {
-                      const dataUrl = reader.result
-                      setVideoUrl(dataUrl)
-                      
-                      // Simulate AI analysis
-                      setTimeout(() => {
-                        // Mock AI analysis results
-                        const analysis = {
-                          videoQuality: Math.floor(Math.random() * 100),
-                          engagement: Math.floor(Math.random() * 100),
-                          performance: Math.floor(Math.random() * 100),
-                          optimization: Math.floor(Math.random() * 100),
-                          score: Math.floor(Math.random() * 100)
-                        }
-                        
-                        setAnalysisResults(analysis)
-                      }, 2000)
-                    }, 3000)
-                  }
-                }
-              />
             </div>
-          </div>
-        )}
+          )}
+        </div>
         
         {/* Analysis Results */}
-        <analysisResults ? (
+        {analysisResults ? (
           <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-8 border border-white/10">
             <h3 className="text-2xl font-bold mb-6">🤖 AI Analysis Results</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <div>
-                <div className="text-lg font-semibold text-gray-700 mb-2">Video Quality</div>
+                <div className="text-lg font-semibold text-gray-300 mb-2">Video Quality</div>
                 <div className="text-3xl font-bold text-purple-600 mb-4">{analysisResults.videoQuality}%</div>
               </div>
               
               <div>
-                <div className="text-lg font-semibold text-gray-700 mb-2">Engagement Rate</div>
+                <div className="text-lg font-semibold text-gray-300 mb-2">Engagement Rate</div>
                 <div className="text-3xl font-bold text-purple-600 mb-4">{analysisResults.engagement}%</div>
               </div>
               
               <div>
-                <div className="text-lg font-semibold text-gray-700 mb-2">Performance Score</div>
+                <div className="text-lg font-semibold text-gray-300 mb-2">Performance Score</div>
                 <div className="text-3xl font-bold text-purple-600 mb-4">{analysisResults.performance}%</div>
               </div>
               
               <div>
-                <div className="text-lg font-semibold text-gray-700 mb-2">Overall Score</div>
+                <div className="text-lg font-semibold text-gray-300 mb-2">Overall Score</div>
                 <div className="text-3xl font-bold text-purple-600 mb-4">{analysisResults.score}%</div>
               </div>
             </div>
+            
+            <button 
+              onClick={() => setAnalysisResults(null)}
+              className="bg-gray-600 text-white px-6 py-3 rounded-lg mt-6"
+            >
+              Clear Results
+            </button>
           </div>
         ) : null}
-        
-        <button 
-          onClick={() => setAnalysisResults(null)}
-          className="bg-gray-600 text-white px-6 py-3 rounded-lg"
-        >
-          Clear Results
-        </button>
-        </div>
-        </div>
       </div>
     </div>
   )

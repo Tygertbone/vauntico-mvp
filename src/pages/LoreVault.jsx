@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FullLogo } from '../components/Logo'
+import { Heart, Eye } from 'lucide-react'
 
 const LoreVault = () => {
   const [posts, setPosts] = useState([])
@@ -13,8 +14,8 @@ const LoreVault = () => {
       date: "January 2024",
       content: "I never thought trust could be quantified. Our first user hit 87.2% and the whole system illuminated with understanding. This wasn't just data—this was knowledge being born.",
       category: "revelation",
-      likes: 142
-      comments: 12
+      likes: 142,
+      comments: 12,
       isFounder: true
     },
     {
@@ -129,7 +130,7 @@ const LoreVault = () => {
               className="bg-white/5 backdrop-blur-lg rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all"
             >
               <div className="flex items-start justify-between mb-4">
-                <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold ${categories.find(cat => cat.id === post.category)?.color || 'gray'}`}>
+                <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-${categories.find(cat => cat.id === post.category)?.color || 'gray'}-600 text-white`}>
                   {post.isFounder && <span className="mr-2">👑</span>}
                   {post.title}
                 </div>
@@ -151,26 +152,25 @@ const LoreVault = () => {
                 </div>
               </div>
             </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Empty State */}
-      {filteredPosts.length === 0 && (
-        <div className="text-center py-16">
-          <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-12 max-w-2xl mx-auto border border-white/10">
-            <div className="text-center mb-4">
-              <span className="text-6xl">📜</span>
-              <h3 className="text-xl font-bold mb-2">No Lore Posts Yet</h3>
-              <p className="text-gray-300">
-                The wisdom of Vauntico grows with every contribution. 
-                Be the first to share your knowledge and experiences.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
-      )}
+
+        {/* Empty State */}
+        {filteredPosts.length === 0 && (
+          <div className="text-center py-16">
+            <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-12 max-w-2xl mx-auto border border-white/10">
+              <div className="text-center mb-4">
+                <span className="text-6xl">📜</span>
+                <h3 className="text-xl font-bold mb-2">No Lore Posts Yet</h3>
+                <p className="text-gray-300">
+                  The wisdom of Vauntico grows with every contribution. 
+                  Be the first to share your knowledge and experiences.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
