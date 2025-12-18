@@ -13,10 +13,10 @@ import {
   Crown,
   Star,
   Search,
-  Filter
-  ArrowRight
+  Filter,
+  ArrowRight,
   Clock,
-  BarChart3
+  BarChart3,
   Activity
 } from 'lucide-react'
 
