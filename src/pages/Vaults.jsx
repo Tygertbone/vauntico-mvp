@@ -145,7 +145,7 @@ const Vaults = () => {
         <div className="mb-8 flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
             <div className="relative">
-              <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2" />
+              <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 placeholder="Search vaults..."
@@ -203,8 +203,8 @@ const Vaults = () => {
                     {getEncryptionIcon(vault.encryption)}
                     <div>
                       <h3 className="text-xl font-bold text-white mb-1">{vault.name}</h3>
-                      <span className={`ml-2 px-2 py-1 rounded-full text-xs font-semibold ${getAccessLevel(vault.access)}`}>
-                        {getAccessLevel(vault.access)}
+                      <span className={`ml-2 px-2 py-1 rounded-full text-xs font-semibold ${getAccessLevel(vault.access).color}`}>
+                        {getAccessLevel(vault.access).label}
                       </span>
                     </div>
                   </div>
@@ -215,6 +215,8 @@ const Vaults = () => {
                   </button>
                 </div>
               </div>
+
+              <p className="text-gray-300 mb-4">{vault.description}</p>
 
               <div className="flex items-center justify-between text-sm text-gray-400 mb-2">
                 <div className="flex items-center space-x-2">
@@ -227,7 +229,7 @@ const Vaults = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-sm text-gray-400 mb-2">
+              <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
                 <div className="flex items-center space-x-2">
                   <Clock className="w-4 h-4" />
                   <span>Modified {vault.lastModified}</span>
@@ -237,15 +239,15 @@ const Vaults = () => {
                   <span>Access Level</span>
                 </div>
               </div>
-            </div>
 
-            <div className="mt-4 pt-4 border-t border-gray-600">
-              <button className="w-full btn-primary py-3">
-                Open Vault
-              </button>
+              <div className="mt-4 pt-4 border-t border-gray-600">
+                <button className="w-full btn-primary py-3">
+                  Open Vault
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
 
         {/* CTA Section */}
         <div className="text-center mt-12">

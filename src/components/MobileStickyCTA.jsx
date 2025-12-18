@@ -10,4 +10,18 @@ function MobileStickyCTA() {
   )
 }
 
+function CreatorPassCTA({ tier, onSubscribe }) {
+  return (
+    <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg px-6 py-3 font-semibold shadow-lg hover:from-purple-700 hover:to-pink-700 transition-all">
+      <button 
+        onClick={() => onSubscribe(tier)}
+        className="w-full text-white"
+      >
+        Upgrade to {tier}
+      </button>
+    </div>
+  )
+}
+
 export default MobileStickyCTA
+export { CreatorPassCTA }

@@ -91,3 +91,27 @@ export const getApproximatePrice = (price, fromCurrency = 'ZAR', toCurrency = 'U
   
   return approximatedPrice
 }
+
+export const formatPrice = (price, currency = 'USD') => {
+  const symbol = currency === 'ZAR' ? 'R' : '$'
+  return `${symbol}${price.toLocaleString()}`
+}
+
+export const getCreatorPassTier = (tier) => {
+  return PRICING.CREATOR_PASS.tiers[tier] || PRICING.CREATOR_PASS.tiers.starter
+}
+
+export const subscribeToCreatorPassTier = (tier) => {
+  // In a real app, this would handle subscription logic
+  console.log(`Subscribe to ${tier} tier`)
+}
+
+export const checkoutCreatorPass = async (tier) => {
+  // In a real app, this would integrate with Paystack
+  console.log(`Checkout ${tier} tier`)
+}
+
+export const subscribeToAuditService = (userEmail, tier) => {
+  // In a real app, this would handle subscription to audit service
+  console.log(`Subscribe ${userEmail} to audit service: ${tier}`)
+}
