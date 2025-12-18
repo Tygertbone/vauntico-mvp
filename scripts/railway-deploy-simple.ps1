@@ -1,6 +1,4 @@
-# Simple Railway Deployment Script for Vauntico Project
-# This script will redeploy all services using Railway CLI
-
+# Simple Railway Deployment Script
 function Deploy-Service {
     param(
         [string]$ServiceName,
@@ -12,7 +10,6 @@ function Deploy-Service {
     if (Test-Path $ServicePath) {
         Set-Location $ServicePath
         
-        # Check if railway.toml exists
         if (-not (Test-Path "railway.toml")) {
             Write-Host "ERROR: railway.toml not found in $ServicePath"
             Set-Location ..
@@ -23,7 +20,6 @@ function Deploy-Service {
         Write-Host "railway.toml found, proceeding with deployment..."
         
         try {
-            # Use redeploy command with automatic yes
             "y" | railway redeploy --service $ServiceName
             Write-Host "SUCCESS: $ServiceName deployed successfully"
         }
@@ -35,7 +31,6 @@ function Deploy-Service {
         }
         
         Set-Location ..
-        Write-Host ""
         return $true
     }
     else {
@@ -44,13 +39,8 @@ function Deploy-Service {
     }
 }
 
-# Main execution
-Write-Host "Railway Deployment Script for Vauntico Project"
-Write-Host "=================================================="
-Write-Host ""
-
-Write-Host "Starting deployment of all services..."
-Write-Host ""
+Write-Host "Railway Deployment Script"
+Write-Host "======================================="
 
 # Deploy services
 $services = @(
@@ -70,24 +60,12 @@ foreach ($service in $services) {
 }
 
 Write-Host ""
-Write-Host "Deployment process completed!"
-Write-Host ""
-Write-Host "Deployment Summary: $successCount/$totalCount services deployed successfully"
-Write-Host ""
-
-Write-Host "Next Steps:"
-Write-Host "1. Check Railway dashboard for deployment status"
-Write-Host "2. Run smoke tests: .\scripts\railway-smoke-test.ps1"
-Write-Host "3. Verify health endpoints are accessible"
-Write-Host ""
-Write-Host "Railway Dashboard: https://railway.app"
+Write-Host "Deployment Summary: $successCount/$totalCount deployments successful"
 
 if ($successCount -eq $totalCount) {
-    Write-Host ""
     Write-Host "All services deployed successfully!"
     exit 0
 } else {
-    Write-Host ""
-    Write-Host "Some deployments failed. Please check errors above."
+    Write-Host "Some deployments failed. Please check the errors above."
     exit 1
 }

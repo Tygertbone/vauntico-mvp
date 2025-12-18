@@ -2,7 +2,22 @@ import React from 'react';
 
 type LogoSize = "sm" | "md" | "lg" | "xl";
 
-export const Logo = ({ size = "md" as LogoSize, className = "" }) => {
+interface LogoProps {
+  size?: LogoSize;
+  className?: string;
+}
+
+interface LogoTextProps {
+  size?: LogoSize;
+  className?: string;
+}
+
+interface FullLogoProps {
+  size?: LogoSize;
+  className?: string;
+}
+
+export const Logo: React.FC<LogoProps> = ({ size = "md", className = "" }) => {
   const sizeClasses: Record<LogoSize, string> = {
     sm: "w-8 h-8",
     md: "w-12 h-12", 
@@ -17,20 +32,20 @@ export const Logo = ({ size = "md" as LogoSize, className = "" }) => {
       
       {/* Main logo container */}
       <div className="relative bg-gradient-to-br from-purple-600 via-pink-500 to-indigo-600 rounded-2xl flex items-center justify-center transform group-hover:scale-105 transition-transform duration-300 shadow-2xl">
-        {/* V Letter with modern design */}
+        {/* V letter with modern design */}
         <div className="relative">
           {/* Main V shape */}
           <svg 
-            width="32" 
-            height="32" 
+            width={32} 
+            height={32} 
             viewBox="0 0 32 32" 
             className="text-white drop-shadow-lg"
             fill="currentColor"
           >
-            <path d="M8 6 L16 22 L24 6 L22 6 L16 18 L10 6 Z" />
+            <path d="M8 6 L16 22 L24 6 L24 26 L16 18 L8 26 L8 6 Z" />
             {/* Modern accent line */}
-            <path d="M6 8 L26 8" stroke="white" strokeWidth="2" strokeLinecap="round" opacity="0.8" />
-            <path d="M6 24 L26 24" stroke="white" strokeWidth="2" strokeLinecap="round" opacity="0.8" />
+            <path d="M6 8 L26 8" stroke="white" strokeWidth={2} strokeLinecap="round" opacity={0.8} />
+            <path d="M6 24 L26 24" stroke="white" strokeWidth={2} strokeLinecap="round" opacity={0.8} />
           </svg>
           
           {/* Shimmer effect */}
@@ -45,7 +60,7 @@ export const Logo = ({ size = "md" as LogoSize, className = "" }) => {
   );
 };
 
-export const LogoText = ({ size = "md" as LogoSize, className = "" }) => {
+export const LogoText: React.FC<LogoTextProps> = ({ size = "md", className = "" }) => {
   const sizeClasses: Record<LogoSize, string> = {
     sm: "text-lg",
     md: "text-2xl", 
@@ -65,7 +80,7 @@ export const LogoText = ({ size = "md" as LogoSize, className = "" }) => {
   );
 };
 
-export const FullLogo = ({ size = "md" as LogoSize, className = "" }) => {
+export const FullLogo: React.FC<FullLogoProps> = ({ size = "md", className = "" }) => {
   return (
     <div className={`flex items-center space-x-3 ${className}`}>
       <Logo size={size} />
