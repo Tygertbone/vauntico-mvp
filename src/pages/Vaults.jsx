@@ -190,9 +190,9 @@ const Vaults = () => {
         </div>
 
         {/* Vault Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredAndSearched.map((vault) => (
-            <div 
+            <div
               key={vault.id}
               className="bg-white/5 backdrop-blur-lg rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all cursor-pointer"
               onClick={() => setSelectedVault(vault)}
@@ -215,9 +215,7 @@ const Vaults = () => {
                   </button>
                 </div>
               </div>
-              
-              </div>
-              
+
               <div className="flex items-center justify-between text-sm text-gray-400 mb-2">
                 <div className="flex items-center space-x-2">
                   <Key className="w-4 h-4" />
@@ -228,7 +226,7 @@ const Vaults = () => {
                   <span>{vault.encryption} encryption</span>
                 </div>
               </div>
-              
+
               <div className="flex items-center justify-between text-sm text-gray-400 mb-2">
                 <div className="flex items-center space-x-2">
                   <Clock className="w-4 h-4" />
@@ -240,15 +238,14 @@ const Vaults = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="mt-4 pt-4 border-t border-gray-600">
               <button className="w-full btn-primary py-3">
                 Open Vault
               </button>
             </div>
-            </div>
-          ))}
-        </div>
+          </div>
+        ))}
 
         {/* CTA Section */}
         <div className="text-center mt-12">
