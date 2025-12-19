@@ -72,12 +72,11 @@ Write-Host ""
 Write-ColorText "Starting deployment of all services..." "Blue"
 Write-Host ""
 
-# Deploy services that we know exist
+# Deploy backend services only (frontend handled by Vercel)
 $services = @(
     @{ Name = "vauntico-fulfillment-engine"; Path = "vauntico-fulfillment-engine" },
-    @{ Name = "src"; Path = "src" },
-    @{ Name = "homepage-redesign"; Path = "homepage-redesign" },
-    @{ Name = "vault-landing"; Path = "vault-landing" }
+    @{ Name = "vault-landing"; Path = "vault-landing" },
+    @{ Name = "server-v2"; Path = "server-v2" }
 )
 
 $successCount = 0
