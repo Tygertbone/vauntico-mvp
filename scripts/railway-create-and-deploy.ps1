@@ -1,5 +1,5 @@
-# Railway Create and Deploy Script for Vauntico Project
-# This script will create new projects and deploy all services
+# Railway Redeploy Script for Vauntico Project
+# This script will redeploy all existing services to Railway
 
 param(
     [switch]$Force = $false
@@ -22,13 +22,13 @@ function Write-ColorText {
     Write-Host $Text -ForegroundColor $Colors[$Color]
 }
 
-function Create-And-Deploy-Service {
+function Redeploy-Service {
     param(
         [string]$ServiceName,
         [string]$ServicePath
     )
-    
-    Write-ColorText "Creating and deploying $ServiceName..." "Yellow"
+
+    Write-ColorText "Redeploying $ServiceName..." "Yellow"
     
     if (Test-Path $ServicePath) {
         Set-Location $ServicePath
@@ -43,26 +43,19 @@ function Create-And-Deploy-Service {
         Write-ColorText "Current directory: $(Get-Location)" "Blue"
         
         try {
-            # Initialize new project
-            Write-ColorText "Creating new Railway project: $ServiceName" "Blue"
-            railway init --name $ServiceName
-            
-            # Deploy the service
-            Write-ColorText "Deploying $ServiceName..." "Blue"
-            railway up --service $ServiceName
-            
-            Write-ColorText "$ServiceName deployed successfully" "Green"
+            # Redeploy the service (assumes project already exists and is linked)
+            Write-ColorText "Redeploying $ServiceName..." "Blue"
+            "y" | railway redeploy --service $ServiceName
+
+            Write-ColorText "$ServiceName redeployed successfully" "Green"
             return $true
         }
         catch {
-            Write-ColorText "Failed to deploy $ServiceName" "Red"
+            Write-ColorText "Failed to redeploy $ServiceName" "Red"
             Write-ColorText "Error: $($_.Exception.Message)" "Red"
             Set-Location ..
             return $false
         }
-        
-        Set-Location ..
-        return $true
     }
     else {
         Write-ColorText "Directory $ServicePath not found" "Red"
@@ -71,11 +64,11 @@ function Create-And-Deploy-Service {
 }
 
 # Main execution
-Write-ColorText "Railway Create and Deploy Script for Vauntico Project" "Blue"
-Write-Host "======================================================="
+Write-ColorText "Railway Redeploy Script for Vauntico Project" "Blue"
+Write-Host "=================================================="
 Write-Host ""
 
-Write-ColorText "Creating new projects and deploying all services..." "Blue"
+Write-ColorText "Redeploying all services..." "Blue"
 Write-Host ""
 
 # Deploy all services
@@ -91,7 +84,7 @@ $successCount = 0
 $totalCount = $services.Count
 
 foreach ($service in $services) {
-    if (Create-And-Deploy-Service -ServiceName $service.Name -ServicePath $service.Path) {
+    if (Redeploy-Service -ServiceName $service.Name -ServicePath $service.Path) {
         $successCount++
     }
     Write-Host ""

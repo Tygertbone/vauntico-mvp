@@ -46,7 +46,13 @@ function Deploy-Service {
         try {
             # Use redeploy command with automatic yes
             "y" | railway redeploy --service $ServiceName
-            Write-ColorText "$ServiceName redeployed successfully" "Green"
+            if ($LASTEXITCODE -eq 0) {
+                Write-ColorText "$ServiceName redeployed successfully" "Green"
+            } else {
+                Write-ColorText "Failed to redeploy $ServiceName (Exit Code: $LASTEXITCODE)" "Red"
+                Set-Location ..
+                return $false
+            }
         }
         catch {
             Write-ColorText "Failed to redeploy $ServiceName" "Red"

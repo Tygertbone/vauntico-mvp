@@ -27,28 +27,26 @@ function Link-Project {
         [string]$ProjectName,
         [string]$ProjectPath
     )
-    
+
     Write-ColorText "Linking $ProjectName to Vercel..." "Yellow"
-    
+
     if (Test-Path $ProjectPath) {
-        Set-Location $ProjectPath
+        Push-Location $ProjectPath
         Write-ColorText "Current directory: $(Get-Location)" "Blue"
-        
+
         try {
             # Use npx to ensure vercel is available
             npx vercel link --yes
             Write-ColorText "$ProjectName linked successfully" "Green"
+            Pop-Location
             return $true
         }
         catch {
             Write-ColorText "Failed to link $ProjectName" "Red"
             Write-ColorText "Error: $($_.Exception.Message)" "Red"
-            Set-Location ..
+            Pop-Location
             return $false
         }
-        
-        Set-Location ..
-        return $true
     }
     else {
         Write-ColorText "Directory $ProjectPath not found" "Red"
@@ -63,8 +61,12 @@ Write-Host ""
 
 Write-ColorText "Checking Vercel authentication..." "Blue"
 try {
-    $whoami = & npx vercel whoami 2>$null
-    Write-ColorText "Authenticated as: $whoami" "Green"
+    $whoami = npx vercel whoami 2>&1
+    if ($LASTEXITCODE -eq 0) {
+        Write-ColorText "Authenticated as: $whoami" "Green"
+    } else {
+        throw "Authentication failed"
+    }
 }
 catch {
     Write-ColorText "Not authenticated. Please run 'npx vercel login' first." "Red"

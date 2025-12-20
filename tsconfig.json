@@ -20,21 +20,27 @@
     "incremental": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noImplicitReturns": false,
-    "exactOptionalPropertyTypes": false
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "exactOptionalPropertyTypes": true
   },
   "include": [
-    "src",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.js",
-    "**/*.jsx"
+    "src"
   ],
   "exclude": [
     "node_modules",
     "dist",
-    "build"
+    "build",
+    "homepage-redesign",
+    "server-v2",
+    "vauntico-fulfillment-engine",
+    "vault-landing",
+    "scripts",
+    "public",
+    "tests",
+    "docs",
+    "app",
+    "demo"
   ]
 }

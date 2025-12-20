@@ -25,6 +25,12 @@
 - [ ] src: `npm run build` works (Vite build)
 - [ ] homepage-redesign: `npm run build` works (Next.js build)
 - [ ] vault-landing: `npm run build` works (Next.js build)
+- [ ] **CRITICAL**: Verify package.json scripts do not self-reference (e.g., 'build': 'npm run build')
+- [ ] **TypeScript Sanity Check**: Run `npm run tsc:check` in server-v2 to verify TypeScript type resolution before deployment
+- [ ] **Code Quality Check**: Run `npm run lint` to ensure ESLint passes across all projects
+- [ ] **Code Formatting**: Run `npm run format` to verify Prettier formatting consistency
+- [ ] **Pre-deployment Validation**: Run `npm run predeploy` to execute all checks before deployment
+- [ ] **Pre-commit Hook**: Husky configured to run lint and type checks on every commit
 
 ---
 
