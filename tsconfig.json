@@ -1,31 +1,38 @@
 {
   "compilerOptions": {
+    /* Basic Options */
     "target": "esnext",
     "module": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "checkJs": false,
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    /* --- THE FIX: Relaxing strictness for the build to pass --- */
-    "strict": false, 
+    "noEmit": false,
+    "incremental": true,
+
+    /* Connection & Resolution */
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+
+    /* Strictness - THE STABILIZER SETTINGS */
+    "strict": false,
     "noImplicitAny": false,
     "noImplicitThis": false,
     "noImplicitReturns": false,
     "exactOptionalPropertyTypes": false,
-    /* -------------------------------------------------------- */
-    "moduleResolution": "node",
+    "useUnknownInCatchVariables": false,
+
+    /* Interop & Safety */
     "esModuleInterop": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "noEmit": false,
-    "incremental": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "src"
